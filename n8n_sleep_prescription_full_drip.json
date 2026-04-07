@@ -1,0 +1,754 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "timewaver-prescription-delivery",
+        "options": {}
+      },
+      "id": "e8d64c01-7009-40c2-acc2-902e1c9444d3",
+      "name": "Webhook (Receive Form Data)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        100,
+        300
+      ],
+      "webhookId": "timewaver-prescription-delivery"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID_HERE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "Timestamp",
+            "Name",
+            "Email",
+            "Prescription Type",
+            "Status"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prescription Type",
+              "displayName": "Prescription Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "google-sheets-node-1",
+      "name": "Google Sheets (Record Client)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        300,
+        300
+      ],
+      "credentials": {
+        "googleApi": {
+          "id": "your-google-api-credential-id",
+          "name": "Google Sheets API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $('Webhook (Receive Form Data)').item.json.body.result_type }}",
+              "value2": "A"
+            }
+          ]
+        }
+      },
+      "id": "f5f5f5f5-f5f5-f5f5-f5f5-f5f5f5f5f5f5",
+      "name": "IF Type A",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $('Webhook (Receive Form Data)').item.json.body.result_type }}",
+              "value2": "B"
+            }
+          ]
+        }
+      },
+      "id": "e8e8e8e8-e8e8-e8e8-e8e8-e8e8e8e8e8e8",
+      "name": "IF Type B",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        700,
+        450
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $('Webhook (Receive Form Data)').item.json.body.result_type }}",
+              "value2": "C"
+            }
+          ]
+        }
+      },
+      "id": "d1d1d1d1-d1d1-d1d1-d1d1-d1d1d1d1d1d1",
+      "name": "IF Type C",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        900,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "download_link",
+              "value": "https://drive.google.com/drive/folders/1DsJJktVmnEXULZNW3ecUvxCB8OlJ3PVH?usp=drive_link"
+            },
+            {
+              "name": "prescription_name",
+              "value": "【A劑】斷路器・Theta波 4-7Hz"
+            },
+            {
+              "name": "prescription_desc",
+              "value": "強制切斷表意識的過載運轉，像拔掉大腦電源插頭一樣釋放腦壓。"
+            },
+            {
+              "name": "observation_indicators",
+              "value": "請觀察：1. 入睡前腦袋「跑馬燈」的次數是否減少？ 2. 早上醒來時，頭部的緊繃感是否有減輕？"
+            },
+            {
+              "name": "day3_content",
+              "value": "A劑（Theta波）專屬 Day 3 內容佔位符"
+            },
+            {
+              "name": "day7_content",
+              "value": "A劑（Theta波）專屬 Day 7 內容佔位符"
+            },
+            {
+              "name": "day14_content",
+              "value": "A劑（Theta波）專屬 Day 14 內容佔位符"
+            },
+            {
+              "name": "day21_content",
+              "value": "A劑（Theta波）專屬 Day 21 內容佔位符"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1",
+      "name": "Set Variables A",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        700,
+        150
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "download_link",
+              "value": "https://drive.google.com/drive/folders/1DsJJktVmnEXULZNW3ecUvxCB8OlJ3PVH?usp=drive_link"
+            },
+            {
+              "name": "prescription_name",
+              "value": "【B劑】深海艙・Delta波 0.5-4Hz"
+            },
+            {
+              "name": "prescription_desc",
+              "value": "物理性深層修復，將頻率拖入深海，阻絕外界雜音，強迫身體進入深層睡眠期。"
+            },
+            {
+              "name": "observation_indicators",
+              "value": "請觀察：1. 半夜醒來的次數是否減少？ 2. 早上起床時，身體的痠痛與沉重感是否有所改善？"
+            },
+            {
+              "name": "day3_content",
+              "value": "B劑（Delta波）專屬 Day 3 內容佔位符"
+            },
+            {
+              "name": "day7_content",
+              "value": "B劑（Delta波）專屬 Day 7 內容佔位符"
+            },
+            {
+              "name": "day14_content",
+              "value": "B劑（Delta波）專屬 Day 14 內容佔位符"
+            },
+            {
+              "name": "day21_content",
+              "value": "B劑（Delta波）專屬 Day 21 內容佔位符"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2",
+      "name": "Set Variables B",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "download_link",
+              "value": "https://drive.google.com/drive/folders/1DsJJktVmnEXULZNW3ecUvxCB8OlJ3PVH?usp=drive_link"
+            },
+            {
+              "name": "prescription_name",
+              "value": "【C劑】心流校準・Alpha波 8-12Hz"
+            },
+            {
+              "name": "prescription_desc",
+              "value": "讓大腦在平靜中預先彩排明天的從容狀態，消除未知的恐懼感後自然入睡。"
+            },
+            {
+              "name": "observation_indicators",
+              "value": "請觀察：1. 對明天任務的預期性焦慮是否降低？ 2. 隔天工作時，進入「專注狀態」的速度是否變快？"
+            },
+            {
+              "name": "day3_content",
+              "value": "C劑（Alpha波）專屬 Day 3 內容佔位符"
+            },
+            {
+              "name": "day7_content",
+              "value": "C劑（Alpha波）專屬 Day 7 內容佔位符"
+            },
+            {
+              "name": "day14_content",
+              "value": "C劑（Alpha波）專屬 Day 14 內容佔位符"
+            },
+            {
+              "name": "day21_content",
+              "value": "C劑（Alpha波）專屬 Day 21 內容佔位符"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c3c3c3c3-c3c3-c3c3-c3c3-c3c3c3c3c3c3",
+      "name": "Set Variables C",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        450
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "download_link",
+              "value": "https://drive.google.com/drive/folders/1DsJJktVmnEXULZNW3ecUvxCB8OlJ3PVH?usp=drive_link"
+            },
+            {
+              "name": "prescription_name",
+              "value": "【D劑】豐盛錨點・Solfeggio 852Hz"
+            },
+            {
+              "name": "prescription_desc",
+              "value": "在睡前最脆弱的時刻，洗掉恐懼的頻率，植入豐盛與信任的錨點。"
+            },
+            {
+              "name": "observation_indicators",
+              "value": "請觀察：1. 半夜驚醒時，那種「匱乏感與恐懼感」的強度是否減弱？ 2. 白天面對財務或決策時，是否感覺更加安定？"
+            },
+            {
+              "name": "day3_content",
+              "value": "D劑（Solfeggio 852Hz）專屬 Day 3 內容佔位符"
+            },
+            {
+              "name": "day7_content",
+              "value": "D劑（Solfeggio 852Hz）專屬 Day 7 內容佔位符"
+            },
+            {
+              "name": "day14_content",
+              "value": "D劑（Solfeggio 852Hz）專屬 Day 14 內容佔位符"
+            },
+            {
+              "name": "day21_content",
+              "value": "D劑（Solfeggio 852Hz）專屬 Day 21 內容佔位符"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d4d4d4d4-d4d4-d4d4-d4d4-d4d4d4d4d4d4",
+      "name": "Set Variables D",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        650
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "Erick | TimeWaver Audio <kern0907@gmail.com>",
+        "toEmail": "={{ $('Webhook (Receive Form Data)').item.json.body.email }}",
+        "subject": "【專屬載入】您的 TimeWaver 睡眠頻率處方已生成 (Day 1)",
+        "text": "",
+        "html": "=<h2>{{ $('Webhook (Receive Form Data)').item.json.body.name }}，您好：</h2><p>這是您專屬的睡眠診斷結果與數位處方。</p><p>根據系統運算，您目前的失眠根源需要：<br><strong>{{ $json.prescription_name }}</strong></p><p><em>作用機制：{{ $json.prescription_desc }}</em></p><hr><p><strong>【前三天觀察指標】</strong><br>{{ $json.observation_indicators }}</p><hr><p><strong>【服用指南】</strong><br>1. 請在睡前 15 分鐘下載並戴上降噪耳機。<br>2. <strong>重要：請開啟飛航模式</strong>，切斷所有外界電磁波與訊息干擾。<br>3. 點擊播放，不需專注，不需刻意放鬆，讓頻率強制接管您的神經系統。</p><p><a href=\"{{ $json.download_link }}\" style=\"display: inline-block; padding: 10px 20px; background-color: #0a192f; color: #ffffff; text-decoration: none; border-radius: 5px;\">點此下載您的數位處方 (30秒高維度試聽)</a></p><hr><p>這是一份「活」的音頻。我們已在源頭（德國 TimeWaver 設備）將其設定為您的信息場錨點，並會持續進行遠端頻率優化。我們將在第 3 天發送追蹤確認。</p><p>今晚，祝您擁有真正的深度休眠。</p><p><strong>Erick | 全息人生架構師</strong></p>",
+        "options": {}
+      },
+      "id": "f9f9f9f9-f9f9-f9f9-f9f9-f9f9f9f9f9f9",
+      "name": "Send Day 1 Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        300
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "gmail_smtp_credential",
+          "name": "Erick Gmail SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "days"
+      },
+      "id": "wait-day3",
+      "name": "Wait (To Day 3)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "Erick | TimeWaver Audio <kern0907@gmail.com>",
+        "toEmail": "={{ $('Webhook (Receive Form Data)').item.json.body.email }}",
+        "subject": "【頻率適應期】Day 3 觀察：您的大腦正在重新連線",
+        "text": "",
+        "html": "=<h2>{{ $('Webhook (Receive Form Data)').item.json.body.name }}，您好：</h2><p>進入頻率校準的第 3 天，您可能開始感受到一些微細的變化，或者出現短暫的「排毒反應」（如多夢、比平常更想睡）。這代表表意識的防衛機制正在卸下。</p><p><strong>【{{ $json.prescription_name }} 專屬觀察】：</strong><br>{{ $json.day3_content }}</p><p>請繼續保持睡前 15 分鐘的飛航模式聆聽。我們會在第 7 天再次為您確認頻率的深層穿透狀態。</p><p><strong>Erick | 全息人生架構師</strong></p>",
+        "options": {}
+      },
+      "id": "send-day3-email",
+      "name": "Send Day 3 Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        1800,
+        300
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "gmail_smtp_credential",
+          "name": "Erick Gmail SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 4,
+        "unit": "days"
+      },
+      "id": "wait-day7",
+      "name": "Wait (To Day 7)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "Erick | TimeWaver Audio <kern0907@gmail.com>",
+        "toEmail": "={{ $('Webhook (Receive Form Data)').item.json.body.email }}",
+        "subject": "【頻率校準週報】Day 7 深空適應期狀態確認",
+        "text": "",
+        "html": "=<h2>{{ $('Webhook (Receive Form Data)').item.json.body.name }}，您好：</h2><p>距離您開始使用「{{ $json.prescription_name }}」已經過了一週。</p><p>這 7 天，您的大腦適應這個頻段了嗎？<br>{{ $json.day7_content }}</p><p>如果您感覺這款處方無法穿透您的深層焦慮，或是出現了持續的抗拒感，請直接回覆本信件。我們深知每個高階大腦的抗性不同，我們將為您免費進行一次人工診斷，並為您替換為另一款等值處方。</p><p>若一切順利，請繼續保持。下一階段（Day 14），我們將進入更深層的潛意識重塑期。</p><p><strong>Erick | 全息人生架構師</strong></p>",
+        "options": {}
+      },
+      "id": "send-day7-email",
+      "name": "Send Day 7 Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        2200,
+        300
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "gmail_smtp_credential",
+          "name": "Erick Gmail SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 7,
+        "unit": "days"
+      },
+      "id": "wait-day14",
+      "name": "Wait (To Day 14)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "Erick | TimeWaver Audio <kern0907@gmail.com>",
+        "toEmail": "={{ $('Webhook (Receive Form Data)').item.json.body.email }}",
+        "subject": "【深層清理期】Day 14：那些浮現的夢境與情緒",
+        "text": "",
+        "html": "=<h2>{{ $('Webhook (Receive Form Data)').item.json.body.name }}，您好：</h2><p>來到第 14 天，您的表意識防衛應該已經大幅降低，極低頻的共振開始進入您的潛意識底層。</p><p>在這個階段：<br>{{ $json.day14_content }}</p><p>請持續記錄您的睡眠品質，我們將在下週（Day 21）為您進行最終的維度躍遷結業評估。</p><p><strong>Erick | 全息人生架構師</strong></p>",
+        "options": {}
+      },
+      "id": "send-day14-email",
+      "name": "Send Day 14 Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        2600,
+        300
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "gmail_smtp_credential",
+          "name": "Erick Gmail SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 7,
+        "unit": "days"
+      },
+      "id": "wait-day21",
+      "name": "Wait (To Day 21)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "Erick | TimeWaver Audio <kern0907@gmail.com>",
+        "toEmail": "={{ $('Webhook (Receive Form Data)').item.json.body.email }}",
+        "subject": "【維度躍遷完成】Day 21：您的神經重置已達標",
+        "text": "",
+        "html": "=<h2>{{ $('Webhook (Receive Form Data)').item.json.body.name }}，您好：</h2><p>恭喜您，完成了 21 天的神經系統頻率重開機。</p><p>這 21 天的穩定共振，已經在您的潛意識深處植入了新的錨點：<br>{{ $json.day21_content }}</p><p><strong>下一步的進階建議：</strong><br>若您的大眾版睡眠處方已經成功為您建立防護網，而您希望針對「個人專屬的財務阻礙、企業決策盲點」進行更深層的量子解析，您可以預約我的「TimeWaver 專屬個人信息場高階診斷」。</p><p>作為完成 21 天校準的用戶，您可以全額折抵您此次購買大眾版處方的費用。</p><p><a href=\"#\" style=\"display: inline-block; padding: 10px 20px; background-color: #d4af37; color: #000000; text-decoration: none; border-radius: 5px; font-weight: bold;\">預約一對一高階診斷 (保留折抵資格)</a></p><p><strong>Erick | 全息人生架構師</strong></p>",
+        "options": {}
+      },
+      "id": "send-day21-email",
+      "name": "Send Day 21 Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        3000,
+        300
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "gmail_smtp_credential",
+          "name": "Erick Gmail SMTP"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook (Receive Form Data)": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Record Client)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (Record Client)": {
+      "main": [
+        [
+          {
+            "node": "IF Type A",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Type A": {
+      "main": [
+        [
+          {
+            "node": "Set Variables A",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF Type B",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Type B": {
+      "main": [
+        [
+          {
+            "node": "Set Variables B",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF Type C",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Type C": {
+      "main": [
+        [
+          {
+            "node": "Set Variables C",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Variables D",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variables A": {
+      "main": [
+        [
+          {
+            "node": "Send Day 1 Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variables B": {
+      "main": [
+        [
+          {
+            "node": "Send Day 1 Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variables C": {
+      "main": [
+        [
+          {
+            "node": "Send Day 1 Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variables D": {
+      "main": [
+        [
+          {
+            "node": "Send Day 1 Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Day 1 Email": {
+      "main": [
+        [
+          {
+            "node": "Wait (To Day 3)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait (To Day 3)": {
+      "main": [
+        [
+          {
+            "node": "Send Day 3 Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Day 3 Email": {
+      "main": [
+        [
+          {
+            "node": "Wait (To Day 7)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait (To Day 7)": {
+      "main": [
+        [
+          {
+            "node": "Send Day 7 Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Day 7 Email": {
+      "main": [
+        [
+          {
+            "node": "Wait (To Day 14)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait (To Day 14)": {
+      "main": [
+        [
+          {
+            "node": "Send Day 14 Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Day 14 Email": {
+      "main": [
+        [
+          {
+            "node": "Wait (To Day 21)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait (To Day 21)": {
+      "main": [
+        [
+          {
+            "node": "Send Day 21 Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音頻腦波校準｜全息神經重置防護罩</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 基礎變數與重置 */
+        :root {
+            --primary: #0a0f1d;
+            --secondary: #1f3a5f;
+            --accent: #d4af37;
+            --bg-light: #f8f9fa;
+            --bg-section: #eef1f5;
+            --text-main: #1a202c;
+            --text-sub: #4a5568;
+            --border-color: #cbd5e0;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.4);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Noto Sans TC', sans-serif; background: radial-gradient(circle at top, rgba(212,175,55,0.08), transparent 22%), linear-gradient(180deg, #fbfbfc 0%, #f5f7fa 100%); color: var(--text-main); margin: 0; padding: 0; line-height: 1.7; overflow-x: hidden; letter-spacing: 0.03em; }
+        
+        /* Hero 區塊 */
+        header { position: relative; padding: 12rem 2rem 14rem; text-align: center; background: #0a0f1d; color: #fff; overflow: hidden; }
+        header::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 200%; height: 100%;
+            background: linear-gradient(60deg, #0a0f1d, #1a365d, #090e17, #0a0f1d);
+            background-size: 50% 100%; opacity: 0.6; animation: rainbowFlow 20s linear infinite; z-index: 0;
+        }
+        header::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 150px;
+            background: linear-gradient(to top, var(--bg-light), transparent); z-index: 1;
+        }
+        @keyframes rainbowFlow { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .header-content { position: relative; z-index: 2; max-width: 980px; margin: 0 auto; }
+        .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.55rem 1rem; margin-bottom: 1.5rem; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: rgba(255,255,255,0.82); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; backdrop-filter: blur(10px); }
+        h1 { font-size: 3.8rem; margin-bottom: 1.5rem; color: #fff; font-weight: 800; letter-spacing: 2px; line-height: 1.2; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .hero-subtitle { max-width: 760px; font-size: 1.25rem; color: rgba(255,255,255,0.85); margin: 0 auto 2.2rem; font-weight: 300; letter-spacing: 1px; }
+        .hero-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .cta-button { display: inline-block; padding: 1.2rem 4rem; background: rgba(255, 255, 255, 0.1); color: #fff; text-decoration: none; font-weight: 500; border-radius: 50px; font-size: 1.1rem; border: 1px solid rgba(255, 255, 255, 0.3); backdrop-filter: blur(10px); transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
+        .cta-button:hover { background: #fff; color: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15); border-color: #fff; }
+        .secondary-cta { display: inline-flex; align-items: center; justify-content: center; padding: 1.15rem 2rem; color: rgba(255,255,255,0.88); text-decoration: none; font-weight: 500; border-radius: 50px; font-size: 1.02rem; border: 1px solid rgba(255,255,255,0.18); transition: all 0.3s ease; }
+        .secondary-cta:hover { color: #fff; border-color: rgba(255,255,255,0.34); background: rgba(255,255,255,0.06); }
+        .hero-proof { display: flex; justify-content: center; gap: 0.85rem; flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
+        .hero-proof-item { padding: 0.75rem 1rem; border-radius: 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.84); font-size: 0.9rem; }
+        
+        /* 內容區塊共用 */
+        section { padding: 8rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 5; }
+        h2 { font-size: 2.4rem; margin-bottom: 1.2rem; color: var(--primary); text-align: center; font-weight: 700; letter-spacing: 1px; }
+        .section-desc { text-align: center; color: var(--text-sub); max-width: 700px; margin: 0 auto 4rem; font-size: 1.15rem; font-weight: 300; line-height: 1.9; }
+        .section-kicker { text-align: center; color: var(--accent); font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; margin-bottom: 0.9rem; }
+        .section-shell { position: relative; }
+        .section-shell::before { content: ''; position: absolute; inset: -1.5rem 0 auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(10,15,29,0.1), transparent); }
+        
+/* 個人故事區塊 (Dan Koe Framework) */
+        .founder-story { background: #0a0f1d; color: #fff; padding: 6rem 2rem; margin: 4rem auto; border-radius: 16px; position: relative; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.2); }
+        .founder-story::before { content: '”'; position: absolute; top: -20px; left: 20px; font-size: 15rem; color: rgba(255,255,255,0.03); font-family: serif; line-height: 1; }
+        .founder-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+        .founder-title { font-size: 2rem; color: var(--accent); margin-bottom: 2rem; font-weight: 700; text-align: center; }
+        .founder-text { font-size: 1.1rem; line-height: 1.9; color: rgba(255,255,255,0.85); font-weight: 300; margin-bottom: 1.5rem; text-align: justify; }
+        .founder-highlight { color: #fff; font-weight: 500; border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+        .founder-sign { text-align: right; margin-top: 3rem; font-size: 1.2rem; color: var(--accent); font-style: italic; }
+
+        /* 痛點情境區塊 (Pain Point Story) */
+        .pain-story-section { padding: 8rem 2rem; max-width: 900px; margin: 0 auto; position: relative; z-index: 5; }
+        .pain-story-title { font-size: 2.2rem; color: var(--primary); font-weight: 700; text-align: center; margin-bottom: 3rem; letter-spacing: 1px; }
+        .pain-card { background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 3rem; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.02); border-left: 4px solid var(--secondary); transition: transform 0.3s ease; }
+        .pain-card:hover { transform: translateX(5px); border-color: var(--secondary); }
+        .pain-scene { font-size: 0.9rem; color: var(--accent); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; display: block; }
+        .pain-quote { font-size: 1.4rem; color: var(--primary); font-style: italic; font-weight: 500; margin-bottom: 1.5rem; line-height: 1.6; }
+        .pain-desc { font-size: 1.05rem; color: var(--text-sub); font-weight: 300; line-height: 1.8; margin-bottom: 0; }
+        .pain-transition { text-align: center; margin-top: 5rem; padding-top: 4rem; border-top: 1px dashed rgba(0,0,0,0.1); }
+        .pain-transition h3 { font-size: 1.8rem; color: var(--primary); font-weight: 700; margin-bottom: 1rem; }
+        .pain-transition p { font-size: 1.1rem; color: var(--text-sub); font-weight: 300; max-width: 600px; margin: 0 auto; line-height: 1.8; }
+        .comparison-wrapper { background: linear-gradient(180deg, rgba(238,241,245,0.55), rgba(238,241,245,0.9)); padding: 7rem 0; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; }
+        .comparison-shell { max-width: 1040px; margin: 0 auto; padding: 0 2rem; }
+        .comparison-header { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0 auto 1rem; }
+        .comparison-brand-card { padding: 1.35rem 1.5rem; border-radius: 22px; border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 16px 32px rgba(10,15,29,0.05); backdrop-filter: blur(12px); }
+        .comparison-brand-card.them { background: linear-gradient(145deg, rgba(255,255,255,0.78), rgba(240,243,247,0.92)); }
+        .comparison-brand-card.us { background: linear-gradient(145deg, rgba(10,15,29,0.94), rgba(31,58,95,0.9)); color: #fff; border-color: rgba(255,255,255,0.08); }
+        .comparison-brand-label { display: block; margin-bottom: 0.45rem; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.7; }
+        .comparison-brand-title { margin: 0; font-size: 1.25rem; line-height: 1.4; font-weight: 700; }
+        .comparison-cards { display: grid; gap: 1rem; }
+        .comparison-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+        .comparison-card { min-height: 100%; padding: 1.5rem; border-radius: 22px; border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 16px 32px rgba(10,15,29,0.04); }
+        .comparison-card.them { background: linear-gradient(145deg, rgba(255,255,255,0.86), rgba(243,246,249,0.96)); }
+        .comparison-card.us { background: linear-gradient(145deg, rgba(255,255,255,0.94), rgba(248,250,252,0.98)); border-color: rgba(10,15,29,0.06); }
+        .comparison-card-header { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.9rem; }
+        .comparison-badge { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .comparison-card.them .comparison-badge { background: rgba(239,68,68,0.1); color: #b91c1c; }
+        .comparison-card.us .comparison-badge { background: rgba(16,185,129,0.12); color: #047857; }
+        .comparison-card-title { margin: 0; font-size: 1.02rem; line-height: 1.5; font-weight: 700; color: var(--primary); }
+        .comparison-card-text { margin: 0; font-size: 0.98rem; line-height: 1.85; color: var(--text-sub); }
+
+        /* 產品與體驗區 */
+        .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; align-items: stretch; }
+        @media (max-width: 1024px) { .product-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; } }
+        @media (max-width: 768px) { .product-grid { grid-template-columns: 1fr; } }
+        .product-card { background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,249,250,0.96)); backdrop-filter: blur(10px); border: 1px solid rgba(10,15,29,0.08); border-radius: 22px; padding: 2.5rem 2rem; display: flex; flex-direction: column; height: 100%; transition: all 0.4s ease; box-shadow: 0 18px 36px rgba(10,15,29,0.06); }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); border-color: rgba(31, 58, 95, 0.2); }
+        .card-icon { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; opacity: 0.9; }
+        .card-title { font-size: 1.35rem; margin-bottom: 0.5rem; color: var(--primary); font-weight: 700; }
+        .card-freq { font-size: 0.8rem; color: var(--text-sub); letter-spacing: 1px; margin-bottom: 1.5rem; font-weight: 500; text-transform: uppercase; }
+        .card-desc { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 2.5rem; flex-grow: 1; font-weight: 300; }
+        .experience-intro { max-width: 860px; margin: 0 auto 3rem; padding: 1.35rem; border-radius: 20px; background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(238,241,245,0.78)); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 18px 36px rgba(10,15,29,0.05); }
+        .experience-points { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
+        .experience-point { padding: 0.7rem 0.95rem; border-radius: 999px; background: rgba(10,15,29,0.04); color: var(--text-main); font-size: 0.92rem; }
+        .audio-container { background: linear-gradient(145deg, rgba(255,255,255,0.96), rgba(238,241,245,0.92)); padding: 1.2rem; border-radius: 16px; margin-bottom: 1.5rem; text-align: left; border: 1px solid rgba(10,15,29,0.06); box-shadow: inset 0 1px 0 rgba(255,255,255,0.7); min-height: 210px; display: flex; flex-direction: column; justify-content: flex-start; }
+        .audio-hint { font-size: 0.78rem; color: var(--text-main); font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.45rem; letter-spacing: 0.08em; }
+        .audio-player { display: none; }
+        .custom-audio-player { display: flex; align-items: center; gap: 0.9rem; padding: 0.95rem 1rem; border-radius: 14px; background: linear-gradient(135deg, rgba(10,15,29,0.96), rgba(31,58,95,0.92)); color: #fff; box-shadow: 0 14px 30px rgba(10,15,29,0.14); }
+        .audio-play-btn { width: 48px; height: 48px; border: none; border-radius: 50%; background: rgba(255,255,255,0.14); color: #fff; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 8px 18px rgba(0,0,0,0.18); flex-shrink: 0; }
+        .audio-play-btn:hover { transform: translateY(-1px) scale(1.03); background: rgba(255,255,255,0.22); }
+        .audio-play-btn:focus-visible { outline: 2px solid rgba(212, 175, 55, 0.9); outline-offset: 3px; }
+        .audio-play-icon { font-size: 1rem; line-height: 1; margin-left: 2px; }
+        .audio-meta { flex: 1; min-width: 0; }
+        .audio-track-label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.68); margin-bottom: 0.45rem; }
+        .audio-progress-row { display: flex; align-items: center; gap: 0.75rem; }
+        .audio-progress { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 999px; background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--progress, 0%), rgba(255,255,255,0.2) var(--progress, 0%), rgba(255,255,255,0.2) 100%); cursor: pointer; outline: none; }
+        .audio-progress::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .audio-progress::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .audio-progress::-moz-range-track { height: 6px; border-radius: 999px; background: rgba(255,255,255,0.2); }
+        .audio-time { min-width: 86px; text-align: right; font-size: 0.75rem; color: rgba(255,255,255,0.8); font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+        .audio-status { margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-sub); line-height: 1.6; min-height: 4.8em; }
+        .audio-status:empty { visibility: hidden; }
+        .card-cta { width: fit-content; max-width: 100%; padding: 0.85rem 1.15rem; background: linear-gradient(145deg, rgba(255,255,255,0.72), rgba(238,241,245,0.5)); color: var(--primary); border: 1px solid rgba(10,15,29,0.18); border-radius: 999px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-align: center; display: block; text-decoration: none; font-size: 0.84rem; letter-spacing: 0.04em; margin: auto auto 0; backdrop-filter: blur(10px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 8px 18px rgba(10,15,29,0.06); white-space: nowrap; }
+        .card-cta:hover { background: linear-gradient(145deg, rgba(10,15,29,0.9), rgba(31,58,95,0.92)); color: #fff; border-color: rgba(10,15,29,0.4); box-shadow: 0 12px 24px rgba(10,15,29,0.14); }
+
+        /* 金色特別版 */
+        .gold-card { background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,249,250,0.96)); border-color: rgba(10,15,29,0.08); }
+        .gold-card .card-cta { border-color: var(--primary); color: var(--primary); }
+        .gold-card .card-cta:hover { background: var(--primary); color: #fff; }
+
+        /* 技術背書 */
+        .tech-container { max-width: 900px; margin: 0 auto; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(248,249,250,0.96)); backdrop-filter: blur(10px); padding: 4rem; border-radius: 24px; box-shadow: 0 18px 38px rgba(10,15,29,0.05); border: 1px solid rgba(10,15,29,0.06); position: relative; overflow: hidden; }
+        .tech-bg-image { width: 100%; max-height: 350px; object-fit: cover; border-radius: 12px; margin-bottom: 2.5rem; opacity: 0.95; border: 1px solid rgba(0,0,0,0.05); }
+        .tech-list { list-style: none; padding: 0; }
+        .tech-list li { margin-bottom: 2rem; padding-left: 2.5rem; position: relative; font-weight: 300; font-size: 1.05rem; }
+        .tech-list li::before { content: '✦'; color: var(--accent); position: absolute; left: 0; font-size: 1.2rem; top: -2px; }
+        .tech-list strong { font-weight: 500; color: var(--primary); }
+
+        /* 進階說明區塊 */
+        .quantum-anchor-box { margin-top: 3rem; padding: 2.5rem; background: linear-gradient(135deg, #0a0f1d, #1a2a40); border-radius: 16px; color: #fff; position: relative; overflow: hidden; }
+        .quantum-anchor-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 60%); z-index: 1; }
+        .quantum-anchor-box h4 { position: relative; z-index: 2; color: var(--accent); margin-top: 0; font-size: 1.2rem; letter-spacing: 1px; font-weight: 500; display: flex; align-items: center; }
+        .quantum-anchor-box h4::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; margin-right: 12px; box-shadow: 0 0 10px var(--accent); animation: pulseDot 3s infinite; }
+        @keyframes pulseDot { 0% { opacity: 0.5; box-shadow: 0 0 5px var(--accent); } 50% { opacity: 1; box-shadow: 0 0 15px var(--accent); } 100% { opacity: 0.5; box-shadow: 0 0 5px var(--accent); } }
+        .quantum-anchor-box p { position: relative; z-index: 2; color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.8; margin-bottom: 0; font-weight: 300; }
+
+        /* 零風險承諾 */
+        .guarantee-box { max-width: 800px; margin: 5rem auto 0; background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(248,249,250,0.95)); border: 1px solid rgba(10,15,29,0.08); padding: 4rem 3rem; border-radius: 24px; text-align: center; box-shadow: 0 16px 34px rgba(10,15,29,0.04); }
+        .guarantee-box h3 { color: var(--primary); font-size: 1.5rem; margin-top: 0; font-weight: 500; letter-spacing: 1px; }
+        .guarantee-box p { font-weight: 300; color: var(--text-sub); }
+        
+        /* Footer & 法律聲明 */
+        footer { background: linear-gradient(180deg, rgba(238,241,245,0.7), rgba(238,241,245,0.95)); color: var(--text-sub); text-align: center; padding: 4rem 2rem; font-size: 0.85rem; margin-top: 4rem; border-top: 1px solid var(--border-color); }
+        .legal-disclaimer { max-width: 800px; margin: 0 auto; padding-top: 2rem; text-align: justify; font-weight: 300; opacity: 0.8; }
+
+        @media (max-width: 768px) {
+            body { line-height: 1.8; }
+            header { padding: 7rem 1.25rem 8rem; }
+            header::after { height: 96px; }
+            .header-content { max-width: 100%; }
+            .hero-eyebrow { font-size: 0.74rem; letter-spacing: 0.08em; margin-bottom: 1rem; }
+            h1 { font-size: 2.35rem; letter-spacing: 0.5px; line-height: 1.22; margin-bottom: 1rem; }
+            .hero-subtitle { font-size: 1rem; line-height: 1.9; margin-bottom: 2rem; letter-spacing: 0.02em; }
+            .hero-actions { gap: 0.75rem; }
+            .cta-button { width: 100%; max-width: 320px; padding: 1rem 1.5rem; font-size: 1rem; }
+            .secondary-cta { width: 100%; max-width: 320px; padding: 0.95rem 1.2rem; font-size: 0.95rem; }
+            .hero-proof-item { width: 100%; max-width: 320px; }
+
+            section { padding: 4.5rem 1.25rem; }
+            h2 { font-size: 1.8rem; line-height: 1.4; margin-bottom: 0.9rem; letter-spacing: 0.02em; }
+            .section-desc { font-size: 1rem; line-height: 1.9; margin-bottom: 2.5rem; padding: 0 0.15rem; }
+
+            .pain-story-section { padding: 4.5rem 1.25rem; }
+            .pain-story-title { font-size: 1.75rem; line-height: 1.45; margin-bottom: 2rem; }
+            .pain-card { padding: 1.5rem 1.2rem; margin-bottom: 1.25rem; border-radius: 14px; }
+            .pain-scene { font-size: 0.78rem; letter-spacing: 0.12em; }
+            .pain-quote { font-size: 1.15rem; line-height: 1.7; margin-bottom: 1rem; }
+            .pain-desc { font-size: 0.98rem; line-height: 1.95; }
+            .pain-transition { margin-top: 3rem; padding-top: 2.5rem; }
+            .pain-transition h3 { font-size: 1.4rem; line-height: 1.5; }
+            .pain-transition p { font-size: 1rem; line-height: 1.95; }
+
+            .founder-story { padding: 4rem 1.25rem; margin: 2.5rem 1rem; border-radius: 18px; }
+            .founder-story::before { font-size: 8rem; top: -6px; left: 10px; }
+            .founder-title { font-size: 1.55rem; line-height: 1.5; margin-bottom: 1.5rem; }
+            .founder-text { font-size: 1rem; line-height: 1.95; text-align: left; margin-bottom: 1.1rem; }
+            .founder-sign { margin-top: 2rem; font-size: 1.05rem; }
+
+            .comparison-wrapper { padding: 4.5rem 0; }
+            .comparison-shell { padding: 0 1rem; }
+            .comparison-header,
+            .comparison-row { grid-template-columns: 1fr; }
+            .comparison-brand-card,
+            .comparison-card { padding: 1.2rem; border-radius: 18px; }
+            .comparison-brand-title { font-size: 1.1rem; }
+            .comparison-card-title { font-size: 0.98rem; }
+            .comparison-card-text { font-size: 0.95rem; line-height: 1.8; }
+
+            .product-grid { gap: 1.25rem; margin-top: 1.5rem; }
+            .product-card { padding: 2rem 1.25rem; border-radius: 18px; }
+            .experience-intro { margin-bottom: 2rem; padding: 1rem; border-radius: 18px; }
+            .experience-point { width: 100%; text-align: center; font-size: 0.9rem; }
+            .card-icon { margin-bottom: 1rem; }
+            .card-title { font-size: 1.2rem; line-height: 1.5; }
+            .card-freq { font-size: 0.78rem; margin-bottom: 1rem; }
+            .card-desc { font-size: 0.98rem; line-height: 1.9; margin-bottom: 1.75rem; }
+            .audio-container { padding: 1rem; margin-bottom: 1.25rem; }
+            .audio-hint { font-size: 0.76rem; margin-bottom: 0.8rem; }
+            .custom-audio-player { padding: 0.9rem; gap: 0.75rem; }
+            .audio-play-btn { width: 44px; height: 44px; }
+            .audio-progress-row { gap: 0.5rem; }
+            .audio-time { min-width: 74px; font-size: 0.68rem; }
+            .card-cta { padding: 0.82rem 1rem; font-size: 0.8rem; max-width: 92%; }
+
+            .tech-container { padding: 1.5rem 1.15rem; border-radius: 18px; }
+            .tech-bg-image { max-height: 220px; margin-bottom: 1.5rem; }
+            .tech-container p,
+            .tech-list li,
+            .quantum-anchor-box p,
+            .guarantee-box p,
+            .legal-disclaimer { font-size: 0.98rem; line-height: 1.95; }
+            .tech-list li { padding-left: 1.8rem; margin-bottom: 1.25rem; }
+
+            .quantum-anchor-box { margin-top: 2rem; padding: 1.5rem 1.2rem; border-radius: 16px; }
+            .quantum-anchor-box h4 { font-size: 1.05rem; line-height: 1.6; align-items: flex-start; }
+
+            .guarantee-box { margin-top: 3rem; padding: 2rem 1.25rem; border-radius: 18px; text-align: left; }
+            .guarantee-box h3 { font-size: 1.25rem; line-height: 1.5; text-align: center; }
+
+            footer { padding: 3rem 1.25rem; margin-top: 3rem; font-size: 0.82rem; }
+            .legal-disclaimer { padding-top: 1.5rem; text-align: left; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2.05rem; }
+            h2 { font-size: 1.6rem; }
+            .pain-story-title { font-size: 1.55rem; }
+            .hero-proof-item { font-size: 0.85rem; }
+            .custom-audio-player { flex-wrap: wrap; }
+            .audio-meta { width: 100%; }
+            .audio-progress-row { flex-wrap: wrap; }
+            .audio-time { min-width: auto; text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="hero-eyebrow">艾伯林量子頻率 | 睡前頻率設計體驗</div>
+        <h1>睡前沉浸：<br>讓自己慢慢回到安定狀態</h1>
+        <p class="hero-subtitle">不是每個睡不著的夜晚，都需要更多內容。有時候，你需要的只是更低干擾、更有結構的一段睡前聲音。</p>
+        <div class="hero-actions">
+            <a href="#experience" class="cta-button">立即試聽 2 分鐘體驗版</a>
+            <a href="#pain-story" class="secondary-cta">先了解這份頻率為何不同</a>
+        </div>
+        <ul class="hero-proof">
+            <li class="hero-proof-item">2 分鐘站內試聽</li>
+            <li class="hero-proof-item">完整版單帖 NT$299</li>
+            <li class="hero-proof-item">A / B / C / D 四型對應情境</li>
+        </ul>
+    </div>
+</header>
+
+<section id="pain-story" class="pain-story-section">
+    <h2 class="pain-story-title">「為什麼你越努力想睡，大腦卻越清醒？」</h2>
+    
+    <div class="pain-card">
+        <span class="pain-scene">【情境一：斷電失敗的高階大腦】</span>
+        <div class="pain-quote">「下班了。身體早就說夠了——但大腦沒有聽到。」</div>
+        <p class="pain-desc">你躺下來了，但腦袋還在開會。明天的工作、還沒完成的事、可能出錯的地方，一輪一輪重播。最折磨的不是不想休息，而是根本停不下來。</p>
+    </div>
+
+    <div class="pain-card" style="border-left-color: #3b82f6;">
+        <span class="pain-scene" style="color: #3b82f6;">【情境二：假性休眠的神經系統】</span>
+        <div class="pain-quote">「你以為睡著了。但那不是真正的睡眠——那是你的身體太累了，強迫自己暫時斷線。」</div>
+        <p class="pain-desc">你不是完全沒睡，而是一直維持在淺層警戒裡。一點聲音就醒，一點動靜就緊。睡了很久，醒來卻還是像沒休息到。</p>
+    </div>
+
+    <div class="pain-card" style="border-left-color: #d4af37;">
+        <span class="pain-scene" style="color: #d4af37;">【情境三：匱乏感被放大的夜晚】</span>
+        <div class="pain-quote">「是凌晨三點。沒有任何事情發生，但你突然就醒了。然後它來了——」</div>
+        <p class="pain-desc">有些夜晚，真正把人叫醒的不是聲音，而是對未來、金錢或安全感的不安。事情還沒發生，心裡卻已經先往下墜。</p>
+    </div>
+
+    <div class="pain-transition">
+        <h3>你需要的也許不是更多資訊，而是一段真正能沉下來的睡前聲音</h3>
+        <p>當大腦已經習慣高速運轉，你很難只靠意志讓自己慢下來。這類頻率設計的目的，不是塞更多刺激，而是用更低干擾、更穩定的聲場，幫你把夜晚過渡得更順一點。你只需要戴上耳機，讓這段聲音成為固定的睡前節奏。</p>
+    </div>
+</section>
+
+<div class="founder-story">
+    <div class="founder-content">
+        <h2 class="founder-title">「我懂那種盯著天花板，看著天亮的恐懼。」</h2>
+        <p class="founder-text">我也曾經是那個躺下很累，卻還是停不下來的人。</p>
+        <p class="founder-text">後來我發現，很多夜晚真正需要的不是更多方法，而是一段能幫自己慢慢收回注意力的聲音節奏。這就是我做這系列音頻的原因。</p>
+        <p class="founder-text">如果你也常常卡在那種「明明該休息了，腦袋卻還在跑」的狀態，這些設計也許能成為你建立新睡前節奏的起點。</p>
+        <div class="founder-sign">— Erick</div>
+    </div>
+</div>
+
+<div class="comparison-wrapper">
+    <section class="comparison-shell">
+        <div class="section-kicker">Listening Comparison</div>
+        <h2>這份頻率設計，和一般睡前音訊有什麼不同？</h2>
+        <p class="section-desc">差異不在於誰「更神」，而在於聲音結構、聆聽方式與使用情境。這裡想幫你更快理解，為什麼不同設計會帶來完全不同的主觀體驗。</p>
+        <div class="comparison-header">
+            <div class="comparison-brand-card them">
+                <span class="comparison-brand-label">Common Option</span>
+                <h3 class="comparison-brand-title">一般睡前音訊 / 白噪音內容</h3>
+            </div>
+            <div class="comparison-brand-card us">
+                <span class="comparison-brand-label">Aiberlin Method</span>
+                <h3 class="comparison-brand-title">艾伯林睡前聲音設計</h3>
+            </div>
+        </div>
+        <div class="comparison-cards">
+            <div class="comparison-row">
+                <article class="comparison-card them">
+                    <div class="comparison-card-header">
+                        <span class="comparison-badge">✕</span>
+                        <h3 class="comparison-card-title">以熟悉旋律或環境聲為主</h3>
+                    </div>
+                    <p class="comparison-card-text">多半以雨聲、海浪聲、白噪音或輕音樂營造放鬆氛圍，適合當作陪伴型背景聲音。</p>
+                </article>
+                <article class="comparison-card us">
+                    <div class="comparison-card-header">
+                        <span class="comparison-badge">✓</span>
+                        <h3 class="comparison-card-title">以頻率鋪陳與聲場結構為主軸</h3>
+                    </div>
+                    <p class="comparison-card-text">更強調低頻層次、長時間鋪底與沉浸感，目標是建立不同於一般助眠內容的聆聽情境。</p>
+                </article>
+            </div>
+            <div class="comparison-row">
+                <article class="comparison-card them">
+                    <div class="comparison-card-header">
+                        <span class="comparison-badge">✕</span>
+                        <h3 class="comparison-card-title">內容通常走泛用型設計</h3>
+                    </div>
+                    <p class="comparison-card-text">多數內容希望適合大部分人，因此在調性與氛圍上會相對中性，也較少區分不同夜晚狀態。</p>
+                </article>
+                <article class="comparison-card us">
+                    <div class="comparison-card-header">
+                        <span class="comparison-badge">✓</span>
+                        <h3 class="comparison-card-title">以不同情境切分 A / B / C / D 四型</h3>
+                    </div>
+                    <p class="comparison-card-text">讓使用者依照自己當晚的主觀狀態，選擇比較貼近自身感受的版本，而不是只用同一種聲音對應所有人。</p>
+                </article>
+            </div>
+            <div class="comparison-row">
+                <article class="comparison-card them">
+                    <div class="comparison-card-header">
+                        <span class="comparison-badge">✕</span>
+                        <h3 class="comparison-card-title">常被當作可有可無的背景播放</h3>
+                    </div>
+                    <p class="comparison-card-text">開著也可以、沒開也可以，使用上偏向陪伴感，較少形成明確的睡前儀式或專注式聆聽節奏。</p>
+                </article>
+                <article class="comparison-card us">
+                    <div class="comparison-card-header">
+                        <span class="comparison-badge">✓</span>
+                        <h3 class="comparison-card-title">更重視「睡前儀式感」的建立</h3>
+                    </div>
+                    <p class="comparison-card-text">從戴上耳機、關閉干擾到固定聆聽流程，讓整體體驗更像一段有意識安排的睡前進場，而不只是隨手播放。</p>
+                </article>
+            </div>
+            <div class="comparison-row">
+                <article class="comparison-card them">
+                    <div class="comparison-card-header">
+                        <span class="comparison-badge">✕</span>
+                        <h3 class="comparison-card-title">容易停留在「好不好聽」的判斷</h3>
+                    </div>
+                    <p class="comparison-card-text">當旋律感、節奏感或過多細節存在時，有些人會更容易注意到聲音本身，而不是單純進入放鬆狀態。</p>
+                </article>
+                <article class="comparison-card us">
+                    <div class="comparison-card-header">
+                        <span class="comparison-badge">✓</span>
+                        <h3 class="comparison-card-title">更偏向低旋律、低干擾的沉浸式載體</h3>
+                    </div>
+                    <p class="comparison-card-text">透過較少旋律線索與較穩定的聲音場景，降低聆聽時對細節的追逐感，讓注意力比較容易慢慢沉下來。</p>
+                </article>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section id="experience" class="section-shell">
+    <div class="section-kicker">Try The Frequency</div>
+    <h2>體驗你的第一段頻率設計：戴上耳機的 ２分鐘</h2>
+    <p class="section-desc">選一款最接近你今晚狀態的版本，戴上耳機，給自己兩分鐘不被打擾的時間。你不需要分析它，只需要感受它是否適合你的夜晚。</p>
+    <div class="experience-intro">
+        <ul class="experience-points">
+            <li class="experience-point">先試聽 2 分鐘體驗版</li>
+            <li class="experience-point">覺得適合，再解鎖 30 分鐘完整版</li>
+            <li class="experience-point">四款正式版皆為 NT$299</li>
+        </ul>
+    </div>
+
+    <div class="product-grid">
+        <!-- 產品 1 -->
+        <div class="product-card">
+            <div class="card-icon">🍃</div>
+            <h3 class="card-title">【A劑】斷路器・沉靜頻率</h3>
+            <span class="card-freq">Theta 波 (4-7Hz) · 對應 A 型大腦</span>
+            <p class="card-desc">適合腦袋停不下來、躺下後還在想明天安排的夜晚。整體更柔和、內收，適合作為夜晚轉場的第一段聲音。</p>
+            <div class="audio-container">
+                <span class="audio-hint">🎧 試聽 ２分鐘體驗版</span>
+                <div class="custom-audio-player" data-player>
+                    <button type="button" class="audio-play-btn" data-play-btn aria-label="播放 A 劑試聽">
+                        <span class="audio-play-icon" data-play-icon>▶</span>
+                    </button>
+                    <div class="audio-meta">
+                        <div class="audio-track-label">A Dose Preview</div>
+                        <div class="audio-progress-row">
+                            <input type="range" class="audio-progress" data-progress value="0" min="0" max="100" step="0.1" aria-label="A 劑試聽進度">
+                            <span class="audio-time" data-time>00:00 / 00:00</span>
+                        </div>
+                    </div>
+                    <audio preload="metadata" class="audio-player" data-audio data-src="https://stcgtmbhuhiosjxiooyw.supabase.co/storage/v1/object/public/Test%20audio/A1.wav"></audio>
+                </div>
+                <div class="audio-status" data-status></div>
+            </div>
+            <a href="https://p.ecpay.com.tw/8F74F17" class="card-cta" target="_blank" rel="noopener noreferrer">立即購買 NT$299</a>
+        </div>
+
+        <!-- 產品 2 -->
+        <div class="product-card">
+            <div class="card-icon">🌙</div>
+            <h3 class="card-title">【B劑】深海艙・放鬆頻率</h3>
+            <span class="card-freq">Delta 波 (0.5-4Hz) · 對應 B 型大腦</span>
+            <p class="card-desc">適合身體已經躺平，整個人卻還沒真正卸下來的夜晚。氛圍更慢、更深、更低干擾，適合睡前背景播放。</p>
+            <div class="audio-container">
+                <span class="audio-hint">🎧 試聽 ２分鐘體驗版</span>
+                <div class="custom-audio-player" data-player>
+                    <button type="button" class="audio-play-btn" data-play-btn aria-label="播放 B 劑試聽">
+                        <span class="audio-play-icon" data-play-icon>▶</span>
+                    </button>
+                    <div class="audio-meta">
+                        <div class="audio-track-label">B Dose Preview</div>
+                        <div class="audio-progress-row">
+                            <input type="range" class="audio-progress" data-progress value="0" min="0" max="100" step="0.1" aria-label="B 劑試聽進度">
+                            <span class="audio-time" data-time>00:00 / 00:00</span>
+                        </div>
+                    </div>
+                    <audio preload="metadata" class="audio-player" data-audio data-src="https://stcgtmbhuhiosjxiooyw.supabase.co/storage/v1/object/public/Test%20audio/B1.wav"></audio>
+                </div>
+                <div class="audio-status" data-status></div>
+            </div>
+            <a href="https://p.ecpay.com.tw/377EA05" class="card-cta" target="_blank" rel="noopener noreferrer">立即購買 NT$299</a>
+        </div>
+
+        <!-- 產品 3 -->
+        <div class="product-card">
+            <div class="card-icon">⚡️</div>
+            <h3 class="card-title">【C劑】心流校準・專注頻率</h3>
+            <span class="card-freq">Alpha 波 (8-12Hz) · 對應 C 型大腦</span>
+            <p class="card-desc">適合高壓前夜。不是要你立刻空白，而是先把緊繃感收回來，讓自己慢慢回到比較穩定的節奏。</p>
+            <div class="audio-container">
+                <span class="audio-hint">🎧 試聽 ２分鐘體驗版</span>
+                <div class="custom-audio-player" data-player>
+                    <button type="button" class="audio-play-btn" data-play-btn aria-label="播放 C 劑試聽">
+                        <span class="audio-play-icon" data-play-icon>▶</span>
+                    </button>
+                    <div class="audio-meta">
+                        <div class="audio-track-label">C Dose Preview</div>
+                        <div class="audio-progress-row">
+                            <input type="range" class="audio-progress" data-progress value="0" min="0" max="100" step="0.1" aria-label="C 劑試聽進度">
+                            <span class="audio-time" data-time>00:00 / 00:00</span>
+                        </div>
+                    </div>
+                    <audio preload="metadata" class="audio-player" data-audio data-src="https://stcgtmbhuhiosjxiooyw.supabase.co/storage/v1/object/public/Test%20audio/C1.wav"></audio>
+                </div>
+                <div class="audio-status" data-status></div>
+            </div>
+            <a href="https://p.ecpay.com.tw/EA5427D" class="card-cta" target="_blank" rel="noopener noreferrer">立即購買 NT$299</a>
+        </div>
+
+        <!-- 產品 4 -->
+        <div class="product-card gold-card">
+            <div class="card-icon">💎</div>
+            <h3 class="card-title">【D劑】豐盛錨點・安定頻率</h3>
+            <span class="card-freq">Solfeggio / 852Hz · 對應 D 型大腦</span>
+            <p class="card-desc">適合容易被未來、金錢或安全感思緒拉走的夜晚。整體更包覆、更留白，陪你慢慢回到比較穩的內在節奏。</p>
+            <div class="audio-container">
+                <span class="audio-hint">🎧 試聽 ２分鐘體驗版</span>
+                <div class="custom-audio-player" data-player>
+                    <button type="button" class="audio-play-btn" data-play-btn aria-label="播放 D 劑試聽">
+                        <span class="audio-play-icon" data-play-icon>▶</span>
+                    </button>
+                    <div class="audio-meta">
+                        <div class="audio-track-label">D Dose Preview</div>
+                        <div class="audio-progress-row">
+                            <input type="range" class="audio-progress" data-progress value="0" min="0" max="100" step="0.1" aria-label="D 劑試聽進度">
+                            <span class="audio-time" data-time>00:00 / 00:00</span>
+                        </div>
+                    </div>
+                    <audio preload="metadata" class="audio-player" data-audio data-src="https://stcgtmbhuhiosjxiooyw.supabase.co/storage/v1/object/public/Test%20audio/D1.wav"></audio>
+                </div>
+                <div class="audio-status" data-status></div>
+            </div>
+            <a href="https://p.ecpay.com.tw/5FB3A34" class="card-cta" target="_blank" rel="noopener noreferrer">立即購買 NT$299</a>
+        </div>
+    </div>
+</section>
+
+<section id="tech-intro" class="section-shell" style="padding-bottom: 4rem;">
+    <div class="section-kicker">How It Differs</div>
+    <h2>為什麼這份「頻率設計」與一般助眠內容不同？</h2>
+    <p class="section-desc">它不以傳統旋律鋪陳為核心，而是結合頻率設計、聲場結構與沉浸式聆聽體驗，提供不同於一般助眠音訊的感受。</p>
+    <div class="tech-container">
+        <img src="images/quantum-nebula.png" alt="頻率設計與聲場結構示意圖" class="tech-bg-image">
+        
+        <div style="margin-bottom: 3rem; padding: 2rem; background: rgba(0,0,0,0.03); border-left: 4px solid var(--primary); border-radius: 8px;">
+            <h4 style="color: var(--primary); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;">不同助眠內容，為什麼帶來的體感會不一樣？</h4>
+            <p style="margin-bottom: 1rem;">很多夜晚真正卡住的，不一定是身體不累，而是思緒太滿、情緒太亮、環境太吵。一般白噪音偏向環境聲遮蔽，這類頻率設計則更重視聲場層次與整體沉浸感。</p>
+            <p style="margin-bottom: 0;">核心不是把聲音做得更複雜，而是把睡前的聆聽體驗做得更穩定、更容易反覆使用。</p>
+        </div>
+
+        <p style="margin-bottom: 2rem;">每一款設計的背後，都圍繞同一個目標: 做出更有結構、也更適合反覆使用的夜晚音訊版本。</p>
+        <ul class="tech-list">
+            <li><strong>低頻鋪底設計：</strong>讓整段聲音的重心更穩定，不會只停留在表面的環境音效果。</li>
+            <li><strong>沉浸式聲場安排：</strong>透過較長的鋪陳與較少旋律線索，降低對細節的注意力拉扯。</li>
+            <li><strong>可重複使用的夜晚版本：</strong>讓不同狀態下的使用者，能依自己的感受選擇比較合適的一款來聽。</li>
+        </ul>
+    </div>
+
+    <div class="quantum-anchor-box">
+        <h4>不只是檔案本身，更是一段被設計過的夜晚使用體驗</h4>
+        <p>重點不只是音檔本身，而是你是否能把它真正用進自己的夜晚。固定的時間、固定的情境、固定的聆聽流程，通常比一次聽很多內容更重要。</p>
+    </div>
+
+    <div class="guarantee-box">
+        <h3>使用建議與版本更換說明</h3>
+        <p>購買完整版後，你會收到一份簡單的睡前使用建議，幫助你更容易把它放進自己的夜晚流程。</p>
+        <p>如果持續使用後，覺得目前版本和自己的習慣不太合，也可以聯繫我們評估是否改聽另一款等值版本。</p>
+        <p>我們希望你買到的不只是檔案，而是一個真的用得上的睡前版本。</p>
+        <p style="font-size: 0.85rem; color: #95a5a6; margin-top: 1rem;">（附註：每份完整版皆附簡易睡前使用說明，協助你建立更固定的聆聽流程。）</p>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 艾伯林量子頻率</p>
+    <div class="legal-disclaimer">
+        <strong>【免責與合規聲明】</strong><br>
+        本網站提供之頻率音頻產品，屬一般身心放鬆與專注聆聽體驗之輔助內容，非屬醫療器材。本產品不具備任何疾病之診斷、治療、減輕或預防功效。頁面中涉及之感受、狀態與使用情境，皆屬個人主觀經驗之描述，實際體驗因人而異。若您有失眠、焦慮症、憂鬱症或其他身心疾患，請務必尋求專業合格醫師之協助。
+    </div>
+</footer>
+
+<script>
+    const formatAudioTime = (seconds) => {
+        if (!Number.isFinite(seconds)) return '00:00';
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = Math.floor(seconds % 60);
+        return String(minutes).padStart(2, '0') + ':' + String(remainingSeconds).padStart(2, '0');
+    };
+
+    const players = Array.from(document.querySelectorAll('[data-player]'));
+
+    players.forEach((player) => {
+        const audio = player.querySelector('[data-audio]');
+        const playButton = player.querySelector('[data-play-btn]');
+        const playIcon = player.querySelector('[data-play-icon]');
+        const progress = player.querySelector('[data-progress]');
+        const timeLabel = player.querySelector('[data-time]');
+        const statusLabel = player.parentElement.querySelector('[data-status]');
+        let hasLoadedSource = false;
+
+        const setStatus = (message = '') => {
+            if (statusLabel) statusLabel.textContent = message;
+        };
+
+        const ensureSourceLoaded = () => {
+            if (hasLoadedSource) return;
+            const source = audio.dataset.src;
+            if (!source) return;
+            audio.src = source;
+            audio.load();
+            hasLoadedSource = true;
+        };
+
+        const updateTime = () => {
+            const duration = Number.isFinite(audio.duration) ? audio.duration : 0;
+            const currentTime = Number.isFinite(audio.currentTime) ? audio.currentTime : 0;
+            const progressPercent = duration ? (currentTime / duration) * 100 : 0;
+            progress.value = progressPercent;
+            progress.style.setProperty('--progress', progressPercent + '%');
+            timeLabel.textContent = formatAudioTime(currentTime) + ' / ' + formatAudioTime(duration);
+        };
+
+        const resetPlayerState = () => {
+            playButton.setAttribute('aria-label', playButton.getAttribute('aria-label').replace('暫停', '播放'));
+            playIcon.textContent = '▶';
+        };
+
+        playButton.addEventListener('click', async () => {
+            if (audio.paused) {
+                ensureSourceLoaded();
+                setStatus('音檔載入中...');
+
+                players.forEach((otherPlayer) => {
+                    if (otherPlayer === player) return;
+                    const otherAudio = otherPlayer.querySelector('[data-audio]');
+                    const otherPlayIcon = otherPlayer.querySelector('[data-play-icon]');
+                    const otherStatus = otherPlayer.parentElement.querySelector('[data-status]');
+                    otherAudio.pause();
+                    otherPlayIcon.textContent = '▶';
+                    if (otherStatus) otherStatus.textContent = '';
+                });
+
+                try {
+                    await audio.play();
+                    playButton.setAttribute('aria-label', playButton.getAttribute('aria-label').replace('播放', '暫停'));
+                    playIcon.textContent = '❚❚';
+                    setStatus('');
+                } catch (error) {
+                    console.error('Audio playback failed:', error);
+                    setStatus('目前無法播放，請確認 Google Drive 檔案已設為「知道連結的任何人可檢視」。');
+                }
+            } else {
+                audio.pause();
+                setStatus('');
+            }
+        });
+
+        progress.addEventListener('input', () => {
+            if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
+            audio.currentTime = (Number(progress.value) / 100) * audio.duration;
+            updateTime();
+        });
+
+        audio.addEventListener('loadedmetadata', updateTime);
+        audio.addEventListener('canplay', () => setStatus(''));
+        audio.addEventListener('timeupdate', updateTime);
+        audio.addEventListener('pause', resetPlayerState);
+        audio.addEventListener('error', () => {
+            setStatus('音檔載入失敗，通常是 Google Drive 權限或串流限制造成。');
+        });
+        audio.addEventListener('ended', () => {
+            audio.currentTime = 0;
+            updateTime();
+            resetPlayerState();
+            setStatus('');
+        });
+
+        updateTime();
+    });
+</script>
+</body>
+</html>
