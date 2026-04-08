@@ -1,0 +1,186 @@
+{
+  "name": "ECPay to Google Sheet",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ecpay-payment-callback",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "8bc00cb0-b57b-4f7e-b938-2eb8f86d1001",
+      "name": "Webhook (ECPay Callback)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        220,
+        300
+      ],
+      "webhookId": "ecpay-payment-callback"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.RtnCode }}",
+              "operation": "equal",
+              "value2": "1"
+            }
+          ]
+        }
+      },
+      "id": "948de687-812b-40e2-a87e-c6c4332243c1",
+      "name": "IF Payment Success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "jsonOutput": "={\n  \"created_at\": \"{{$now.setZone('Asia/Taipei').toFormat('yyyy-LL-dd HH:mm:ss')}}\",\n  \"merchant_trade_no\": \"{{$json.body.MerchantTradeNo || ''}}\",\n  \"trade_no\": \"{{$json.body.TradeNo || ''}}\",\n  \"payment_status\": \"paid\",\n  \"rtn_code\": \"{{$json.body.RtnCode || ''}}\",\n  \"rtn_msg\": \"{{$json.body.RtnMsg || ''}}\",\n  \"trade_amt\": \"{{$json.body.TradeAmt || ''}}\",\n  \"payment_type\": \"{{$json.body.PaymentType || ''}}\",\n  \"simulate_paid\": \"{{$json.body.SimulatePaid || ''}}\",\n  \"product_code\": \"{{ (($json.body.MerchantTradeNo || '').split('-')[0] || '').toUpperCase() }}\",\n  \"product_name\": \"{{ ((($json.body.MerchantTradeNo || '').split('-')[0] || '').toUpperCase() === 'A') ? '【A劑】斷路器・沉靜頻率' : ((($json.body.MerchantTradeNo || '').split('-')[0] || '').toUpperCase() === 'B') ? '【B劑】深海艙・放鬆頻率' : ((($json.body.MerchantTradeNo || '').split('-')[0] || '').toUpperCase() === 'C') ? '【C劑】心流校準・專注頻率' : ((($json.body.MerchantTradeNo || '').split('-')[0] || '').toUpperCase() === 'D') ? '【D劑】豐盛錨點・安定頻率' : '未知商品' }}\",\n  \"buyer_name\": \"{{$json.body.CustomField1 || ''}}\",\n  \"buyer_email\": \"{{$json.body.CustomField2 || ''}}\",\n  \"buyer_phone\": \"{{$json.body.CustomField3 || ''}}\",\n  \"source\": \"ecpay\",\n  \"raw_payload\": \"{{ JSON.stringify($json.body) }}\"\n}"
+      },
+      "id": "a4e44ab4-1dc1-4f63-ba6a-b33219d4dfdb",
+      "name": "Set Payment Record",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        700,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": "YOUR_GOOGLE_SHEET_ID",
+        "sheetName": "payment_records",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "created_at": "={{ $json.created_at }}",
+            "merchant_trade_no": "={{ $json.merchant_trade_no }}",
+            "trade_no": "={{ $json.trade_no }}",
+            "payment_status": "={{ $json.payment_status }}",
+            "rtn_code": "={{ $json.rtn_code }}",
+            "rtn_msg": "={{ $json.rtn_msg }}",
+            "trade_amt": "={{ $json.trade_amt }}",
+            "payment_type": "={{ $json.payment_type }}",
+            "simulate_paid": "={{ $json.simulate_paid }}",
+            "product_code": "={{ $json.product_code }}",
+            "product_name": "={{ $json.product_name }}",
+            "buyer_name": "={{ $json.buyer_name }}",
+            "buyer_email": "={{ $json.buyer_email }}",
+            "buyer_phone": "={{ $json.buyer_phone }}",
+            "source": "={{ $json.source }}",
+            "raw_payload": "={{ $json.raw_payload }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "98e55ca2-56a4-4fb5-9220-2fc80c90b307",
+      "name": "Google Sheets (Append Payment)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        980,
+        220
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "name": "Google Sheets Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "1|OK",
+        "options": {}
+      },
+      "id": "45e4b0f7-3188-4680-9f81-29bf4d309e16",
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1240,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "1|IGNORED",
+        "options": {}
+      },
+      "id": "f0f13fe6-a7fb-4f2b-b918-54892b3a23f6",
+      "name": "Respond Ignored",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        700,
+        420
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook (ECPay Callback)": {
+      "main": [
+        [
+          {
+            "node": "IF Payment Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Payment Success": {
+      "main": [
+        [
+          {
+            "node": "Set Payment Record",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Ignored",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Payment Record": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Append Payment)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (Append Payment)": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "6f19e31a-ec2e-4fed-b74c-8a245ece0001"
+}
