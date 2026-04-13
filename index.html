@@ -38,13 +38,9 @@
         .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.55rem 1rem; margin-bottom: 1.5rem; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: rgba(255,255,255,0.82); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; backdrop-filter: blur(10px); }
         h1 { font-size: 3.8rem; margin-bottom: 1.5rem; color: #fff; font-weight: 800; letter-spacing: 2px; line-height: 1.2; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .hero-subtitle { max-width: 760px; font-size: 1.25rem; color: rgba(255,255,255,0.85); margin: 0 auto 2.2rem; font-weight: 300; letter-spacing: 1px; }
-        .hero-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
-        .cta-button { display: inline-block; padding: 1.2rem 4rem; background: rgba(255, 255, 255, 0.1); color: #fff; text-decoration: none; font-weight: 500; border-radius: 50px; font-size: 1.1rem; border: 1px solid rgba(255, 255, 255, 0.3); backdrop-filter: blur(10px); transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
-        .cta-button:hover { background: #fff; color: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15); border-color: #fff; }
-        .secondary-cta { display: inline-flex; align-items: center; justify-content: center; padding: 1.15rem 2rem; color: rgba(255,255,255,0.88); text-decoration: none; font-weight: 500; border-radius: 50px; font-size: 1.02rem; border: 1px solid rgba(255,255,255,0.18); transition: all 0.3s ease; }
-        .secondary-cta:hover { color: #fff; border-color: rgba(255,255,255,0.34); background: rgba(255,255,255,0.06); }
-        .hero-proof { display: flex; justify-content: center; gap: 0.85rem; flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
-        .hero-proof-item { padding: 0.75rem 1rem; border-radius: 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.84); font-size: 0.9rem; }
+        .hero-value { max-width: 820px; margin: 0 auto; padding: 1.35rem 1.5rem; border-radius: 22px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 18px 40px rgba(0,0,0,0.12); backdrop-filter: blur(12px); }
+        .hero-value p { margin: 0; font-size: 1rem; line-height: 1.9; color: rgba(255,255,255,0.84); }
+        .hero-value strong { color: #fff; font-weight: 600; }
         
         /* 內容區塊共用 */
         section { padding: 8rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 5; }
@@ -74,6 +70,18 @@
         .pain-transition { text-align: center; margin-top: 5rem; padding-top: 4rem; border-top: 1px dashed rgba(0,0,0,0.1); }
         .pain-transition h3 { font-size: 1.8rem; color: var(--primary); font-weight: 700; margin-bottom: 1rem; }
         .pain-transition p { font-size: 1.1rem; color: var(--text-sub); font-weight: 300; max-width: 600px; margin: 0 auto; line-height: 1.8; }
+        .value-anchor-section { max-width: 980px; margin: 0 auto; padding: 0 2rem 7rem; }
+        .value-anchor-shell { background: linear-gradient(160deg, rgba(10,15,29,0.98), rgba(20,35,58,0.94)); color: #fff; border-radius: 28px; padding: 3rem; border: 1px solid rgba(212,175,55,0.18); box-shadow: 0 22px 54px rgba(10,15,29,0.16); }
+        .value-anchor-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr); gap: 1.5rem; align-items: stretch; }
+        .value-anchor-copy h2 { color: #fff; text-align: left; margin-bottom: 1rem; }
+        .value-anchor-copy p { margin: 0 0 1rem; color: rgba(255,255,255,0.82); font-size: 1rem; line-height: 1.9; }
+        .value-anchor-copy p:last-child { margin-bottom: 0; }
+        .value-anchor-copy strong { color: #fff; }
+        .value-anchor-card { padding: 1.5rem; border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04)); border: 1px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; justify-content: center; }
+        .anchor-label { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.64); margin-bottom: 0.8rem; }
+        .anchor-old-price { font-size: 1rem; color: #f87171; text-decoration: line-through; margin-bottom: 0.5rem; }
+        .anchor-price { font-size: 3rem; line-height: 1; color: var(--accent); font-weight: 800; margin-bottom: 0.85rem; }
+        .anchor-note { margin: 0; color: rgba(255,255,255,0.76); font-size: 0.92rem; line-height: 1.8; }
         .comparison-wrapper { background: linear-gradient(180deg, rgba(238,241,245,0.55), rgba(238,241,245,0.9)); padding: 7rem 0; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; }
         .comparison-shell { max-width: 1040px; margin: 0 auto; padding: 0 2rem; }
         .comparison-header { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0 auto 1rem; }
@@ -95,14 +103,26 @@
         .comparison-card-text { margin: 0; font-size: 0.98rem; line-height: 1.85; color: var(--text-sub); }
 
         /* 產品與體驗區 */
-        .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; align-items: stretch; }
+        .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 1.5rem; row-gap: 3rem; margin-top: 2rem; align-items: stretch; }
         @media (max-width: 1024px) {
-            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; align-items: start; }
+            header { padding: 8.25rem 1.4rem 8.8rem; }
+            header::after { height: 112px; }
+            .hero-subtitle { margin-bottom: 1.6rem; }
+            .hero-value { max-width: 720px; padding: 1rem 1.1rem; }
+            section { padding: 4.8rem 1.4rem; }
+            .section-desc { margin-bottom: 2.4rem; }
+            .pain-story-section { padding: 4.8rem 1.4rem; }
+            .pain-story-title { margin-bottom: 2rem; }
+            .pain-card { padding: 1.6rem 1.25rem; margin-bottom: 1.15rem; }
+            .pain-transition { margin-top: 2.8rem; padding-top: 2.2rem; }
+            .value-anchor-section { padding: 0 1.4rem 4.8rem; }
+            .value-anchor-shell { padding: 1.7rem 1.35rem; }
+            .visual-proof-grid { gap: 1rem; margin-bottom: 1.8rem; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); column-gap: 1.5rem; row-gap: 3.2rem; align-items: stretch; }
             .product-card { height: auto; padding: 1.8rem 1.15rem 1.15rem; }
             .card-desc { margin-bottom: 1.5rem; }
-            .audio-container { min-height: 0; padding: 1rem; margin-bottom: 1rem; }
-            .audio-status { min-height: 0; margin-top: 0.55rem; }
-            .audio-status:empty { display: none; }
+            .product-visual { min-height: 164px; margin-bottom: 1rem; }
+            .mystery-note { margin-bottom: 0.8rem; }
             .card-cta {
                 width: 100%;
                 max-width: 100%;
@@ -118,6 +138,12 @@
                 letter-spacing: 0.02em;
                 white-space: nowrap;
             }
+            .tech-container { padding: 1.8rem 1.35rem; }
+            .tech-bg-image { margin-bottom: 1.5rem; }
+            .tech-evidence-grid { gap: 0.9rem; margin: 1.5rem 0 1.9rem; }
+            .quantum-anchor-box { margin-top: 1.8rem; padding: 1.45rem 1.2rem; }
+            .guarantee-box { margin-top: 2rem; padding: 2rem 1.5rem; }
+            footer { padding: 3rem 1.4rem; margin-top: 2.8rem; }
         }
         @media (max-width: 768px) { .product-grid { grid-template-columns: 1fr; } }
         .product-card { background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,249,250,0.96)); backdrop-filter: blur(10px); border: 1px solid rgba(10,15,29,0.08); border-radius: 22px; padding: 2.5rem 2rem; display: flex; flex-direction: column; height: 100%; transition: all 0.4s ease; box-shadow: 0 18px 36px rgba(10,15,29,0.06); }
@@ -126,38 +152,57 @@
         .card-title { font-size: 1.35rem; margin-bottom: 0.5rem; color: var(--primary); font-weight: 700; }
         .card-freq { font-size: 0.8rem; color: var(--text-sub); letter-spacing: 1px; margin-bottom: 1.5rem; font-weight: 500; text-transform: uppercase; }
         .card-desc { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 2.5rem; flex-grow: 1; font-weight: 300; }
-        .experience-intro { max-width: 860px; margin: 0 auto 3rem; padding: 1.35rem; border-radius: 20px; background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(238,241,245,0.78)); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 18px 36px rgba(10,15,29,0.05); }
-        .experience-points { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
-        .experience-point { padding: 0.7rem 0.95rem; border-radius: 999px; background: rgba(10,15,29,0.04); color: var(--text-main); font-size: 0.92rem; }
-        .audio-container { background: linear-gradient(145deg, rgba(255,255,255,0.96), rgba(238,241,245,0.92)); padding: 1.2rem; border-radius: 16px; margin-bottom: 1.5rem; text-align: left; border: 1px solid rgba(10,15,29,0.06); box-shadow: inset 0 1px 0 rgba(255,255,255,0.7); min-height: 210px; display: flex; flex-direction: column; justify-content: flex-start; }
-        .audio-hint { font-size: 0.78rem; color: var(--text-main); font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.45rem; letter-spacing: 0.08em; }
-        .audio-player { display: none; }
-        .custom-audio-player { display: flex; align-items: center; gap: 0.9rem; padding: 0.95rem 1rem; border-radius: 14px; background: linear-gradient(135deg, rgba(10,15,29,0.96), rgba(31,58,95,0.92)); color: #fff; box-shadow: 0 14px 30px rgba(10,15,29,0.14); }
-        .audio-play-btn { width: 48px; height: 48px; border: none; border-radius: 50%; background: rgba(255,255,255,0.14); color: #fff; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 8px 18px rgba(0,0,0,0.18); flex-shrink: 0; }
-        .audio-play-btn:hover { transform: translateY(-1px) scale(1.03); background: rgba(255,255,255,0.22); }
-        .audio-play-btn:focus-visible { outline: 2px solid rgba(212, 175, 55, 0.9); outline-offset: 3px; }
-        .audio-play-icon { font-size: 1rem; line-height: 1; margin-left: 2px; }
-        .audio-meta { flex: 1; min-width: 0; }
-        .audio-track-label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.68); margin-bottom: 0.45rem; }
-        .audio-progress-row { display: flex; align-items: center; gap: 0.75rem; }
-        .audio-progress { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 999px; background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--progress, 0%), rgba(255,255,255,0.2) var(--progress, 0%), rgba(255,255,255,0.2) 100%); cursor: pointer; outline: none; }
-        .audio-progress::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-        .audio-progress::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-        .audio-progress::-moz-range-track { height: 6px; border-radius: 999px; background: rgba(255,255,255,0.2); }
-        .audio-time { min-width: 86px; text-align: right; font-size: 0.75rem; color: rgba(255,255,255,0.8); font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
-        .audio-status { margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-sub); line-height: 1.6; min-height: 4.8em; }
-        .audio-status:empty { visibility: hidden; }
+        .visual-proof-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; margin-bottom: 2.5rem; }
+        .visual-proof-card { overflow: hidden; border-radius: 24px; background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,247,250,0.94)); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 18px 36px rgba(10,15,29,0.06); }
+        .visual-proof-image { width: 100%; aspect-ratio: 1.2 / 1; object-fit: cover; display: block; }
+        .product-visual { position: relative; overflow: hidden; min-height: 180px; border-radius: 18px; margin-bottom: 1.2rem; padding: 1.25rem; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(145deg, rgba(10,15,29,0.94), rgba(28,50,80,0.92)); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 16px 32px rgba(10,15,29,0.12); }
+        .product-visual::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at top left, rgba(212,175,55,0.22), transparent 36%), radial-gradient(circle at bottom right, rgba(59,130,246,0.22), transparent 42%); opacity: 0.92; }
+        .product-visual > * { position: relative; z-index: 1; }
+        .product-visual-label { display: inline-flex; width: fit-content; padding: 0.35rem 0.7rem; border-radius: 999px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.14); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.76); margin-bottom: auto; }
+        .product-visual-title { margin: 0 0 0.45rem; font-size: 1.2rem; line-height: 1.4; font-weight: 700; }
+        .product-visual-copy { margin: 0; color: rgba(255,255,255,0.82); font-size: 0.9rem; line-height: 1.7; }
+        .mystery-note { margin: -0.2rem 0 1.3rem; font-size: 0.82rem; color: var(--text-sub); line-height: 1.7; }
         .card-cta { width: fit-content; max-width: 100%; padding: 0.85rem 1.15rem; background: linear-gradient(145deg, rgba(255,255,255,0.72), rgba(238,241,245,0.5)); color: var(--primary); border: 1px solid rgba(10,15,29,0.18); border-radius: 999px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-align: center; display: block; text-decoration: none; font-size: 0.84rem; letter-spacing: 0.04em; margin: auto 0 0; align-self: center; backdrop-filter: blur(10px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 8px 18px rgba(10,15,29,0.06); white-space: nowrap; line-height: 1.3; }
         .card-cta:hover { background: linear-gradient(145deg, rgba(10,15,29,0.9), rgba(31,58,95,0.92)); color: #fff; border-color: rgba(10,15,29,0.4); box-shadow: 0 12px 24px rgba(10,15,29,0.14); }
-
         /* 金色特別版 */
         .gold-card { background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,249,250,0.96)); border-color: rgba(10,15,29,0.08); }
         .gold-card .card-cta { border-color: var(--primary); color: var(--primary); }
         .gold-card .card-cta:hover { background: var(--primary); color: #fff; }
+        .purchase-modal[hidden] { display: none; }
+        .purchase-modal { position: fixed; inset: 0; z-index: 40; display: flex; align-items: center; justify-content: center; padding: 1.5rem; background: rgba(10,15,29,0.64); backdrop-filter: blur(10px); }
+        .purchase-dialog { width: min(100%, 560px); max-height: calc(100vh - 3rem); overflow-y: auto; background: rgba(255,255,255,0.96); border: 1px solid rgba(10,15,29,0.1); border-radius: 24px; box-shadow: 0 24px 60px rgba(10,15,29,0.2); padding: 2rem; }
+        .purchase-dialog-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+        .purchase-dialog-title { margin: 0; font-size: 1.5rem; color: var(--primary); line-height: 1.4; }
+        .purchase-dialog-subtitle { margin: 0.45rem 0 0; color: var(--text-sub); font-size: 0.95rem; line-height: 1.8; }
+        .purchase-close { width: 40px; height: 40px; border: 1px solid rgba(10,15,29,0.12); border-radius: 999px; background: #fff; color: var(--primary); cursor: pointer; font-size: 1.2rem; transition: all 0.2s ease; }
+        .purchase-close:hover { background: var(--primary); color: #fff; }
+        .purchase-summary { padding: 1rem 1.1rem; margin-bottom: 1.25rem; border-radius: 18px; background: linear-gradient(145deg, rgba(10,15,29,0.04), rgba(31,58,95,0.06)); border: 1px solid rgba(10,15,29,0.08); }
+        .purchase-summary-label { display: inline-flex; padding: 0.24rem 0.6rem; border-radius: 999px; background: rgba(10,15,29,0.08); color: var(--primary); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; }
+        .purchase-summary h4 { margin: 0.75rem 0 0.35rem; font-size: 1.15rem; color: var(--primary); }
+        .purchase-summary p { margin: 0; color: var(--text-sub); font-size: 0.92rem; }
+        .purchase-form { display: grid; gap: 1rem; }
+        .purchase-field { display: grid; gap: 0.45rem; }
+        .purchase-field label { font-size: 0.92rem; font-weight: 600; color: var(--primary); }
+        .purchase-field input { width: 100%; box-sizing: border-box; padding: 0.9rem 1rem; border: 1px solid rgba(10,15,29,0.14); border-radius: 14px; font: inherit; color: var(--text-main); background: rgba(255,255,255,0.98); }
+        .purchase-field input:focus { outline: none; border-color: rgba(31,58,95,0.5); box-shadow: 0 0 0 4px rgba(31,58,95,0.08); }
+        .purchase-help { margin: -0.1rem 0 0; color: var(--text-sub); font-size: 0.83rem; line-height: 1.7; }
+        .purchase-status { min-height: 1.6rem; color: #b45309; font-size: 0.9rem; line-height: 1.6; }
+        .purchase-status[data-tone="error"] { color: #b91c1c; }
+        .purchase-status[data-tone="success"] { color: #166534; }
+        .purchase-actions { display: flex; gap: 0.8rem; justify-content: flex-end; flex-wrap: wrap; margin-top: 0.35rem; }
+        .purchase-secondary, .purchase-primary { border-radius: 999px; padding: 0.9rem 1.25rem; font: inherit; cursor: pointer; transition: all 0.2s ease; }
+        .purchase-secondary { border: 1px solid rgba(10,15,29,0.16); background: #fff; color: var(--primary); }
+        .purchase-secondary:hover { background: rgba(10,15,29,0.04); }
+        .purchase-primary { border: 1px solid rgba(10,15,29,0.2); background: linear-gradient(145deg, rgba(10,15,29,0.94), rgba(31,58,95,0.94)); color: #fff; font-weight: 600; box-shadow: 0 12px 24px rgba(10,15,29,0.16); }
+        .purchase-primary:hover { transform: translateY(-1px); }
+        .purchase-primary:disabled { cursor: wait; opacity: 0.7; transform: none; }
 
         /* 技術背書 */
         .tech-container { max-width: 900px; margin: 0 auto; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(248,249,250,0.96)); backdrop-filter: blur(10px); padding: 4rem; border-radius: 24px; box-shadow: 0 18px 38px rgba(10,15,29,0.05); border: 1px solid rgba(10,15,29,0.06); position: relative; overflow: hidden; }
         .tech-bg-image { width: 100%; max-height: 350px; object-fit: cover; border-radius: 12px; margin-bottom: 2.5rem; opacity: 0.95; border: 1px solid rgba(0,0,0,0.05); }
+        .tech-evidence-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 2rem 0 2.5rem; }
+        .tech-evidence-card { overflow: hidden; border-radius: 20px; background: rgba(255,255,255,0.88); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 14px 28px rgba(10,15,29,0.05); }
+        .tech-evidence-card img { width: 100%; aspect-ratio: 1.15 / 1; object-fit: cover; display: block; }
         .tech-list { list-style: none; padding: 0; }
         .tech-list li { margin-bottom: 2rem; padding-left: 2.5rem; position: relative; font-weight: 300; font-size: 1.05rem; }
         .tech-list li::before { content: '✦'; color: var(--accent); position: absolute; left: 0; font-size: 1.2rem; top: -2px; }
@@ -182,30 +227,36 @@
 
         @media (max-width: 768px) {
             body { line-height: 1.8; }
-            header { padding: 6.25rem 1.1rem 6.8rem; }
-            header::after { height: 96px; }
+            header { padding: 5.35rem 1rem 5.5rem; }
+            header::after { height: 80px; }
             .header-content { max-width: 100%; }
-            .hero-eyebrow { font-size: 0.74rem; letter-spacing: 0.08em; margin-bottom: 1rem; }
-            h1 { font-size: 2.35rem; letter-spacing: 0.5px; line-height: 1.22; margin-bottom: 1rem; }
-            .hero-subtitle { font-size: 1rem; line-height: 1.9; margin-bottom: 2rem; letter-spacing: 0.02em; }
-            .hero-actions { gap: 0.75rem; }
-            .cta-button { width: 100%; max-width: 320px; padding: 1rem 1.5rem; font-size: 1rem; }
-            .secondary-cta { width: 100%; max-width: 320px; padding: 0.95rem 1.2rem; font-size: 0.95rem; }
-            .hero-proof-item { width: 100%; max-width: 320px; }
-
-            section { padding: 3.6rem 1.1rem; }
+            .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.07em; margin-bottom: 0.85rem; padding: 0.48rem 0.8rem; }
+            h1 { font-size: 2.12rem; letter-spacing: 0.4px; line-height: 1.2; margin-bottom: 0.8rem; }
+            .hero-subtitle { font-size: 0.98rem; line-height: 1.75; margin-bottom: 1.25rem; letter-spacing: 0.01em; }
+            .hero-value { padding: 0.9rem 0.95rem; border-radius: 16px; }
+            .hero-value p { font-size: 0.92rem; line-height: 1.72; }
+            section { padding: 2.8rem 1rem; }
             h2 { font-size: 1.8rem; line-height: 1.4; margin-bottom: 0.9rem; letter-spacing: 0.02em; }
-            .section-desc { font-size: 1rem; line-height: 1.85; margin-bottom: 2rem; padding: 0 0.1rem; }
+            .section-desc { font-size: 0.98rem; line-height: 1.72; margin-bottom: 1.35rem; padding: 0; }
 
-            .pain-story-section { padding: 3.8rem 1.1rem; }
-            .pain-story-title { font-size: 1.75rem; line-height: 1.45; margin-bottom: 1.6rem; }
-            .pain-card { padding: 1.25rem 1rem; margin-bottom: 1rem; border-radius: 14px; }
+            .pain-story-section { padding: 2.9rem 1rem; }
+            .pain-story-title { font-size: 1.62rem; line-height: 1.38; margin-bottom: 1.2rem; }
+            .pain-card { padding: 1.05rem 0.95rem; margin-bottom: 0.85rem; border-radius: 14px; }
             .pain-scene { font-size: 0.78rem; letter-spacing: 0.12em; }
-            .pain-quote { font-size: 1.12rem; line-height: 1.65; margin-bottom: 0.8rem; }
-            .pain-desc { font-size: 0.98rem; line-height: 1.85; }
-            .pain-transition { margin-top: 2.4rem; padding-top: 2rem; }
-            .pain-transition h3 { font-size: 1.4rem; line-height: 1.5; }
-            .pain-transition p { font-size: 1rem; line-height: 1.85; }
+            .pain-quote { font-size: 1.04rem; line-height: 1.52; margin-bottom: 0.65rem; }
+            .pain-desc { font-size: 0.95rem; line-height: 1.72; }
+            .pain-transition { margin-top: 1.8rem; padding-top: 1.45rem; }
+            .pain-transition h3 { font-size: 1.24rem; line-height: 1.42; margin-bottom: 0.7rem; }
+            .pain-transition p { font-size: 0.96rem; line-height: 1.72; }
+            .value-anchor-section { padding: 0 1rem 2.8rem; }
+            .value-anchor-shell { padding: 1.15rem 0.95rem; border-radius: 18px; }
+            .value-anchor-grid { grid-template-columns: 1fr; gap: 0.85rem; }
+            .value-anchor-copy h2 { text-align: left; }
+            .value-anchor-copy p { font-size: 0.95rem; line-height: 1.72; }
+            .anchor-label { margin-bottom: 0.55rem; }
+            .anchor-old-price { margin-bottom: 0.35rem; }
+            .anchor-price { font-size: 2.1rem; margin-bottom: 0.55rem; }
+            .anchor-note { font-size: 0.88rem; line-height: 1.65; }
 
             .founder-story { padding: 3rem 1.1rem; margin: 2rem 0.85rem; border-radius: 18px; }
             .founder-story::before { font-size: 8rem; top: -6px; left: 10px; }
@@ -223,29 +274,25 @@
             .comparison-card-title { font-size: 0.98rem; }
             .comparison-card-text { font-size: 0.95rem; line-height: 1.72; }
 
-            .product-grid { gap: 0.85rem; margin-top: 1.25rem; }
-            .product-card { padding: 1.2rem 0.9rem 0.9rem; border-radius: 18px; }
-            .experience-intro { margin-bottom: 1.5rem; padding: 0.95rem; border-radius: 18px; }
-            .experience-point { width: 100%; text-align: center; font-size: 0.9rem; }
-            .card-icon { font-size: 2.15rem; margin-bottom: 0.8rem; }
-            .card-title { font-size: 1.2rem; line-height: 1.5; }
-            .card-freq { font-size: 0.76rem; margin-bottom: 0.8rem; }
-            .card-desc { font-size: 0.96rem; line-height: 1.75; margin-bottom: 0.9rem; flex-grow: 0; }
-            .audio-container { min-height: 0; padding: 0.85rem; margin-bottom: 0.85rem; }
-            .audio-hint { font-size: 0.74rem; margin-bottom: 0.7rem; }
-            .custom-audio-player { padding: 0.8rem; gap: 0.7rem; }
-            .audio-play-btn { width: 44px; height: 44px; }
-            .audio-progress-row { gap: 0.5rem; }
-            .audio-time { min-width: 74px; font-size: 0.68rem; }
-            .audio-status { min-height: 0; margin-top: 0.4rem; font-size: 0.74rem; line-height: 1.5; }
-            .audio-status:empty { display: none; }
+            .product-grid { column-gap: 0.85rem; row-gap: 1.15rem; margin-top: 0.95rem; }
+            .product-card { padding: 1rem 0.82rem 0.82rem; border-radius: 18px; }
+            .visual-proof-grid { grid-template-columns: 1fr; gap: 0.7rem; margin-bottom: 1.05rem; }
+            .product-visual { min-height: 138px; padding: 0.9rem; margin-bottom: 0.75rem; }
+            .product-visual-label { padding: 0.28rem 0.58rem; font-size: 0.68rem; }
+            .product-visual-title { font-size: 1.04rem; line-height: 1.35; }
+            .product-visual-copy { font-size: 0.84rem; line-height: 1.55; }
+            .mystery-note { margin-bottom: 0.65rem; font-size: 0.78rem; line-height: 1.55; }
+            .card-icon { font-size: 2rem; margin-bottom: 0.65rem; }
+            .card-title { font-size: 1.12rem; line-height: 1.38; }
+            .card-freq { font-size: 0.73rem; margin-bottom: 0.65rem; }
+            .card-desc { font-size: 0.93rem; line-height: 1.62; margin-bottom: 0.7rem; flex-grow: 0; }
             .card-cta {
                 width: 100%;
                 max-width: 100%;
-                min-height: 48px;
-                padding: 0.82rem 0.85rem;
-                font-size: 0.88rem;
-                margin-top: 0.45rem;
+                min-height: 44px;
+                padding: 0.76rem 0.82rem;
+                font-size: 0.84rem;
+                margin-top: 0.25rem;
                 border-radius: 16px;
                 letter-spacing: 0.01em;
                 white-space: nowrap;
@@ -253,39 +300,44 @@
                 align-items: center;
                 justify-content: center;
             }
+            .purchase-modal { padding: 0.85rem; }
+            .purchase-dialog { padding: 1rem; border-radius: 18px; max-height: calc(100vh - 1.7rem); }
+            .purchase-dialog-title { font-size: 1.18rem; }
+            .purchase-actions { flex-direction: column-reverse; }
+            .purchase-secondary, .purchase-primary { width: 100%; }
 
-            .tech-container { padding: 1.3rem 1rem; border-radius: 18px; }
-            .tech-bg-image { max-height: 220px; margin-bottom: 1.2rem; }
+            .tech-container { padding: 1.05rem 0.9rem; border-radius: 18px; }
+            .tech-bg-image { max-height: 200px; margin-bottom: 0.95rem; }
             .tech-container p,
             .tech-list li,
             .quantum-anchor-box p,
             .guarantee-box p,
-            .legal-disclaimer { font-size: 0.98rem; line-height: 1.85; }
-            .tech-list li { padding-left: 1.8rem; margin-bottom: 1rem; }
+            .legal-disclaimer { font-size: 0.95rem; line-height: 1.72; }
+            .tech-list li { padding-left: 1.55rem; margin-bottom: 0.8rem; }
+            .tech-evidence-grid { grid-template-columns: 1fr; gap: 0.7rem; margin: 1rem 0 1.2rem; }
 
-            .quantum-anchor-box { margin-top: 1.6rem; padding: 1.3rem 1rem; border-radius: 16px; }
-            .quantum-anchor-box h4 { font-size: 1.05rem; line-height: 1.6; align-items: flex-start; }
+            .quantum-anchor-box { margin-top: 1.1rem; padding: 1rem 0.9rem; border-radius: 16px; }
+            .quantum-anchor-box h4 { font-size: 1rem; line-height: 1.45; align-items: flex-start; }
 
-            .guarantee-box { margin-top: 2.4rem; padding: 1.6rem 1.05rem; border-radius: 18px; text-align: left; }
-            .guarantee-box h3 { font-size: 1.25rem; line-height: 1.5; text-align: center; }
+            .guarantee-box { margin-top: 1.35rem; padding: 1.2rem 0.95rem; border-radius: 18px; text-align: left; }
+            .guarantee-box h3 { font-size: 1.15rem; line-height: 1.4; text-align: center; margin-bottom: 0.7rem; }
+            .guarantee-box p { margin: 0 0 0.55rem; }
 
-            footer { padding: 2.5rem 1.1rem; margin-top: 2.4rem; font-size: 0.82rem; }
-            .legal-disclaimer { padding-top: 1.2rem; text-align: left; }
+            footer { padding: 1.8rem 1rem; margin-top: 1.6rem; font-size: 0.8rem; }
+            .legal-disclaimer { padding-top: 0.85rem; text-align: left; }
         }
 
         @media (max-width: 480px) {
-            h1 { font-size: 2.05rem; }
-            h2 { font-size: 1.6rem; }
-            .pain-story-title { font-size: 1.55rem; }
-            .hero-proof-item { font-size: 0.85rem; }
-            .custom-audio-player { flex-wrap: wrap; }
-            .audio-meta { width: 100%; }
-            .audio-progress-row { flex-wrap: wrap; }
-            .audio-time { min-width: auto; text-align: left; }
-            .product-card { padding: 1.1rem 0.82rem 0.82rem; }
-            .card-desc { margin-bottom: 0.8rem; font-size: 0.94rem; line-height: 1.68; }
-            .audio-container { padding: 0.8rem; margin-bottom: 0.75rem; }
-            .card-cta { min-height: 46px; padding: 0.78rem 0.68rem; font-size: 0.8rem; }
+            h1 { font-size: 1.94rem; }
+            h2 { font-size: 1.48rem; }
+            .pain-story-title { font-size: 1.42rem; }
+            .hero-subtitle { font-size: 0.95rem; }
+            .hero-value p { font-size: 0.89rem; }
+            .product-card { padding: 0.95rem 0.78rem 0.78rem; }
+            .product-grid { row-gap: 1rem; }
+            .product-visual { min-height: 128px; }
+            .card-desc { margin-bottom: 0.65rem; font-size: 0.9rem; line-height: 1.58; }
+            .card-cta { min-height: 42px; padding: 0.72rem 0.64rem; font-size: 0.78rem; }
         }
     </style>
 </head>
@@ -293,152 +345,75 @@
 
 <header>
     <div class="header-content">
-        <div class="hero-eyebrow">艾伯林量子頻率 | 睡前頻率設計體驗</div>
+        <div class="hero-eyebrow">艾伯林量子頻率 | 比較容易睡下去的方法</div>
         <h1>睡前沉浸：<br>讓自己慢慢回到安定狀態</h1>
-        <p class="hero-subtitle">不是每個睡不著的夜晚，都需要更多內容。有時候，你需要的只是更低干擾、更有結構的一段睡前聲音。</p>
-        <div class="hero-actions">
-            <a href="#experience" class="cta-button">立即試聽 2 分鐘體驗版</a>
-            <a href="#pain-story" class="secondary-cta">先了解這份頻率為何不同</a>
+        <p class="hero-subtitle">你買的不是一段音頻，而是一個幫大腦慢下來、比較容易睡下去的方法。</p>
+        <div class="hero-value">
+            <p><strong>最累的時候，往往不是身體不想睡，而是頭腦停不下來。</strong>這套音頻不是要你更努力放鬆，而是幫你把夜晚從高速運轉慢慢拉回安定狀態。</p>
         </div>
-        <ul class="hero-proof">
-            <li class="hero-proof-item">2 分鐘站內試聽</li>
-            <li class="hero-proof-item">完整版單帖 NT$299</li>
-            <li class="hero-proof-item">A / B / C / D 四型對應情境</li>
-        </ul>
     </div>
 </header>
 
 <section id="pain-story" class="pain-story-section">
-    <h2 class="pain-story-title">「為什麼你越努力想睡，大腦卻越清醒？」</h2>
+    <h2 class="pain-story-title">你真正想解決的，不是「要不要聽音頻」，而是「今晚到底怎麼睡得著」</h2>
     
     <div class="pain-card">
-        <span class="pain-scene">【情境一：斷電失敗的高階大腦】</span>
-        <div class="pain-quote">「下班了。身體早就說夠了——但大腦沒有聽到。」</div>
-        <p class="pain-desc">你躺下來了，但腦袋還在開會。明天的工作、還沒完成的事、可能出錯的地方，一輪一輪重播。最折磨的不是不想休息，而是根本停不下來。</p>
+        <span class="pain-scene">最大痛點</span>
+        <div class="pain-quote">「明明已經很累，腦袋卻還在跑。」</div>
+        <p class="pain-desc">你不是不想睡，而是躺下之後，腦袋還在整理今天、預演明天、補做剛剛沒做完的決策。真正折磨人的不是夜晚太長，而是大腦根本沒有收到『現在可以關機』的訊號。</p>
     </div>
 
     <div class="pain-card" style="border-left-color: #3b82f6;">
-        <span class="pain-scene" style="color: #3b82f6;">【情境二：假性休眠的神經系統】</span>
-        <div class="pain-quote">「你以為睡著了。但那不是真正的睡眠——那是你的身體太累了，強迫自己暫時斷線。」</div>
-        <p class="pain-desc">你不是完全沒睡，而是一直維持在淺層警戒裡。一點聲音就醒，一點動靜就緊。睡了很久，醒來卻還是像沒休息到。</p>
+        <span class="pain-scene" style="color: #3b82f6;">核心原因</span>
+        <div class="pain-quote">「白天的壓力結束了，但神經系統還沒下班。」</div>
+        <p class="pain-desc">資訊殘留、工作壓力、預期性焦慮和對未來的不安，會讓交感神經持續留在工作模式。這也是為什麼很多人身體已經躺平，頭腦卻還像開了很多分頁，越想睡反而越清醒。</p>
     </div>
 
     <div class="pain-card" style="border-left-color: #d4af37;">
-        <span class="pain-scene" style="color: #d4af37;">【情境三：匱乏感被放大的夜晚】</span>
-        <div class="pain-quote">「是凌晨三點。沒有任何事情發生，但你突然就醒了。然後它來了——」</div>
-        <p class="pain-desc">有些夜晚，真正把人叫醒的不是聲音，而是對未來、金錢或安全感的不安。事情還沒發生，心裡卻已經先往下墜。</p>
+        <span class="pain-scene" style="color: #d4af37;">這套設計怎麼幫你</span>
+        <div class="pain-quote">「不是叫你更用力放鬆，而是幫夜晚比較容易降速。」</div>
+        <p class="pain-desc">這套音頻的重點，不是塞更多刺激，而是用更穩定、更低干擾的聲音，幫你把注意力從腦內噪音裡慢慢拉開。A / B / C / D 四型也不是複雜分類，而是對應四種常見的睡不著狀態。</p>
     </div>
 
     <div class="pain-transition">
-        <h3>你需要的也許不是更多資訊，而是一段真正能沉下來的睡前聲音</h3>
-        <p>當大腦已經習慣高速運轉，你很難只靠意志讓自己慢下來。這類頻率設計的目的，不是塞更多刺激，而是用更低干擾、更穩定的聲場，幫你把夜晚過渡得更順一點。你只需要戴上耳機，讓這段聲音成為固定的睡前節奏。</p>
+        <h3>你要找的不是更多方法，而是一個今晚就能開始用的解法</h3>
+        <p>重點不是把睡前弄得更複雜，而是找到一個你今晚就能開始用、而且能反覆使用的方法。</p>
     </div>
 </section>
 
-<div class="founder-story">
-    <div class="founder-content">
-        <h2 class="founder-title">「我懂那種盯著天花板，看著天亮的恐懼。」</h2>
-        <p class="founder-text">我也曾經是那個躺下很累，卻還是停不下來的人。</p>
-        <p class="founder-text">後來我發現，很多夜晚真正需要的不是更多方法，而是一段能幫自己慢慢收回注意力的聲音節奏。這就是我做這系列音頻的原因。</p>
-        <p class="founder-text">如果你也常常卡在那種「明明該休息了，腦袋卻還在跑」的狀態，這些設計也許能成為你建立新睡前節奏的起點。</p>
-        <div class="founder-sign">— Erick</div>
+<section class="value-anchor-section">
+    <div class="value-anchor-shell">
+        <div class="value-anchor-grid">
+            <div class="value-anchor-copy">
+                <div class="section-kicker" style="text-align: left; color: rgba(212,175,55,0.92);">價格比較</div>
+                <h2>不用一次買整套，先選最符合你現在狀態的一款就好</h2>
+                <p>一套完整的高階睡前音頻方案，原價通常會落在 <strong>NT$6,000</strong> 左右。多數人真正需要的，不是一次買一整套，而是先找到最適合自己現在狀態的那一款。</p>
+                <p>所以你現在不用先花整套的錢。你可以先用 <strong>NT$299</strong>，選一款最接近你現在困擾的版本，從今晚開始使用。</p>
+            </div>
+            <aside class="value-anchor-card" aria-label="價格定錨資訊">
+                <div class="anchor-label">現在先買一款就可以</div>
+                <div class="anchor-old-price">整套方案原價 NT$6,000</div>
+                <div class="anchor-price">NT$299</div>
+                <p class="anchor-note">先選一款最符合你現在狀態的版本。先從今晚開始，再看看它適不適合你。</p>
+            </aside>
+        </div>
     </div>
-</div>
-
-<div class="comparison-wrapper">
-    <section class="comparison-shell">
-        <div class="section-kicker">Listening Comparison</div>
-        <h2>這份頻率設計，和一般睡前音訊有什麼不同？</h2>
-        <p class="section-desc">差異不在於誰「更神」，而在於聲音結構、聆聽方式與使用情境。這裡想幫你更快理解，為什麼不同設計會帶來完全不同的主觀體驗。</p>
-        <div class="comparison-header">
-            <div class="comparison-brand-card them">
-                <span class="comparison-brand-label">Common Option</span>
-                <h3 class="comparison-brand-title">一般睡前音訊 / 白噪音內容</h3>
-            </div>
-            <div class="comparison-brand-card us">
-                <span class="comparison-brand-label">Aiberlin Method</span>
-                <h3 class="comparison-brand-title">艾伯林睡前聲音設計</h3>
-            </div>
-        </div>
-        <div class="comparison-cards">
-            <div class="comparison-row">
-                <article class="comparison-card them">
-                    <div class="comparison-card-header">
-                        <span class="comparison-badge">✕</span>
-                        <h3 class="comparison-card-title">以熟悉旋律或環境聲為主</h3>
-                    </div>
-                    <p class="comparison-card-text">多半以雨聲、海浪聲、白噪音或輕音樂營造放鬆氛圍，適合當作陪伴型背景聲音。</p>
-                </article>
-                <article class="comparison-card us">
-                    <div class="comparison-card-header">
-                        <span class="comparison-badge">✓</span>
-                        <h3 class="comparison-card-title">以頻率鋪陳與聲場結構為主軸</h3>
-                    </div>
-                    <p class="comparison-card-text">更強調低頻層次、長時間鋪底與沉浸感，目標是建立不同於一般助眠內容的聆聽情境。</p>
-                </article>
-            </div>
-            <div class="comparison-row">
-                <article class="comparison-card them">
-                    <div class="comparison-card-header">
-                        <span class="comparison-badge">✕</span>
-                        <h3 class="comparison-card-title">內容通常走泛用型設計</h3>
-                    </div>
-                    <p class="comparison-card-text">多數內容希望適合大部分人，因此在調性與氛圍上會相對中性，也較少區分不同夜晚狀態。</p>
-                </article>
-                <article class="comparison-card us">
-                    <div class="comparison-card-header">
-                        <span class="comparison-badge">✓</span>
-                        <h3 class="comparison-card-title">以不同情境切分 A / B / C / D 四型</h3>
-                    </div>
-                    <p class="comparison-card-text">讓使用者依照自己當晚的主觀狀態，選擇比較貼近自身感受的版本，而不是只用同一種聲音對應所有人。</p>
-                </article>
-            </div>
-            <div class="comparison-row">
-                <article class="comparison-card them">
-                    <div class="comparison-card-header">
-                        <span class="comparison-badge">✕</span>
-                        <h3 class="comparison-card-title">常被當作可有可無的背景播放</h3>
-                    </div>
-                    <p class="comparison-card-text">開著也可以、沒開也可以，使用上偏向陪伴感，較少形成明確的睡前儀式或專注式聆聽節奏。</p>
-                </article>
-                <article class="comparison-card us">
-                    <div class="comparison-card-header">
-                        <span class="comparison-badge">✓</span>
-                        <h3 class="comparison-card-title">更重視「睡前儀式感」的建立</h3>
-                    </div>
-                    <p class="comparison-card-text">從戴上耳機、關閉干擾到固定聆聽流程，讓整體體驗更像一段有意識安排的睡前進場，而不只是隨手播放。</p>
-                </article>
-            </div>
-            <div class="comparison-row">
-                <article class="comparison-card them">
-                    <div class="comparison-card-header">
-                        <span class="comparison-badge">✕</span>
-                        <h3 class="comparison-card-title">容易停留在「好不好聽」的判斷</h3>
-                    </div>
-                    <p class="comparison-card-text">當旋律感、節奏感或過多細節存在時，有些人會更容易注意到聲音本身，而不是單純進入放鬆狀態。</p>
-                </article>
-                <article class="comparison-card us">
-                    <div class="comparison-card-header">
-                        <span class="comparison-badge">✓</span>
-                        <h3 class="comparison-card-title">更偏向低旋律、低干擾的沉浸式載體</h3>
-                    </div>
-                    <p class="comparison-card-text">透過較少旋律線索與較穩定的聲音場景，降低聆聽時對細節的追逐感，讓注意力比較容易慢慢沉下來。</p>
-                </article>
-            </div>
-        </div>
-    </section>
-</div>
+</section>
 
 <section id="experience" class="section-shell">
-    <div class="section-kicker">Try The Frequency</div>
-    <h2>體驗你的第一段頻率設計：戴上耳機的 ２分鐘</h2>
-    <p class="section-desc">選一款最接近你今晚狀態的版本，戴上耳機，給自己兩分鐘不被打擾的時間。你不需要分析它，只需要感受它是否適合你的夜晚。</p>
-    <div class="experience-intro">
-        <ul class="experience-points">
-            <li class="experience-point">先試聽 2 分鐘體驗版</li>
-            <li class="experience-point">覺得適合，再解鎖 30 分鐘完整版</li>
-            <li class="experience-point">四款正式版皆為 NT$299</li>
-        </ul>
+    <div class="section-kicker">產品介紹</div>
+    <h2>先了解它和一般助眠音有什麼不同，再選擇適合你的版本</h2>
+    <p class="section-desc">這不是一般的助眠背景音。這裡看到的設備、分析畫面和使用情境，能幫你更快理解它為什麼和一般音頻不一樣。</p>
+    <div class="visual-proof-grid">
+        <article class="visual-proof-card">
+            <img src="images/timewaver-device.jpeg" alt="TimeWaver 儀器視覺" class="visual-proof-image">
+        </article>
+        <article class="visual-proof-card">
+            <img src="images/timewaver-analysis.png" alt="頻率分析介面截圖" class="visual-proof-image">
+        </article>
+        <article class="visual-proof-card">
+            <img src="images/timewaver-eye-device.jpg" alt="TimeWaver 儀器與視覺意象" class="visual-proof-image">
+        </article>
     </div>
 
     <div class="product-grid">
@@ -447,25 +422,14 @@
             <div class="card-icon">🍃</div>
             <h3 class="card-title">【A劑】斷路器・沉靜頻率</h3>
             <span class="card-freq">Theta 波 (4-7Hz) · 對應 A 型大腦</span>
-            <p class="card-desc">適合腦袋停不下來、躺下後還在想明天安排的夜晚。整體更柔和、內收，適合作為夜晚轉場的第一段聲音。</p>
-            <div class="audio-container">
-                <span class="audio-hint">🎧 試聽 ２分鐘體驗版</span>
-                <div class="custom-audio-player" data-player>
-                    <button type="button" class="audio-play-btn" data-play-btn aria-label="播放 A 劑試聽">
-                        <span class="audio-play-icon" data-play-icon>▶</span>
-                    </button>
-                    <div class="audio-meta">
-                        <div class="audio-track-label">A Dose Preview</div>
-                        <div class="audio-progress-row">
-                            <input type="range" class="audio-progress" data-progress value="0" min="0" max="100" step="0.1" aria-label="A 劑試聽進度">
-                            <span class="audio-time" data-time>00:00 / 00:00</span>
-                        </div>
-                    </div>
-                    <audio preload="metadata" class="audio-player" data-audio data-src="https://stcgtmbhuhiosjxiooyw.supabase.co/storage/v1/object/public/Test%20audio/A1.wav"></audio>
-                </div>
-                <div class="audio-status" data-status></div>
+            <div class="product-visual">
+                <span class="product-visual-label">適合這種狀態</span>
+                <h4 class="product-visual-title">過載中的大腦，需要先被切離。</h4>
+                <p class="product-visual-copy">像是把還在閃爍的腦內頁面，一格一格暗下來。</p>
             </div>
-            <a href="https://p.ecpay.com.tw/8F74F17" class="card-cta" target="_blank" rel="noopener noreferrer">立即購買 NT$299</a>
+            <p class="mystery-note">本頁不提供試聽，保留這款版本的神秘感與完整體驗張力。</p>
+            <p class="card-desc">適合那種身體已經累了，腦袋卻還在跑行程、想工作、想明天的夜晚。這一款想幫你先收掉過載運轉，讓夜晚比較有機會慢下來。</p>
+            <button type="button" class="card-cta" data-purchase-trigger data-product-code="A" data-product-name="【A劑】斷路器・沉靜頻率" data-payment-url="https://p.ecpay.com.tw/8F74F17">立即購買 NT$299</button>
         </div>
 
         <!-- 產品 2 -->
@@ -473,25 +437,14 @@
             <div class="card-icon">🌙</div>
             <h3 class="card-title">【B劑】深海艙・放鬆頻率</h3>
             <span class="card-freq">Delta 波 (0.5-4Hz) · 對應 B 型大腦</span>
-            <p class="card-desc">適合身體已經躺平，整個人卻還沒真正卸下來的夜晚。氛圍更慢、更深、更低干擾，適合睡前背景播放。</p>
-            <div class="audio-container">
-                <span class="audio-hint">🎧 試聽 ２分鐘體驗版</span>
-                <div class="custom-audio-player" data-player>
-                    <button type="button" class="audio-play-btn" data-play-btn aria-label="播放 B 劑試聽">
-                        <span class="audio-play-icon" data-play-icon>▶</span>
-                    </button>
-                    <div class="audio-meta">
-                        <div class="audio-track-label">B Dose Preview</div>
-                        <div class="audio-progress-row">
-                            <input type="range" class="audio-progress" data-progress value="0" min="0" max="100" step="0.1" aria-label="B 劑試聽進度">
-                            <span class="audio-time" data-time>00:00 / 00:00</span>
-                        </div>
-                    </div>
-                    <audio preload="metadata" class="audio-player" data-audio data-src="https://stcgtmbhuhiosjxiooyw.supabase.co/storage/v1/object/public/Test%20audio/B1.wav"></audio>
-                </div>
-                <div class="audio-status" data-status></div>
+            <div class="product-visual">
+                <span class="product-visual-label">適合這種狀態</span>
+                <h4 class="product-visual-title">身體很累，但神經系統還在警戒。</h4>
+                <p class="product-visual-copy">像慢慢沉進深海保護艙，把外面的干擾關在外面。</p>
             </div>
-            <a href="https://p.ecpay.com.tw/377EA05" class="card-cta" target="_blank" rel="noopener noreferrer">立即購買 NT$299</a>
+            <p class="mystery-note">不先公開聲音，讓你保留對「深層靜下來」的完整期待。</p>
+            <p class="card-desc">適合身體很累，但神經系統還在備戰、半夜容易醒、醒來像沒睡到的夜晚。這一款想幫你把夜裡那種鬆不開的狀態再往下放一層。</p>
+            <button type="button" class="card-cta" data-purchase-trigger data-product-code="B" data-product-name="【B劑】深海艙・放鬆頻率" data-payment-url="https://p.ecpay.com.tw/377EA05">立即購買 NT$299</button>
         </div>
 
         <!-- 產品 3 -->
@@ -499,25 +452,14 @@
             <div class="card-icon">⚡️</div>
             <h3 class="card-title">【C劑】心流校準・專注頻率</h3>
             <span class="card-freq">Alpha 波 (8-12Hz) · 對應 C 型大腦</span>
-            <p class="card-desc">適合高壓前夜。不是要你立刻空白，而是先把緊繃感收回來，讓自己慢慢回到比較穩定的節奏。</p>
-            <div class="audio-container">
-                <span class="audio-hint">🎧 試聽 ２分鐘體驗版</span>
-                <div class="custom-audio-player" data-player>
-                    <button type="button" class="audio-play-btn" data-play-btn aria-label="播放 C 劑試聽">
-                        <span class="audio-play-icon" data-play-icon>▶</span>
-                    </button>
-                    <div class="audio-meta">
-                        <div class="audio-track-label">C Dose Preview</div>
-                        <div class="audio-progress-row">
-                            <input type="range" class="audio-progress" data-progress value="0" min="0" max="100" step="0.1" aria-label="C 劑試聽進度">
-                            <span class="audio-time" data-time>00:00 / 00:00</span>
-                        </div>
-                    </div>
-                    <audio preload="metadata" class="audio-player" data-audio data-src="https://stcgtmbhuhiosjxiooyw.supabase.co/storage/v1/object/public/Test%20audio/C1.wav"></audio>
-                </div>
-                <div class="audio-status" data-status></div>
+            <div class="product-visual">
+                <span class="product-visual-label">適合這種狀態</span>
+                <h4 class="product-visual-title">高壓前夜，不必靠失控來準備明天。</h4>
+                <p class="product-visual-copy">讓緊繃感先退一步，清醒感才有機會變得穩定。</p>
             </div>
-            <a href="https://p.ecpay.com.tw/EA5427D" class="card-cta" target="_blank" rel="noopener noreferrer">立即購買 NT$299</a>
+            <p class="mystery-note">先保留細節，讓你把注意力放在自己是不是正處在這種狀態。</p>
+            <p class="card-desc">適合明天有重要任務、高壓會議、腦袋停在備戰模式的夜晚。這一款想幫你把緊繃感收回來，讓清醒不再等於一直繃著。</p>
+            <button type="button" class="card-cta" data-purchase-trigger data-product-code="C" data-product-name="【C劑】心流校準・專注頻率" data-payment-url="https://p.ecpay.com.tw/EA5427D">立即購買 NT$299</button>
         </div>
 
         <!-- 產品 4 -->
@@ -525,63 +467,102 @@
             <div class="card-icon">💎</div>
             <h3 class="card-title">【D劑】豐盛錨點・安定頻率</h3>
             <span class="card-freq">Solfeggio / 852Hz · 對應 D 型大腦</span>
-            <p class="card-desc">適合容易被未來、金錢或安全感思緒拉走的夜晚。整體更包覆、更留白，陪你慢慢回到比較穩的內在節奏。</p>
-            <div class="audio-container">
-                <span class="audio-hint">🎧 試聽 ２分鐘體驗版</span>
-                <div class="custom-audio-player" data-player>
-                    <button type="button" class="audio-play-btn" data-play-btn aria-label="播放 D 劑試聽">
-                        <span class="audio-play-icon" data-play-icon>▶</span>
-                    </button>
-                    <div class="audio-meta">
-                        <div class="audio-track-label">D Dose Preview</div>
-                        <div class="audio-progress-row">
-                            <input type="range" class="audio-progress" data-progress value="0" min="0" max="100" step="0.1" aria-label="D 劑試聽進度">
-                            <span class="audio-time" data-time>00:00 / 00:00</span>
-                        </div>
-                    </div>
-                    <audio preload="metadata" class="audio-player" data-audio data-src="https://stcgtmbhuhiosjxiooyw.supabase.co/storage/v1/object/public/Test%20audio/D1.wav"></audio>
-                </div>
-                <div class="audio-status" data-status></div>
+            <div class="product-visual">
+                <span class="product-visual-label">適合這種狀態</span>
+                <h4 class="product-visual-title">把夜裡那股匱乏與不安，重新壓回寂靜裡。</h4>
+                <p class="product-visual-copy">不是否定情緒，而是先把拉扯感降下來，讓人回到內在穩定。</p>
             </div>
-            <a href="https://p.ecpay.com.tw/5FB3A34" class="card-cta" target="_blank" rel="noopener noreferrer">立即購買 NT$299</a>
+            <p class="mystery-note">保留聲音本身的神秘感，讓價值先透過畫面與狀態想像建立。</p>
+            <p class="card-desc">適合一到夜裡就容易被未來、金錢和安全感拉走的狀態。這一款想幫你先把那種內在拉扯壓低，讓人比較回得來當下。</p>
+            <button type="button" class="card-cta" data-purchase-trigger data-product-code="D" data-product-name="【D劑】豐盛錨點・安定頻率" data-payment-url="https://p.ecpay.com.tw/5FB3A34">立即購買 NT$299</button>
         </div>
     </div>
 </section>
 
 <section id="tech-intro" class="section-shell" style="padding-bottom: 4rem;">
-    <div class="section-kicker">How It Differs</div>
-    <h2>為什麼這份「頻率設計」與一般助眠內容不同？</h2>
-    <p class="section-desc">它不以傳統旋律鋪陳為核心，而是結合頻率設計、聲場結構與沉浸式聆聽體驗，提供不同於一般助眠音訊的感受。</p>
+    <div class="section-kicker">差別在哪裡</div>
+    <h2>為什麼很多人聽了很多助眠內容，夜裡還是停不下來？</h2>
+    <p class="section-desc">差別不一定在聲音多厲害，而在於它能不能幫你把大腦從工作模式拉回休息模式。很多助眠內容有陪伴感，但不一定真的幫你慢下來。</p>
     <div class="tech-container">
-        <img src="images/quantum-nebula.png" alt="頻率設計與聲場結構示意圖" class="tech-bg-image">
+        <img src="images/energy-body.jpg" alt="頻率與能量人體意象" class="tech-bg-image">
         
         <div style="margin-bottom: 3rem; padding: 2rem; background: rgba(0,0,0,0.03); border-left: 4px solid var(--primary); border-radius: 8px;">
-            <h4 style="color: var(--primary); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;">不同助眠內容，為什麼帶來的體感會不一樣？</h4>
-            <p style="margin-bottom: 1rem;">很多夜晚真正卡住的，不一定是身體不累，而是思緒太滿、情緒太亮、環境太吵。一般白噪音偏向環境聲遮蔽，這類頻率設計則更重視聲場層次與整體沉浸感。</p>
-            <p style="margin-bottom: 0;">核心不是把聲音做得更複雜，而是把睡前的聆聽體驗做得更穩定、更容易反覆使用。</p>
+            <h4 style="color: var(--primary); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;">它不是陪你熬夜的背景聲，而是幫你比較快慢下來的工具</h4>
+            <p style="margin-bottom: 1rem;">重點不是把聲音做得更華麗，而是讓你比較不會一直跟著旋律、訊息或內在對話跑。</p>
+            <p style="margin-bottom: 0;">它的目的很單純，就是幫你在晚上比較容易從緊繃回到安定。</p>
+        </div>
+        <div class="tech-evidence-grid">
+            <article class="tech-evidence-card">
+                <img src="images/timewaver-device.jpeg" alt="TimeWaver 儀器照片">
+            </article>
+            <article class="tech-evidence-card">
+                <img src="images/timewaver-analysis.png" alt="頻率分析軟體畫面">
+            </article>
+            <article class="tech-evidence-card">
+                <img src="images/timewaver-eye-device.jpg" alt="TimeWaver 儀器與專注視覺">
+            </article>
         </div>
 
-        <p style="margin-bottom: 2rem;">每一款設計的背後，都圍繞同一個目標: 做出更有結構、也更適合反覆使用的夜晚音訊版本。</p>
+        <p style="margin-bottom: 2rem;">如果你聽過很多助眠音，卻還是覺得睡前停不下來，差別通常就在這三件事：</p>
         <ul class="tech-list">
-            <li><strong>低頻鋪底設計：</strong>讓整段聲音的重心更穩定，不會只停留在表面的環境音效果。</li>
-            <li><strong>沉浸式聲場安排：</strong>透過較長的鋪陳與較少旋律線索，降低對細節的注意力拉扯。</li>
-            <li><strong>可重複使用的夜晚版本：</strong>讓不同狀態下的使用者，能依自己的感受選擇比較合適的一款來聽。</li>
+            <li><strong>不是靠旋律抓住注意力：</strong>整體更低干擾，減少腦袋一直追著細節跑的機會。</li>
+            <li><strong>不是每個人都聽同一款：</strong>你可以依照自己現在的狀態選 A / B / C / D。</li>
+            <li><strong>不是只聽一次就結束：</strong>它比較適合固定放進每天晚上的使用習慣裡。</li>
         </ul>
     </div>
 
     <div class="quantum-anchor-box">
-        <h4>不只是檔案本身，更是一段被設計過的夜晚使用體驗</h4>
-        <p>重點不只是音檔本身，而是你是否能把它真正用進自己的夜晚。固定的時間、固定的情境、固定的聆聽流程，通常比一次聽很多內容更重要。</p>
+        <h4>你買到的不是一個檔案，而是一個可以每天用的睡前方法</h4>
+        <p>真正重要的不是音檔本身，而是它能不能真的被你用進每天晚上。當你開始固定使用，晚上才比較有機會慢慢回到安定。</p>
     </div>
 
     <div class="guarantee-box">
-        <h3>使用建議與版本更換說明</h3>
-        <p>購買完整版後，你會收到一份簡單的睡前使用建議，幫助你更容易把它放進自己的夜晚流程。</p>
-        <p>如果持續使用後，覺得目前版本和自己的習慣不太合，也可以聯繫我們評估是否改聽另一款等值版本。</p>
-        <p>我們希望你買到的不只是檔案，而是一個真的用得上的睡前版本。</p>
-        <p style="font-size: 0.85rem; color: #95a5a6; margin-top: 1rem;">（附註：每份完整版皆附簡易睡前使用說明，協助你建立更固定的聆聽流程。）</p>
+        <h3>購買後，你會得到的不只是音檔</h3>
+        <p>你會收到對應版本的完整音頻，可以直接開始使用。</p>
+        <p>你會收到簡單的使用指引，幫助你知道什麼時間聽、怎麼聽，才比較容易變成日常習慣。</p>
+        <p>如果持續使用後，發現目前版本和你的夜晚狀態不合，也可以聯繫我們評估是否更換等值版本。</p>
     </div>
 </section>
+
+<div class="purchase-modal" hidden data-purchase-modal>
+    <div class="purchase-dialog" role="dialog" aria-modal="true" aria-labelledby="purchase-dialog-title">
+        <div class="purchase-dialog-header">
+            <div>
+                <h3 id="purchase-dialog-title" class="purchase-dialog-title">填寫基本資料後前往付款</h3>
+                <p class="purchase-dialog-subtitle">填完基本資料後會直接帶你前往付款頁面，方便後續確認訂單與寄送內容。</p>
+            </div>
+            <button type="button" class="purchase-close" data-purchase-close aria-label="關閉表單">×</button>
+        </div>
+        <div class="purchase-summary">
+            <span class="purchase-summary-label">NT$299</span>
+            <h4 data-summary-name></h4>
+            <p>送出後會立即跳轉到綠界付款頁，不會先扣款。</p>
+        </div>
+        <form class="purchase-form" data-purchase-form>
+            <input type="hidden" name="product_code">
+            <input type="hidden" name="product_name">
+            <input type="hidden" name="payment_url">
+            <div class="purchase-field">
+                <label for="purchase-name">姓名</label>
+                <input id="purchase-name" name="buyer_name" type="text" autocomplete="name" required>
+            </div>
+            <div class="purchase-field">
+                <label for="purchase-email">Email</label>
+                <input id="purchase-email" name="buyer_email" type="email" autocomplete="email" required>
+            </div>
+            <div class="purchase-field">
+                <label for="purchase-phone">手機</label>
+                <input id="purchase-phone" name="buyer_phone" type="tel" inputmode="tel" autocomplete="tel" required>
+            </div>
+            <p class="purchase-help">送出後會保留這筆訂單資料，方便後續確認付款與寄送資訊。</p>
+            <div class="purchase-status" data-purchase-status></div>
+            <div class="purchase-actions">
+                <button type="button" class="purchase-secondary" data-purchase-close>取消</button>
+                <button type="submit" class="purchase-primary" data-purchase-submit>儲存資料並前往付款</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <footer>
     <p>&copy; 2026 艾伯林量子頻率</p>
@@ -592,102 +573,132 @@
 </footer>
 
 <script>
-    const formatAudioTime = (seconds) => {
-        if (!Number.isFinite(seconds)) return '00:00';
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = Math.floor(seconds % 60);
-        return String(minutes).padStart(2, '0') + ':' + String(remainingSeconds).padStart(2, '0');
+    const PAYMENT_CAPTURE_WEBHOOK = 'https://erick303.app.n8n.cloud/webhook/timewaver-payment-intake';
+
+    const purchaseModal = document.querySelector('[data-purchase-modal]');
+    const purchaseForm = purchaseModal.querySelector('[data-purchase-form]');
+    const purchaseStatus = purchaseModal.querySelector('[data-purchase-status]');
+    const purchaseSubmit = purchaseModal.querySelector('[data-purchase-submit]');
+    const purchaseSummaryName = purchaseModal.querySelector('[data-summary-name]');
+    const purchaseFields = {
+        productCode: purchaseForm.elements.product_code,
+        productName: purchaseForm.elements.product_name,
+        paymentUrl: purchaseForm.elements.payment_url,
+        buyerName: purchaseForm.elements.buyer_name,
+        buyerEmail: purchaseForm.elements.buyer_email,
+        buyerPhone: purchaseForm.elements.buyer_phone
     };
 
-    const players = Array.from(document.querySelectorAll('[data-player]'));
+    const setPurchaseStatus = (message = '', tone = '') => {
+        purchaseStatus.textContent = message;
+        if (tone) {
+            purchaseStatus.dataset.tone = tone;
+        } else {
+            delete purchaseStatus.dataset.tone;
+        }
+    };
 
-    players.forEach((player) => {
-        const audio = player.querySelector('[data-audio]');
-        const playButton = player.querySelector('[data-play-btn]');
-        const playIcon = player.querySelector('[data-play-icon]');
-        const progress = player.querySelector('[data-progress]');
-        const timeLabel = player.querySelector('[data-time]');
-        const statusLabel = player.parentElement.querySelector('[data-status]');
-        let hasLoadedSource = false;
+    const openPurchaseModal = ({ productCode, productName, paymentUrl }) => {
+        purchaseFields.productCode.value = productCode;
+        purchaseFields.productName.value = productName;
+        purchaseFields.paymentUrl.value = paymentUrl;
+        purchaseSummaryName.textContent = productName;
+        setPurchaseStatus('');
+        purchaseModal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        window.requestAnimationFrame(() => purchaseFields.buyerName.focus());
+    };
 
-        const setStatus = (message = '') => {
-            if (statusLabel) statusLabel.textContent = message;
-        };
+    const closePurchaseModal = () => {
+        purchaseModal.hidden = true;
+        document.body.style.overflow = '';
+        setPurchaseStatus('');
+    };
 
-        const ensureSourceLoaded = () => {
-            if (hasLoadedSource) return;
-            const source = audio.dataset.src;
-            if (!source) return;
-            audio.src = source;
-            audio.load();
-            hasLoadedSource = true;
-        };
+    document.querySelectorAll('[data-purchase-trigger]').forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+            openPurchaseModal({
+                productCode: trigger.dataset.productCode,
+                productName: trigger.dataset.productName,
+                paymentUrl: trigger.dataset.paymentUrl
+            });
+        });
+    });
 
-        const updateTime = () => {
-            const duration = Number.isFinite(audio.duration) ? audio.duration : 0;
-            const currentTime = Number.isFinite(audio.currentTime) ? audio.currentTime : 0;
-            const progressPercent = duration ? (currentTime / duration) * 100 : 0;
-            progress.value = progressPercent;
-            progress.style.setProperty('--progress', progressPercent + '%');
-            timeLabel.textContent = formatAudioTime(currentTime) + ' / ' + formatAudioTime(duration);
-        };
+    purchaseModal.addEventListener('click', (event) => {
+        if (event.target === purchaseModal) closePurchaseModal();
+    });
 
-        const resetPlayerState = () => {
-            playButton.setAttribute('aria-label', playButton.getAttribute('aria-label').replace('暫停', '播放'));
-            playIcon.textContent = '▶';
-        };
+    purchaseModal.querySelectorAll('[data-purchase-close]').forEach((button) => {
+        button.addEventListener('click', closePurchaseModal);
+    });
 
-        playButton.addEventListener('click', async () => {
-            if (audio.paused) {
-                ensureSourceLoaded();
-                setStatus('音檔載入中...');
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !purchaseModal.hidden) {
+            closePurchaseModal();
+        }
+    });
 
-                players.forEach((otherPlayer) => {
-                    if (otherPlayer === player) return;
-                    const otherAudio = otherPlayer.querySelector('[data-audio]');
-                    const otherPlayIcon = otherPlayer.querySelector('[data-play-icon]');
-                    const otherStatus = otherPlayer.parentElement.querySelector('[data-status]');
-                    otherAudio.pause();
-                    otherPlayIcon.textContent = '▶';
-                    if (otherStatus) otherStatus.textContent = '';
-                });
+    const buildOrderNumber = (productCode) => {
+        const now = new Date();
+        const stamp = [
+            now.getFullYear(),
+            String(now.getMonth() + 1).padStart(2, '0'),
+            String(now.getDate()).padStart(2, '0'),
+            String(now.getHours()).padStart(2, '0'),
+            String(now.getMinutes()).padStart(2, '0'),
+            String(now.getSeconds()).padStart(2, '0')
+        ].join('');
+        const suffix = Math.random().toString(36).slice(2, 6).toUpperCase();
+        return productCode + '-' + stamp + '-' + suffix;
+    };
 
-                try {
-                    await audio.play();
-                    playButton.setAttribute('aria-label', playButton.getAttribute('aria-label').replace('播放', '暫停'));
-                    playIcon.textContent = '❚❚';
-                    setStatus('');
-                } catch (error) {
-                    console.error('Audio playback failed:', error);
-                    setStatus('目前無法播放，請確認 Google Drive 檔案已設為「知道連結的任何人可檢視」。');
-                }
-            } else {
-                audio.pause();
-                setStatus('');
+    purchaseForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const productCode = purchaseFields.productCode.value;
+        const productName = purchaseFields.productName.value;
+        const paymentUrl = purchaseFields.paymentUrl.value;
+        const buyerName = purchaseFields.buyerName.value.trim();
+        const buyerEmail = purchaseFields.buyerEmail.value.trim();
+        const buyerPhone = purchaseFields.buyerPhone.value.trim();
+        const orderNo = buildOrderNumber(productCode);
+
+        purchaseSubmit.disabled = true;
+        setPurchaseStatus('資料寫入中，完成後會跳轉到綠界付款頁...', '');
+
+        try {
+            const response = await fetch(PAYMENT_CAPTURE_WEBHOOK, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    order_no: orderNo,
+                    buyer_name: buyerName,
+                    buyer_email: buyerEmail,
+                    buyer_phone: buyerPhone,
+                    product_code: productCode,
+                    product_name: productName,
+                    trade_amt: '299',
+                    payment_url: paymentUrl,
+                    status: 'pending',
+                    source: 'landing_page'
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Webhook responded with status ' + response.status);
             }
-        });
 
-        progress.addEventListener('input', () => {
-            if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
-            audio.currentTime = (Number(progress.value) / 100) * audio.duration;
-            updateTime();
-        });
-
-        audio.addEventListener('loadedmetadata', updateTime);
-        audio.addEventListener('canplay', () => setStatus(''));
-        audio.addEventListener('timeupdate', updateTime);
-        audio.addEventListener('pause', resetPlayerState);
-        audio.addEventListener('error', () => {
-            setStatus('音檔載入失敗，通常是 Google Drive 權限或串流限制造成。');
-        });
-        audio.addEventListener('ended', () => {
-            audio.currentTime = 0;
-            updateTime();
-            resetPlayerState();
-            setStatus('');
-        });
-
-        updateTime();
+            setPurchaseStatus('資料已送出，正在前往付款頁...', 'success');
+            window.location.href = paymentUrl;
+        } catch (error) {
+            console.error('Payment intake failed:', error);
+            setPurchaseStatus('資料尚未成功寫入，為避免遺漏名單，請稍後再試一次。', 'error');
+        } finally {
+            purchaseSubmit.disabled = false;
+        }
     });
 </script>
 </body>
