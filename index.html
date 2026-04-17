@@ -135,6 +135,13 @@
             .value-anchor-section { padding: 0 1.15rem 3.4rem; }
             .value-anchor-shell { padding: 1.35rem 1.15rem; }
             .visual-proof-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; margin-bottom: 0.95rem; }
+            .decision-helper { padding: 1.1rem 0.95rem; margin-bottom: 1rem; }
+            .decision-helper h3 { font-size: 1.18rem; margin-bottom: 0.4rem; }
+            .decision-helper p { font-size: 0.9rem; line-height: 1.7; }
+            .decision-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; margin-top: 0.9rem; }
+            .decision-card { padding: 0.9rem 0.82rem; }
+            .decision-card p { margin-bottom: 0.55rem; font-size: 0.86rem; line-height: 1.6; }
+            .decision-link { width: 100%; box-sizing: border-box; padding: 0.52rem 0.72rem; }
             .product-grid { grid-template-columns: repeat(2, 1fr); column-gap: 1rem; row-gap: 1.2rem; align-items: stretch; }
             .product-card { height: auto; padding: 1.3rem 1rem 0.95rem; }
             .card-desc { margin-bottom: 1rem; }
@@ -163,6 +170,7 @@
             .research-note { margin-top: 1.2rem; }
             .quantum-anchor-box { margin-top: 1.2rem; padding: 1.15rem 1rem; }
             .guarantee-box { margin-top: 1.35rem; padding: 1.45rem 1.15rem; }
+            .faq-item { padding: 1rem 0.95rem; }
             footer { padding: 2rem 1.15rem; margin-top: 1.8rem; }
         }
         @media (max-width: 768px) { .product-grid { grid-template-columns: 1fr; } }
@@ -175,6 +183,15 @@
         .visual-proof-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; margin-bottom: 2.5rem; }
         .visual-proof-card { overflow: hidden; border-radius: 24px; background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,247,250,0.94)); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 18px 36px rgba(10,15,29,0.06); }
         .visual-proof-image { width: 100%; aspect-ratio: 1.2 / 1; object-fit: cover; display: block; }
+        .decision-helper { margin: 0 0 2.2rem; padding: 1.5rem; border-radius: 24px; background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,247,250,0.94)); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 18px 36px rgba(10,15,29,0.05); }
+        .decision-helper h3 { margin: 0 0 0.55rem; color: var(--primary); font-size: 1.3rem; line-height: 1.45; }
+        .decision-helper p { margin: 0; color: var(--text-sub); font-size: 0.95rem; line-height: 1.8; }
+        .decision-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.95rem; margin-top: 1.2rem; }
+        .decision-card { padding: 1rem; border-radius: 18px; background: rgba(10,15,29,0.03); border: 1px solid rgba(10,15,29,0.08); }
+        .decision-card strong { display: block; margin-bottom: 0.4rem; color: var(--primary); font-size: 1rem; }
+        .decision-card p { margin: 0 0 0.8rem; font-size: 0.9rem; line-height: 1.7; color: var(--text-sub); }
+        .decision-link { display: inline-flex; align-items: center; justify-content: center; padding: 0.55rem 0.8rem; border-radius: 999px; border: 1px solid rgba(10,15,29,0.12); color: var(--primary); font-size: 0.8rem; font-weight: 600; text-decoration: none; background: rgba(255,255,255,0.78); }
+        .decision-link:hover { background: rgba(10,15,29,0.9); color: #fff; }
         .product-visual { position: relative; overflow: hidden; min-height: 180px; border-radius: 18px; margin-bottom: 1.2rem; padding: 1.25rem; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(145deg, rgba(10,15,29,0.94), rgba(28,50,80,0.92)); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 16px 32px rgba(10,15,29,0.12); }
         .product-visual::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at top left, rgba(212,175,55,0.22), transparent 36%), radial-gradient(circle at bottom right, rgba(59,130,246,0.22), transparent 42%); opacity: 0.92; }
         .product-visual > * { position: relative; z-index: 1; }
@@ -200,6 +217,10 @@
         .purchase-summary-label { display: inline-flex; padding: 0.24rem 0.6rem; border-radius: 999px; background: rgba(10,15,29,0.08); color: var(--primary); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; }
         .purchase-summary h4 { margin: 0.75rem 0 0.35rem; font-size: 1.15rem; color: var(--primary); }
         .purchase-summary p { margin: 0; color: var(--text-sub); font-size: 0.92rem; }
+        .purchase-reassurance { margin-bottom: 1.15rem; padding: 1rem 1.05rem; border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,248,251,0.96)); border: 1px solid rgba(10,15,29,0.08); }
+        .purchase-reassurance h4 { margin: 0 0 0.6rem; color: var(--primary); font-size: 1rem; }
+        .purchase-reassurance ul { margin: 0; padding-left: 1.1rem; color: var(--text-sub); font-size: 0.88rem; line-height: 1.8; }
+        .purchase-reassurance li + li { margin-top: 0.28rem; }
         .purchase-form { display: grid; gap: 1rem; }
         .purchase-field { display: grid; gap: 0.45rem; }
         .purchase-field label { font-size: 0.92rem; font-weight: 600; color: var(--primary); }
@@ -253,6 +274,11 @@
         .guarantee-box { max-width: 800px; margin: 5rem auto 0; background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(248,249,250,0.95)); border: 1px solid rgba(10,15,29,0.08); padding: 4rem 3rem; border-radius: 24px; text-align: center; box-shadow: 0 16px 34px rgba(10,15,29,0.04); }
         .guarantee-box h3 { color: var(--primary); font-size: 1.5rem; margin-top: 0; font-weight: 500; letter-spacing: 1px; }
         .guarantee-box p { font-weight: 300; color: var(--text-sub); }
+        .faq-section { max-width: 900px; margin: 0 auto; padding-top: 1rem; }
+        .faq-grid { display: grid; gap: 0.9rem; }
+        .faq-item { padding: 1.2rem 1.15rem; border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,248,251,0.96)); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 12px 26px rgba(10,15,29,0.04); }
+        .faq-item h4 { margin: 0 0 0.55rem; color: var(--primary); font-size: 1.16rem; line-height: 1.55; }
+        .faq-item p { margin: 0; color: var(--text-sub); font-size: 0.94rem; line-height: 1.8; }
         
         /* Footer & 法律聲明 */
         footer { background: linear-gradient(180deg, rgba(238,241,245,0.7), rgba(238,241,245,0.95)); color: var(--text-sub); text-align: center; padding: 4rem 2rem; font-size: 0.85rem; margin-top: 4rem; border-top: 1px solid var(--border-color); }
@@ -337,6 +363,12 @@
             .purchase-modal { padding: 0.85rem; }
             .purchase-dialog { padding: 1rem; border-radius: 18px; max-height: calc(100vh - 1.7rem); }
             .purchase-dialog-title { font-size: 1.18rem; }
+            .purchase-dialog-subtitle { margin-top: 0.3rem; font-size: 0.9rem; line-height: 1.65; }
+            .purchase-summary { padding: 0.88rem 0.92rem; margin-bottom: 0.8rem; }
+            .purchase-reassurance { padding: 0.85rem 0.9rem; margin-bottom: 0.8rem; }
+            .purchase-reassurance h4 { font-size: 0.95rem; margin-bottom: 0.4rem; }
+            .purchase-reassurance ul { font-size: 0.84rem; line-height: 1.65; }
+            .purchase-form { gap: 0.82rem; }
             .purchase-actions { flex-direction: column-reverse; }
             .purchase-secondary, .purchase-primary { width: 100%; }
 
@@ -366,6 +398,11 @@
             .guarantee-box { margin-top: 1rem; padding: 1rem 0.82rem; border-radius: 18px; text-align: left; }
             .guarantee-box h3 { font-size: 1.15rem; line-height: 1.4; text-align: center; margin-bottom: 0.7rem; }
             .guarantee-box p { margin: 0 0 0.45rem; }
+            .faq-section { padding-top: 0.35rem; }
+            .faq-grid { gap: 0.55rem; }
+            .faq-item { padding: 0.92rem 0.82rem; border-radius: 16px; }
+            .faq-item h4 { font-size: 1.05rem; line-height: 1.45; margin-bottom: 0.38rem; }
+            .faq-item p { font-size: 0.9rem; line-height: 1.68; }
 
             footer { padding: 1.35rem 0.85rem; margin-top: 1.05rem; font-size: 0.8rem; }
             .legal-disclaimer { padding-top: 0.65rem; text-align: left; }
@@ -384,10 +421,24 @@
             .card-desc { margin-bottom: 0.5rem; font-size: 0.9rem; line-height: 1.58; }
             .card-cta { min-height: 40px; padding: 0.68rem 0.6rem; font-size: 0.78rem; }
             .visual-proof-grid { gap: 0.45rem; margin-bottom: 0.45rem; }
+            .decision-grid { grid-template-columns: 1fr; }
+            .decision-helper { padding: 0.88rem 0.72rem; margin-bottom: 0.72rem; border-radius: 18px; }
+            .decision-helper h3 { font-size: 1.04rem; line-height: 1.42; }
+            .decision-helper p { font-size: 0.88rem; line-height: 1.62; }
+            .decision-card { padding: 0.78rem 0.72rem; border-radius: 16px; }
+            .decision-card strong { font-size: 0.95rem; }
+            .decision-card p { font-size: 0.86rem; line-height: 1.56; margin-bottom: 0.48rem; }
+            .decision-link { font-size: 0.78rem; padding: 0.48rem 0.66rem; }
             .tech-container { padding: 0.8rem 0.7rem; }
             .brainwave-card,
             .tech-pillar,
-            .research-note { padding: 0.82rem 0.7rem; }
+            .research-note,
+            .faq-item { padding: 0.82rem 0.7rem; }
+            .faq-item h4 { font-size: 0.98rem; }
+            .faq-item p { font-size: 0.88rem; line-height: 1.62; }
+            .purchase-summary { padding: 0.8rem 0.78rem; margin-bottom: 0.68rem; }
+            .purchase-reassurance { padding: 0.78rem 0.75rem; margin-bottom: 0.7rem; border-radius: 16px; }
+            .purchase-reassurance ul { font-size: 0.82rem; line-height: 1.58; padding-left: 1rem; }
         }
     </style>
 </head>
@@ -464,6 +515,33 @@
         <article class="visual-proof-card">
             <img src="images/gemini-timewaver-mind.png" alt="意識與頻率引導視覺" class="visual-proof-image">
         </article>
+    </div>
+
+    <div class="decision-helper">
+        <h3>如果你不確定選哪一款，先用最近最常發生的夜晚狀態判斷就好</h3>
+        <p>不用一次看完全部技術細節，也不用怕自己選錯。先找到最像你現在狀態的那一種夜晚，通常就已經很接近適合的版本。</p>
+        <div class="decision-grid">
+            <article class="decision-card">
+                <strong>A 劑</strong>
+                <p>明明很累，腦袋還在跑工作、行程和明天。</p>
+                <a href="#experience" class="decision-link">看 A 劑</a>
+            </article>
+            <article class="decision-card">
+                <strong>B 劑</strong>
+                <p>身體很累，但半夜容易醒，醒來像沒有真正睡到。</p>
+                <a href="#experience" class="decision-link">看 B 劑</a>
+            </article>
+            <article class="decision-card">
+                <strong>C 劑</strong>
+                <p>明天有重要任務，整個人停在備戰模式，鬆不下來。</p>
+                <a href="#experience" class="decision-link">看 C 劑</a>
+            </article>
+            <article class="decision-card">
+                <strong>D 劑</strong>
+                <p>夜裡容易被未來、金錢和安全感的不安拉走。</p>
+                <a href="#experience" class="decision-link">看 D 劑</a>
+            </article>
+        </div>
     </div>
 
     <div class="product-grid">
@@ -605,6 +683,33 @@
         <h3>購買後，你會得到的不只是音檔</h3>
         <p>你會收到對應版本的完整音頻，可以直接開始使用。</p>
         <p>你會收到簡單的使用指引，幫助你知道什麼時間聽、怎麼聽，才比較容易變成日常習慣。</p>
+        <p>付款完成後，系統會依你填寫的資料對應訂單與寄送資訊，讓你知道自己買的是哪一款、接下來怎麼開始使用。</p>
+    </div>
+</section>
+
+<section class="faq-section section-shell" id="faq">
+    <div class="section-kicker">常見問題</div>
+    <div class="faq-grid">
+        <article class="faq-item">
+            <h4>我不確定自己該選 A、B、C 還是 D，怎麼辦？</h4>
+            <p>先不用想得太複雜，直接選你最近最常出現的那種夜晚狀態就好。腦袋停不下來選 A、身體累但睡不沉選 B、重要事情前夜太緊繃選 C、夜裡容易被未來與安全感拉走選 D。</p>
+        </article>
+        <article class="faq-item">
+            <h4>付款後會發生什麼？</h4>
+            <p>你送出資料後會先前往綠界付款頁。完成付款後，系統會依你填寫的資料做訂單對應與後續寄送，方便你收到正確版本與使用內容。</p>
+        </article>
+        <article class="faq-item">
+            <h4>這是一段只聽一次的音頻，還是可以重複使用？</h4>
+            <p>它不是一次性的內容，而是一個可以重複使用的睡前方法。真正重要的通常不是第一次感受，而是你能不能在固定的夜晚節奏裡持續用它。</p>
+        </article>
+        <article class="faq-item">
+            <h4>如果買了之後發現版本不太適合，怎麼辦？</h4>
+            <p>多數人先用目前最明顯的狀態去選就已經足夠。如果後續發現真正困擾不是這一型，也可以再依你實際使用後的狀態重新判斷下一步。</p>
+        </article>
+        <article class="faq-item">
+            <h4>它是醫療產品嗎？</h4>
+            <p>不是。它屬於一般身心放鬆與專注聆聽體驗的輔助內容，不取代醫療診斷或治療。如果你本身已有明確身心疾患，仍建議優先尋求專業醫療協助。</p>
+        </article>
     </div>
 </section>
 
@@ -621,6 +726,15 @@
             <span class="purchase-summary-label">NT$299</span>
             <h4 data-summary-name></h4>
             <p>送出後會立即跳轉到綠界付款頁，不會先扣款。</p>
+        </div>
+        <div class="purchase-reassurance">
+            <h4>送出前你可以先知道</h4>
+            <ul>
+                <li>這一步是先保留訂單資料，送出後才會進入綠界付款頁。</li>
+                <li>你填寫的資料只用於訂單確認、付款對應與後續寄送內容。</li>
+                <li>付款完成後，會依你填寫的資料對應正確版本與使用資訊。</li>
+                <li>如果你仍不確定版本，先選最接近目前狀態的一款即可。</li>
+            </ul>
         </div>
         <form class="purchase-form" data-purchase-form>
             <input type="hidden" name="product_code">
