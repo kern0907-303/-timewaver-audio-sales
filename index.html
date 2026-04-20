@@ -703,8 +703,8 @@
             <p>它不是一次性的內容，而是一個可以重複使用的睡前方法。真正重要的通常不是第一次感受，而是你能不能在固定的夜晚節奏裡持續用它。</p>
         </article>
         <article class="faq-item">
-            <h4>如果買了之後發現版本不太適合，怎麼辦？</h4>
-            <p>多數人先用目前最明顯的狀態去選就已經足夠。如果後續發現真正困擾不是這一型，也可以再依你實際使用後的狀態重新判斷下一步。</p>
+            <h4>如果我同時有好幾種狀態，該怎麼選？</h4>
+            <p>我能理解每個人的狀態通常都是綜合性的，有些時候也不容易分得那麼清楚。建議你先以前面測驗推薦的結果作為第一步，先選擇那一款適合的頻率開始使用，後續再依實際狀態慢慢調整就可以。</p>
         </article>
         <article class="faq-item">
             <h4>它是醫療產品嗎？</h4>
@@ -851,6 +851,46 @@
         return productCode + '-' + stamp + '-' + suffix;
     };
 
+    const redirectToPayment = (paymentUrl) => {
+        window.location.assign(paymentUrl);
+    };
+
+    const sendPaymentIntake = async (payload) => {
+        if (navigator.sendBeacon) {
+            const beaconSent = navigator.sendBeacon(
+                PAYMENT_CAPTURE_WEBHOOK,
+                new Blob([JSON.stringify(payload)], { type: 'application/json' })
+            );
+
+            if (beaconSent) {
+                return true;
+            }
+        }
+
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(() => controller.abort(), 2500);
+
+        try {
+            const response = await fetch(PAYMENT_CAPTURE_WEBHOOK, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload),
+                keepalive: true,
+                signal: controller.signal
+            });
+
+            if (!response.ok) {
+                throw new Error('Webhook responded with status ' + response.status);
+            }
+
+            return true;
+        } finally {
+            window.clearTimeout(timeoutId);
+        }
+    };
+
     purchaseForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -861,44 +901,35 @@
         const buyerEmail = purchaseFields.buyerEmail.value.trim();
         const buyerPhone = purchaseFields.buyerPhone.value.trim();
         const orderNo = buildOrderNumber(productCode);
+        const payload = {
+            order_no: orderNo,
+            buyer_name: buyerName,
+            buyer_email: buyerEmail,
+            buyer_phone: buyerPhone,
+            product_code: productCode,
+            product_name: productName,
+            trade_amt: '299',
+            payment_url: paymentUrl,
+            status: 'pending',
+            source: 'landing_page'
+        };
 
         purchaseSubmit.disabled = true;
-        setPurchaseStatus('資料寫入中，完成後會跳轉到綠界付款頁...', '');
+        setPurchaseStatus('資料處理中，正在前往綠界付款頁...', '');
+
+        if (typeof fbq === 'function') {
+            fbq('track', 'Lead');
+        }
 
         try {
-            const response = await fetch(PAYMENT_CAPTURE_WEBHOOK, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    order_no: orderNo,
-                    buyer_name: buyerName,
-                    buyer_email: buyerEmail,
-                    buyer_phone: buyerPhone,
-                    product_code: productCode,
-                    product_name: productName,
-                    trade_amt: '299',
-                    payment_url: paymentUrl,
-                    status: 'pending',
-                    source: 'landing_page'
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('Webhook responded with status ' + response.status);
-            }
-
-            setPurchaseStatus('資料已送出，正在前往付款頁...', 'success');
-            if (typeof fbq === 'function') {
-                fbq('track', 'Lead');
-            }
-            window.location.href = paymentUrl;
+            await sendPaymentIntake(payload);
         } catch (error) {
             console.error('Payment intake failed:', error);
-            setPurchaseStatus('資料尚未成功寫入，為避免遺漏名單，請稍後再試一次。', 'error');
         } finally {
-            purchaseSubmit.disabled = false;
+            redirectToPayment(paymentUrl);
+            window.setTimeout(() => {
+                purchaseSubmit.disabled = false;
+            }, 1200);
         }
     });
 </script>
