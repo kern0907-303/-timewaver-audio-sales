@@ -1,0 +1,183 @@
+{
+  "name": "TimeWaver Payment Intake",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "timewaver-payment-intake",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "f0e98a3a-cd83-4752-93ea-9613ed213001",
+      "name": "Webhook (Payment Intake)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        220,
+        260
+      ],
+      "webhookId": "timewaver-payment-intake"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "created_at",
+              "value": "={{ $now.setZone('Asia/Taipei').toFormat('yyyy-LL-dd HH:mm:ss') }}"
+            },
+            {
+              "name": "order_no",
+              "value": "={{ $json.body.order_no || $json.order_no || '' }}"
+            },
+            {
+              "name": "buyer_name",
+              "value": "={{ $json.body.buyer_name || $json.buyer_name || '' }}"
+            },
+            {
+              "name": "buyer_email",
+              "value": "={{ $json.body.buyer_email || $json.buyer_email || '' }}"
+            },
+            {
+              "name": "buyer_phone",
+              "value": "={{ $json.body.buyer_phone || $json.buyer_phone || '' }}"
+            },
+            {
+              "name": "product_code",
+              "value": "={{ (($json.body.product_code || $json.product_code || '').toString()).toUpperCase() }}"
+            },
+            {
+              "name": "product_name",
+              "value": "={{ $json.body.product_name || $json.product_name || '' }}"
+            },
+            {
+              "name": "trade_amt",
+              "value": "={{ $json.body.trade_amt || $json.trade_amt || '299' }}"
+            },
+            {
+              "name": "payment_url",
+              "value": "={{ $json.body.payment_url || $json.payment_url || '' }}"
+            },
+            {
+              "name": "status",
+              "value": "={{ $json.body.status || $json.status || 'pending' }}"
+            },
+            {
+              "name": "source",
+              "value": "={{ $json.body.source || $json.source || 'landing_page' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fe8bdf97-a01b-40b5-9c83-a45b91e20262",
+      "name": "Normalize Intake",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        460,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "工作表2",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "created_at": "={{ $json.created_at }}",
+            "order_no": "={{ $json.order_no }}",
+            "buyer_name": "={{ $json.buyer_name }}",
+            "buyer_email": "={{ $json.buyer_email }}",
+            "buyer_phone": "={{ $json.buyer_phone }}",
+            "product_code": "={{ $json.product_code }}",
+            "product_name": "={{ $json.product_name }}",
+            "trade_amt": "={{ $json.trade_amt }}",
+            "payment_url": "={{ $json.payment_url }}",
+            "status": "={{ $json.status }}",
+            "source": "={{ $json.source }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "83f0f434-8f6d-4bda-94eb-186eafcb6c7f",
+      "name": "Google Sheets (Append 工作表2)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        740,
+        260
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "naOPDNB4CMwotNnb",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"ok\":true,\"order_no\":\"{{$json.order_no}}\"}",
+        "options": {}
+      },
+      "id": "14d0fef8-e90f-4aab-a75b-6097d9112dae",
+      "name": "Respond OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1020,
+        260
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook (Payment Intake)": {
+      "main": [
+        [
+          {
+            "node": "Normalize Intake",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Intake": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Append 工作表2)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (Append 工作表2)": {
+      "main": [
+        [
+          {
+            "node": "Respond OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {}
+}

@@ -1,0 +1,292 @@
+{
+  "name": "ECPay Payment Callback Semi Auto",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ecpay-payment-callback",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "e4dfce85-bc4b-4cac-aac5-b70d4cf87831",
+      "name": "Webhook (ECPay Callback)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        220,
+        300
+      ],
+      "webhookId": "ecpay-payment-callback"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ ($json.body.succ || '').toString() }}",
+              "operation": "equal",
+              "value2": "1"
+            }
+          ]
+        }
+      },
+      "id": "fd8e04bb-77a7-437d-9194-c4556d0f8d67",
+      "name": "IF Payment Success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "created_at",
+              "value": "={{ $now.setZone('Asia/Taipei').toFormat('yyyy-LL-dd HH:mm:ss') }}"
+            },
+            {
+              "name": "merchant_trade_no",
+              "value": "={{ $json.body.od_sob || '' }}"
+            },
+            {
+              "name": "trade_no",
+              "value": "={{ $json.body.allsn || $json.body.gwsr || '' }}"
+            },
+            {
+              "name": "payment_status",
+              "value": "paid"
+            },
+            {
+              "name": "rtn_code",
+              "value": "={{ $json.body.succ || '' }}"
+            },
+            {
+              "name": "rtn_msg",
+              "value": "={{ $json.body.response_msg || '' }}"
+            },
+            {
+              "name": "trade_amt",
+              "value": "={{ $json.body.amount || '' }}"
+            },
+            {
+              "name": "payment_type",
+              "value": "credit_card"
+            },
+            {
+              "name": "simulate_paid",
+              "value": "0"
+            },
+            {
+              "name": "product_code",
+              "value": "={{ ($json.body.od_hoho || '').includes('A劑') ? 'A' : ($json.body.od_hoho || '').includes('B劑') ? 'B' : ($json.body.od_hoho || '').includes('C劑') ? 'C' : ($json.body.od_hoho || '').includes('D劑') ? 'D' : '' }}"
+            },
+            {
+              "name": "product_name",
+              "value": "={{ ($json.body.od_hoho || '').includes('A劑') ? '【A劑】斷路器・Theta波 4-7Hz' : ($json.body.od_hoho || '').includes('B劑') ? '【B劑】深海艙・Delta波 0.5-4Hz' : ($json.body.od_hoho || '').includes('C劑') ? '【C劑】心流校準・Alpha波 8-12Hz' : ($json.body.od_hoho || '').includes('D劑') ? '【D劑】豐盛錨點・Solfeggio 852Hz' : '未知商品' }}"
+            },
+            {
+              "name": "buyer_phone",
+              "value": "={{ (($json.body.od_hoho || '').match(/phonenumber:\\s*([^|]+)/) || [])[1] || '' }}"
+            },
+            {
+              "name": "callback_payload",
+              "value": "={{ JSON.stringify($json.body || {}) }}"
+            },
+            {
+              "name": "callback_note",
+              "value": "付款已成功，但此 callback 不含 email/name，需到工作表2人工核對後再啟動 21 天。"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "96ca30fe-65da-46c2-86cc-3f4ff512fd1d",
+      "name": "Set Payment Record",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        720,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "payment_records",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "created_at": "={{ $json.created_at }}",
+            "merchant_trade_no": "={{ $json.merchant_trade_no }}",
+            "trade_no": "={{ $json.trade_no }}",
+            "payment_status": "={{ $json.payment_status }}",
+            "rtn_code": "={{ $json.rtn_code }}",
+            "rtn_msg": "={{ $json.rtn_msg }}",
+            "trade_amt": "={{ $json.trade_amt }}",
+            "payment_type": "={{ $json.payment_type }}",
+            "simulate_paid": "={{ $json.simulate_paid }}",
+            "product_code": "={{ $json.product_code }}",
+            "product_name": "={{ $json.product_name }}",
+            "buyer_phone": "={{ $json.buyer_phone }}",
+            "callback_note": "={{ $json.callback_note }}",
+            "callback_payload": "={{ $json.callback_payload }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "e20d8500-710d-4137-9931-43b986d97405",
+      "name": "Google Sheets (Append Payment)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1000,
+        220
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "naOPDNB4CMwotNnb",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chat_id",
+              "value": "YOUR_CHAT_ID"
+            },
+            {
+              "name": "text",
+              "value": "=🟢 綠界付款成功\\n\\n商品：{{ $json.product_name || '未知商品' }}\\n商品代碼：{{ $json.product_code || '' }}\\n金額：NT${{ $json.trade_amt || '' }}\\n訂單編號：{{ $json.merchant_trade_no || '' }}\\n交易編號：{{ $json.trade_no || '' }}\\n電話：{{ $json.buyer_phone || '' }}\\n訊息：{{ $json.rtn_msg || '' }}\\n備註：{{ $json.callback_note || '' }}\\n時間：{{ $json.created_at || '' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f0c142cb-7c7d-4ff5-a96f-ff2fae245b87",
+      "name": "Telegram Notify",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1240,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "1|OK",
+        "options": {}
+      },
+      "id": "74ef9871-a8d0-4239-91ce-fb65fd7ea82f",
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1480,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "1|IGNORED",
+        "options": {}
+      },
+      "id": "29afc6dd-4f96-4db8-a1eb-bca04e542c7f",
+      "name": "Respond Ignored",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        420
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook (ECPay Callback)": {
+      "main": [
+        [
+          {
+            "node": "IF Payment Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Payment Success": {
+      "main": [
+        [
+          {
+            "node": "Set Payment Record",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Ignored",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Payment Record": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Append Payment)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (Append Payment)": {
+      "main": [
+        [
+          {
+            "node": "Telegram Notify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Notify": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {}
+}
