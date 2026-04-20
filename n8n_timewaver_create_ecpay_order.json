@@ -1,0 +1,227 @@
+{
+  "name": "TimeWaver Create ECPay Order",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "timewaver-create-ecpay-order",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "feaed9c4-7317-4fef-9d8b-a6a0f18b7501",
+      "name": "Webhook (Create ECPay Order)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        220,
+        280
+      ],
+      "webhookId": "timewaver-create-ecpay-order"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "created_at",
+              "value": "={{ $now.setZone('Asia/Taipei').toFormat('yyyy-LL-dd HH:mm:ss') }}"
+            },
+            {
+              "name": "order_no",
+              "value": "={{ $json.body.order_no || $json.order_no || '' }}"
+            },
+            {
+              "name": "buyer_name",
+              "value": "={{ $json.body.buyer_name || $json.buyer_name || '' }}"
+            },
+            {
+              "name": "buyer_email",
+              "value": "={{ $json.body.buyer_email || $json.buyer_email || '' }}"
+            },
+            {
+              "name": "buyer_phone",
+              "value": "={{ $json.body.buyer_phone || $json.buyer_phone || '' }}"
+            },
+            {
+              "name": "product_code",
+              "value": "={{ (($json.body.product_code || $json.product_code || '').toString()).toUpperCase() }}"
+            },
+            {
+              "name": "product_name",
+              "value": "={{ $json.body.product_name || $json.product_name || '' }}"
+            },
+            {
+              "name": "trade_amt",
+              "value": "={{ $json.body.trade_amt || $json.trade_amt || '299' }}"
+            },
+            {
+              "name": "status",
+              "value": "={{ $json.body.status || $json.status || 'pending' }}"
+            },
+            {
+              "name": "source",
+              "value": "={{ $json.body.source || $json.source || 'landing_page' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0821ea39-5c57-4d10-9107-5ad925cb59d9",
+      "name": "Normalize Intake",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        500,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "工作表2",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "created_at": "={{ $json.created_at }}",
+            "order_no": "={{ $json.order_no }}",
+            "buyer_name": "={{ $json.buyer_name }}",
+            "buyer_email": "={{ $json.buyer_email }}",
+            "buyer_phone": "={{ $json.buyer_phone }}",
+            "product_code": "={{ $json.product_code }}",
+            "product_name": "={{ $json.product_name }}",
+            "trade_amt": "={{ $json.trade_amt }}",
+            "status": "={{ $json.status }}",
+            "source": "={{ $json.source }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "c99cedce-3fba-46f3-a468-59d76f0b4ec3",
+      "name": "Google Sheets (Append Intake)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        780,
+        280
+      ],
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "jsCode": "const crypto = require('crypto');\n\nconst item = items[0].json;\nconst config = {\n  merchantId: 'REPLACE_WITH_YOUR_MERCHANT_ID',\n  hashKey: 'REPLACE_WITH_YOUR_HASH_KEY',\n  hashIV: 'REPLACE_WITH_YOUR_HASH_IV',\n  checkoutUrl: 'https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5',\n  returnUrl: 'https://erick303.app.n8n.cloud/webhook/ecpay-payment-callback',\n  choosePayment: 'Credit',\n  needExtraPaidInfo: 'Y',\n  tradeDesc: 'TimeWaver Audio'\n};\n\nconst requiredKeys = ['merchantId', 'hashKey', 'hashIV', 'returnUrl'];\nconst missing = requiredKeys.filter((key) => config[key].startsWith('REPLACE_'));\nif (missing.length) {\n  throw new Error(`Please replace config values first: ${missing.join(', ')}`);\n}\n\nconst tradeDate = new Date().toLocaleString('sv-SE', {\n  timeZone: 'Asia/Taipei',\n  hour12: false\n}).replace(' ', ' ').replace(/-/g, '/');\n\nconst params = {\n  MerchantID: config.merchantId,\n  MerchantTradeNo: item.order_no,\n  MerchantTradeDate: tradeDate,\n  PaymentType: 'aio',\n  TotalAmount: String(item.trade_amt || '299'),\n  TradeDesc: config.tradeDesc,\n  ItemName: item.product_name,\n  ReturnURL: config.returnUrl,\n  ChoosePayment: config.choosePayment,\n  NeedExtraPaidInfo: config.needExtraPaidInfo,\n  CustomField1: item.buyer_name,\n  CustomField2: item.buyer_email,\n  CustomField3: item.buyer_phone,\n  CustomField4: item.product_code,\n  EncryptType: '1'\n};\n\nconst sortedQuery = Object.keys(params)\n  .sort((a, b) => a.localeCompare(b))\n  .map((key) => `${key}=${params[key] ?? ''}`)\n  .join('&');\n\nconst raw = `HashKey=${config.hashKey}&${sortedQuery}&HashIV=${config.hashIV}`;\nconst encoded = encodeURIComponent(raw)\n  .replace(/%20/g, '+')\n  .replace(/!/g, '%21')\n  .replace(/\\(/g, '%28')\n  .replace(/\\)/g, '%29')\n  .replace(/\\*/g, '%2a')\n  .replace(/~/g, '%7e')\n  .toLowerCase();\n\nparams.CheckMacValue = crypto\n  .createHash('sha256')\n  .update(encoded)\n  .digest('hex')\n  .toUpperCase();\n\nconst escapeHtml = (value) => String(value ?? '')\n  .replace(/&/g, '&amp;')\n  .replace(/</g, '&lt;')\n  .replace(/>/g, '&gt;')\n  .replace(/\\\"/g, '&quot;')\n  .replace(/'/g, '&#39;');\n\nconst hiddenInputs = Object.entries(params)\n  .map(([key, value]) => `<input type=\"hidden\" name=\"${escapeHtml(key)}\" value=\"${escapeHtml(value)}\" />`)\n  .join('');\n\nconst checkoutHtml = `<!doctype html>\n<html lang=\"zh-Hant\">\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <title>正在前往綠界付款</title>\n</head>\n<body>\n  <p>正在前往綠界付款頁，請稍候...</p>\n  <form id=\"ecpay-form\" method=\"post\" action=\"${escapeHtml(config.checkoutUrl)}\" accept-charset=\"UTF-8\">\n    ${hiddenInputs}\n  </form>\n  <script>\n    document.getElementById('ecpay-form').submit();\n  </script>\n</body>\n</html>`;\n\nreturn [{ json: { ...item, ecpay_params: params, checkout_html: checkoutHtml } }];"
+      },
+      "id": "e9d6fd3a-c89b-48ae-8ef6-fbb74ad0d032",
+      "name": "Build ECPay Checkout HTML",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.checkout_html }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/html; charset=utf-8"
+              }
+            ]
+          }
+        }
+      },
+      "id": "2ebde01b-e01a-4120-89fc-07368152b4b1",
+      "name": "Respond Checkout HTML",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1380,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "REPLACE_WITH_YOUR_TELEGRAM_CHAT_ID",
+        "text": "=🛒 新付款訂單建立\n\n📦 商品：{{ $json.product_name }}\n💰 金額：NT$ {{ $json.trade_amt }}\n👤 姓名：{{ $json.buyer_name }}\n📧 Email：{{ $json.buyer_email }}\n📱 電話：{{ $json.buyer_phone }}\n🧾 訂單號：{{ $json.order_no }}\n⏰ 建立時間：{{ $json.created_at }}\n",
+        "additionalFields": {}
+      },
+      "id": "55d7f30f-0c15-4236-aeb6-e0451d7789f2",
+      "name": "Send Telegram Intake Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1080,
+        480
+      ],
+      "credentials": {},
+      "continueOnFail": true
+    }
+  ],
+  "connections": {
+    "Webhook (Create ECPay Order)": {
+      "main": [
+        [
+          {
+            "node": "Normalize Intake",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Intake": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Append Intake)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (Append Intake)": {
+      "main": [
+        [
+          {
+            "node": "Build ECPay Checkout HTML",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Telegram Intake Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build ECPay Checkout HTML": {
+      "main": [
+        [
+          {
+            "node": "Respond Checkout HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {}
+}

@@ -1,0 +1,332 @@
+{
+  "name": "ECPay Payment Callback API",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ecpay-payment-callback",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "b50fb6a9-2ce1-4429-a752-7db2709f0617",
+      "name": "Webhook (ECPay Callback)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -920,
+        420
+      ],
+      "webhookId": "ecpay-payment-callback"
+    },
+    {
+      "parameters": {
+        "jsCode": "const crypto = require('crypto');\n\nconst body = items[0].json.body || items[0].json;\nconst hashKey = 'REPLACE_WITH_YOUR_HASH_KEY';\nconst hashIV = 'REPLACE_WITH_YOUR_HASH_IV';\n\nif (hashKey.startsWith('REPLACE_') || hashIV.startsWith('REPLACE_')) {\n  throw new Error('Please replace callback HashKey / HashIV first');\n}\n\nconst received = String(body.CheckMacValue || '').toUpperCase();\nconst payload = { ...body };\ndelete payload.CheckMacValue;\n\nconst sorted = Object.keys(payload)\n  .sort((a, b) => a.localeCompare(b))\n  .map((key) => `${key}=${payload[key] ?? ''}`)\n  .join('&');\n\nconst raw = `HashKey=${hashKey}&${sorted}&HashIV=${hashIV}`;\nconst encoded = encodeURIComponent(raw)\n  .replace(/%20/g, '+')\n  .replace(/!/g, '%21')\n  .replace(/\\(/g, '%28')\n  .replace(/\\)/g, '%29')\n  .replace(/\\*/g, '%2a')\n  .replace(/~/g, '%7e')\n  .toLowerCase();\n\nconst expected = crypto\n  .createHash('sha256')\n  .update(encoded)\n  .digest('hex')\n  .toUpperCase();\n\nreturn [{ json: { body, check_mac_received: received, check_mac_expected: expected, check_mac_valid: received === expected } }];"
+      },
+      "id": "6f5f5a0f-2a69-402f-bfc8-70be2589d93f",
+      "name": "Verify CheckMacValue",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -660,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.check_mac_valid }}",
+              "value2": true
+            }
+          ],
+          "string": [
+            {
+              "value1": "={{ ($json.body.RtnCode || '').toString() }}",
+              "operation": "equal",
+              "value2": "1"
+            }
+          ]
+        }
+      },
+      "id": "e3a82b1f-69e6-4212-8e78-4ec6fd3c8df4",
+      "name": "IF Valid Paid Callback",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "created_at",
+              "value": "={{ $now.setZone('Asia/Taipei').toFormat('yyyy-LL-dd HH:mm:ss') }}"
+            },
+            {
+              "name": "start_date",
+              "value": "={{ $now.setZone('Asia/Taipei').toFormat('yyyy-LL-dd') }}"
+            },
+            {
+              "name": "merchant_trade_no",
+              "value": "={{ $json.body.MerchantTradeNo || '' }}"
+            },
+            {
+              "name": "trade_no",
+              "value": "={{ $json.body.TradeNo || '' }}"
+            },
+            {
+              "name": "payment_status",
+              "value": "paid"
+            },
+            {
+              "name": "rtn_code",
+              "value": "={{ $json.body.RtnCode || '' }}"
+            },
+            {
+              "name": "rtn_msg",
+              "value": "={{ $json.body.RtnMsg || '' }}"
+            },
+            {
+              "name": "trade_amt",
+              "value": "={{ $json.body.TradeAmt || '' }}"
+            },
+            {
+              "name": "payment_type",
+              "value": "={{ $json.body.PaymentType || '' }}"
+            },
+            {
+              "name": "simulate_paid",
+              "value": "={{ ($json.body.SimulatePaid || '0').toString() }}"
+            },
+            {
+              "name": "product_code",
+              "value": "={{ ($json.body.CustomField4 || '').toString().toUpperCase() }}"
+            },
+            {
+              "name": "product_name",
+              "value": "={{ (($json.body.CustomField4 || '').toString().toUpperCase() === 'A') ? '【A劑】斷路器・沉靜頻率' : (($json.body.CustomField4 || '').toString().toUpperCase() === 'B') ? '【B劑】深海艙・放鬆頻率' : (($json.body.CustomField4 || '').toString().toUpperCase() === 'C') ? '【C劑】心流校準・專注頻率' : (($json.body.CustomField4 || '').toString().toUpperCase() === 'D') ? '【D劑】豐盛錨點・安定頻率' : '未知商品' }}"
+            },
+            {
+              "name": "buyer_name",
+              "value": "={{ $json.body.CustomField1 || '' }}"
+            },
+            {
+              "name": "buyer_email",
+              "value": "={{ $json.body.CustomField2 || '' }}"
+            },
+            {
+              "name": "buyer_phone",
+              "value": "={{ $json.body.CustomField3 || '' }}"
+            },
+            {
+              "name": "status",
+              "value": "active"
+            },
+            {
+              "name": "last_sent_day",
+              "value": "0"
+            },
+            {
+              "name": "last_sent_at"
+            },
+            {
+              "name": "callback_payload",
+              "value": "={{ JSON.stringify($json.body || {}) }}"
+            },
+            {
+              "name": "callback_note",
+              "value": "付款成功，已登記進每日排程寄送名單。"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d69fa8ce-b1a1-412c-9954-4936cff693ce",
+      "name": "Set Payment Record",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1471779915,
+          "mode": "list",
+          "cachedResultName": "購買名單",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY/edit#gid=1471779915"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "created_at": "={{ $json.created_at }}",
+            "start_date": "={{ $json.start_date }}",
+            "merchant_trade_no": "={{ $json.merchant_trade_no }}",
+            "trade_no": "={{ $json.trade_no }}",
+            "payment_status": "={{ $json.payment_status }}",
+            "rtn_code": "={{ $json.rtn_code }}",
+            "rtn_msg": "={{ $json.rtn_msg }}",
+            "trade_amt": "={{ $json.trade_amt }}",
+            "payment_type": "={{ $json.payment_type }}",
+            "simulate_paid": "={{ $json.simulate_paid }}",
+            "product_code": "={{ $json.product_code }}",
+            "product_name": "={{ $json.product_name }}",
+            "buyer_name": "={{ $json.buyer_name }}",
+            "buyer_email": "={{ $json.buyer_email }}",
+            "buyer_phone": "={{ $json.buyer_phone }}",
+            "status": "={{ $json.status }}",
+            "last_sent_day": "={{ $json.last_sent_day }}",
+            "last_sent_at": "={{ $json.last_sent_at }}",
+            "callback_payload": "={{ $json.callback_payload }}",
+            "callback_note": "={{ $json.callback_note }}"
+          },
+          "matchingColumns": [
+            "merchant_trade_no"
+          ]
+        },
+        "options": {}
+      },
+      "id": "b9346f94-dbfd-4314-9990-c123eab8c3ac",
+      "name": "Google Sheets (Upsert Payment)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        120,
+        340
+      ],
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "1|OK",
+        "options": {}
+      },
+      "id": "bd6c22e0-4871-472e-a548-f6478fbd8b32",
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        380,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "REPLACE_WITH_YOUR_TELEGRAM_CHAT_ID",
+        "text": "=🎉 綠界付款成功\n\n📦 商品：{{ $json.product_name }}\n💰 金額：NT$ {{ $json.trade_amt }}\n👤 姓名：{{ $json.buyer_name }}\n📧 Email：{{ $json.buyer_email }}\n📱 電話：{{ $json.buyer_phone }}\n🧾 訂單號：{{ $json.merchant_trade_no }}\n🧾 綠界交易號：{{ $json.trade_no }}\n⏰ 時間：{{ $json.created_at }}\n",
+        "additionalFields": {}
+      },
+      "id": "e004747c-464e-4b3e-a05d-2e5547d3be7d",
+      "name": "Send Telegram Payment Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        380,
+        460
+      ],
+      "credentials": {},
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "1|IGNORED",
+        "options": {}
+      },
+      "id": "96c4df1b-91d7-4080-8db0-70b552db2af0",
+      "name": "Respond Ignored",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -140,
+        540
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook (ECPay Callback)": {
+      "main": [
+        [
+          {
+            "node": "Verify CheckMacValue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify CheckMacValue": {
+      "main": [
+        [
+          {
+            "node": "IF Valid Paid Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Valid Paid Callback": {
+      "main": [
+        [
+          {
+            "node": "Set Payment Record",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Ignored",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Payment Record": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Upsert Payment)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (Upsert Payment)": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Telegram Payment Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {}
+}

@@ -771,7 +771,7 @@
 </footer>
 
 <script>
-    const PAYMENT_CAPTURE_WEBHOOK = 'https://erick303.app.n8n.cloud/webhook/timewaver-payment-intake';
+    const PAYMENT_ORDER_WEBHOOK = 'https://erick303.app.n8n.cloud/webhook/timewaver-create-ecpay-order';
 
     const purchaseModal = document.querySelector('[data-purchase-modal]');
     const purchaseForm = purchaseModal.querySelector('[data-purchase-form]');
@@ -781,7 +781,6 @@
     const purchaseFields = {
         productCode: purchaseForm.elements.product_code,
         productName: purchaseForm.elements.product_name,
-        paymentUrl: purchaseForm.elements.payment_url,
         buyerName: purchaseForm.elements.buyer_name,
         buyerEmail: purchaseForm.elements.buyer_email,
         buyerPhone: purchaseForm.elements.buyer_phone
@@ -796,10 +795,9 @@
         }
     };
 
-    const openPurchaseModal = ({ productCode, productName, paymentUrl }) => {
+    const openPurchaseModal = ({ productCode, productName }) => {
         purchaseFields.productCode.value = productCode;
         purchaseFields.productName.value = productName;
-        purchaseFields.paymentUrl.value = paymentUrl;
         purchaseSummaryName.textContent = productName;
         setPurchaseStatus('');
         purchaseModal.hidden = false;
@@ -817,8 +815,7 @@
         trigger.addEventListener('click', () => {
             openPurchaseModal({
                 productCode: trigger.dataset.productCode,
-                productName: trigger.dataset.productName,
-                paymentUrl: trigger.dataset.paymentUrl
+                productName: trigger.dataset.productName
             });
         });
     });
@@ -851,52 +848,30 @@
         return productCode + '-' + stamp + '-' + suffix;
     };
 
-    const redirectToPayment = (paymentUrl) => {
-        window.location.assign(paymentUrl);
+    const submitPaymentOrder = (payload) => {
+        const bridgeForm = document.createElement('form');
+        bridgeForm.method = 'POST';
+        bridgeForm.action = PAYMENT_ORDER_WEBHOOK;
+        bridgeForm.acceptCharset = 'UTF-8';
+        bridgeForm.hidden = true;
+
+        Object.entries(payload).forEach(([key, value]) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = value;
+            bridgeForm.appendChild(input);
+        });
+
+        document.body.appendChild(bridgeForm);
+        bridgeForm.submit();
     };
 
-    const sendPaymentIntake = async (payload) => {
-        if (navigator.sendBeacon) {
-            const beaconSent = navigator.sendBeacon(
-                PAYMENT_CAPTURE_WEBHOOK,
-                new Blob([JSON.stringify(payload)], { type: 'application/json' })
-            );
-
-            if (beaconSent) {
-                return true;
-            }
-        }
-
-        const controller = new AbortController();
-        const timeoutId = window.setTimeout(() => controller.abort(), 2500);
-
-        try {
-            const response = await fetch(PAYMENT_CAPTURE_WEBHOOK, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload),
-                keepalive: true,
-                signal: controller.signal
-            });
-
-            if (!response.ok) {
-                throw new Error('Webhook responded with status ' + response.status);
-            }
-
-            return true;
-        } finally {
-            window.clearTimeout(timeoutId);
-        }
-    };
-
-    purchaseForm.addEventListener('submit', async (event) => {
+    purchaseForm.addEventListener('submit', (event) => {
         event.preventDefault();
 
         const productCode = purchaseFields.productCode.value;
         const productName = purchaseFields.productName.value;
-        const paymentUrl = purchaseFields.paymentUrl.value;
         const buyerName = purchaseFields.buyerName.value.trim();
         const buyerEmail = purchaseFields.buyerEmail.value.trim();
         const buyerPhone = purchaseFields.buyerPhone.value.trim();
@@ -909,28 +884,18 @@
             product_code: productCode,
             product_name: productName,
             trade_amt: '299',
-            payment_url: paymentUrl,
             status: 'pending',
             source: 'landing_page'
         };
 
         purchaseSubmit.disabled = true;
-        setPurchaseStatus('資料處理中，正在前往綠界付款頁...', '');
+        setPurchaseStatus('資料處理中，正在建立綠界訂單...', '');
 
         if (typeof fbq === 'function') {
             fbq('track', 'Lead');
         }
 
-        try {
-            await sendPaymentIntake(payload);
-        } catch (error) {
-            console.error('Payment intake failed:', error);
-        } finally {
-            redirectToPayment(paymentUrl);
-            window.setTimeout(() => {
-                purchaseSubmit.disabled = false;
-            }, 1200);
-        }
+        submitPaymentOrder(payload);
     });
 </script>
 </body>
