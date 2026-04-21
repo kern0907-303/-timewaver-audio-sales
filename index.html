@@ -837,7 +837,7 @@
     const buildOrderNumber = (productCode) => {
         const now = new Date();
         const stamp = [
-            now.getFullYear(),
+            String(now.getFullYear()).slice(-2),
             String(now.getMonth() + 1).padStart(2, '0'),
             String(now.getDate()).padStart(2, '0'),
             String(now.getHours()).padStart(2, '0'),
@@ -845,7 +845,7 @@
             String(now.getSeconds()).padStart(2, '0')
         ].join('');
         const suffix = Math.random().toString(36).slice(2, 6).toUpperCase();
-        return productCode + '-' + stamp + '-' + suffix;
+        return `${productCode}${stamp}${suffix}`;
     };
 
     const submitPaymentOrder = (payload) => {
