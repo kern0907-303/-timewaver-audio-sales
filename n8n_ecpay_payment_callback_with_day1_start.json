@@ -1,0 +1,368 @@
+{
+  "name": "ECPay Payment Callback API With Day1 Start",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ecpay-payment-callback",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "bd203d11-c92a-4846-bdad-a6d4828a4ff7",
+      "name": "Webhook (ECPay Callback)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -1632,
+        2272
+      ],
+      "webhookId": "ecpay-payment-callback"
+    },
+    {
+      "parameters": {
+        "jsCode": "const crypto = require('crypto');\n\nconst body = items[0].json.body || items[0].json;\nconst hashKey = 'REPLACE_WITH_YOUR_HASH_KEY';\nconst hashIV = 'REPLACE_WITH_YOUR_HASH_IV';\n\nif (hashKey.startsWith('REPLACE_') || hashIV.startsWith('REPLACE_')) {\n  throw new Error('Please replace callback HashKey / HashIV first');\n}\n\nconst received = String(body.CheckMacValue || '').toUpperCase();\nconst payload = { ...body };\ndelete payload.CheckMacValue;\n\nconst sorted = Object.keys(payload)\n  .sort((a, b) => a.localeCompare(b))\n  .map((key) => `${key}=${payload[key] ?? ''}`)\n  .join('&');\n\nconst raw = `HashKey=${hashKey}&${sorted}&HashIV=${hashIV}`;\nconst encoded = encodeURIComponent(raw)\n  .replace(/%20/g, '+')\n  .replace(/!/g, '%21')\n  .replace(/\\(/g, '%28')\n  .replace(/\\)/g, '%29')\n  .replace(/\\*/g, '%2a')\n  .replace(/~/g, '%7e')\n  .toLowerCase();\n\nconst expected = crypto\n  .createHash('sha256')\n  .update(encoded)\n  .digest('hex')\n  .toUpperCase();\n\nreturn [{ json: { body, check_mac_received: received, check_mac_expected: expected, check_mac_valid: received === expected } }];"
+      },
+      "id": "81153b79-b650-4621-8dcc-a38e8b56874f",
+      "name": "Verify CheckMacValue",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1376,
+        2272
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.check_mac_valid }}",
+              "value2": true
+            }
+          ],
+          "string": [
+            {
+              "value1": "={{ ($json.body.RtnCode || '').toString() }}",
+              "operation": "equal",
+              "value2": "1"
+            }
+          ]
+        }
+      },
+      "id": "8efe5b42-a23d-4a9d-a8e2-63755e7ca89e",
+      "name": "IF Valid Paid Callback",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1120,
+        2272
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "created_at",
+              "value": "={{ $now.setZone('Asia/Taipei').toFormat('yyyy-LL-dd HH:mm:ss') }}"
+            },
+            {
+              "name": "start_date",
+              "value": "={{ $now.setZone('Asia/Taipei').toFormat('yyyy-LL-dd') }}"
+            },
+            {
+              "name": "merchant_trade_no",
+              "value": "={{ $json.body.MerchantTradeNo || '' }}"
+            },
+            {
+              "name": "trade_no",
+              "value": "={{ $json.body.TradeNo || '' }}"
+            },
+            {
+              "name": "payment_status",
+              "value": "paid"
+            },
+            {
+              "name": "rtn_code",
+              "value": "={{ $json.body.RtnCode || '' }}"
+            },
+            {
+              "name": "rtn_msg",
+              "value": "={{ $json.body.RtnMsg || '' }}"
+            },
+            {
+              "name": "trade_amt",
+              "value": "={{ $json.body.TradeAmt || '' }}"
+            },
+            {
+              "name": "payment_type",
+              "value": "={{ $json.body.PaymentType || '' }}"
+            },
+            {
+              "name": "simulate_paid",
+              "value": "={{ ($json.body.SimulatePaid || '0').toString() }}"
+            },
+            {
+              "name": "product_code",
+              "value": "={{ ($json.body.CustomField4 || '').toString().toUpperCase() }}"
+            },
+            {
+              "name": "product_name",
+              "value": "={{ (($json.body.CustomField4 || '').toString().toUpperCase() === 'A') ? '【A劑】斷路器・沉靜頻率' : (($json.body.CustomField4 || '').toString().toUpperCase() === 'B') ? '【B劑】深海艙・放鬆頻率' : (($json.body.CustomField4 || '').toString().toUpperCase() === 'C') ? '【C劑】心流校準・專注頻率' : (($json.body.CustomField4 || '').toString().toUpperCase() === 'D') ? '【D劑】豐盛錨點・安定頻率' : '未知商品' }}"
+            },
+            {
+              "name": "buyer_name",
+              "value": "={{ $json.body.CustomField1 || '' }}"
+            },
+            {
+              "name": "buyer_email",
+              "value": "={{ $json.body.CustomField2 || '' }}"
+            },
+            {
+              "name": "buyer_phone",
+              "value": "={{ $json.body.CustomField3 || '' }}"
+            },
+            {
+              "name": "status",
+              "value": "active"
+            },
+            {
+              "name": "last_sent_day",
+              "value": "0"
+            },
+            {
+              "name": "last_sent_at"
+            },
+            {
+              "name": "callback_payload",
+              "value": "={{ JSON.stringify($json.body || {}) }}"
+            },
+            {
+              "name": "callback_note",
+              "value": "付款成功，已登記進每日排程寄送名單。"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "518c9b03-2eb1-48e2-a985-baf462bd9038",
+      "name": "Set Payment Record",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -864,
+        2192
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1471779915,
+          "mode": "list",
+          "cachedResultName": "購買名單",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY/edit#gid=1471779915"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "created_at": "={{ $json.created_at }}",
+            "start_date": "={{ $json.start_date }}",
+            "merchant_trade_no": "={{ $json.merchant_trade_no }}",
+            "trade_no": "={{ $json.trade_no }}",
+            "payment_status": "={{ $json.payment_status }}",
+            "rtn_code": "={{ $json.rtn_code }}",
+            "rtn_msg": "={{ $json.rtn_msg }}",
+            "trade_amt": "={{ $json.trade_amt }}",
+            "payment_type": "={{ $json.payment_type }}",
+            "simulate_paid": "={{ $json.simulate_paid }}",
+            "product_code": "={{ $json.product_code }}",
+            "product_name": "={{ $json.product_name }}",
+            "buyer_name": "={{ $json.buyer_name }}",
+            "buyer_email": "={{ $json.buyer_email }}",
+            "buyer_phone": "={{ $json.buyer_phone }}",
+            "status": "={{ $json.status }}",
+            "last_sent_day": "={{ $json.last_sent_day }}",
+            "last_sent_at": "={{ $json.last_sent_at }}",
+            "callback_payload": "={{ $json.callback_payload }}",
+            "callback_note": "={{ $json.callback_note }}"
+          },
+          "matchingColumns": [
+            "merchant_trade_no"
+          ]
+        },
+        "options": {}
+      },
+      "id": "d49f0ff5-fa85-469f-b0df-fc24c624af0d",
+      "name": "Google Sheets (Upsert Payment)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -592,
+        2192
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "naOPDNB4CMwotNnb",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://erick303.app.n8n.cloud/webhook/timewaver-21day-start",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"created_at\": $json.created_at,\n  \"start_date\": $json.start_date,\n  \"merchant_trade_no\": $json.merchant_trade_no,\n  \"trade_no\": $json.trade_no,\n  \"payment_status\": $json.payment_status,\n  \"rtn_code\": $json.rtn_code,\n  \"rtn_msg\": $json.rtn_msg,\n  \"trade_amt\": $json.trade_amt,\n  \"payment_type\": $json.payment_type,\n  \"simulate_paid\": $json.simulate_paid,\n  \"product_code\": $json.product_code,\n  \"product_name\": $json.product_name,\n  \"buyer_name\": $json.buyer_name,\n  \"buyer_email\": $json.buyer_email,\n  \"buyer_phone\": $json.buyer_phone,\n  \"status\": $json.status,\n  \"last_sent_day\": $json.last_sent_day,\n  \"last_sent_at\": $json.last_sent_at,\n  \"callback_payload\": $json.callback_payload,\n  \"callback_note\": $json.callback_note\n}",
+        "options": {}
+      },
+      "id": "dc7b51f1-c826-471a-93d6-83b8a02fd7bd",
+      "name": "Start Day 1 Workflow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -336,
+        2464
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "1|OK",
+        "options": {}
+      },
+      "id": "27f9d5b5-8acc-4d54-8f3d-9882ec540aa9",
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -336,
+        2112
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "8288352647",
+        "text": "=🎉 綠界付款成功\n\n📦 商品：{{ $json.product_name }}\n💰 金額：NT$ {{ $json.trade_amt }}\n👤 姓名：{{ $json.buyer_name }}\n📧 Email：{{ $json.buyer_email }}\n📱 電話：{{ $json.buyer_phone }}\n🧾 訂單號：{{ $json.merchant_trade_no }}\n🧾 綠界交易號：{{ $json.trade_no }}\n⏰ 時間：{{ $json.created_at }}\n",
+        "additionalFields": {}
+      },
+      "id": "5a2a4cb1-fd9d-418c-8879-857ad25c1af3",
+      "name": "Send Telegram Payment Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -336,
+        2320
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "FAWPlNKK2oUUUwkr",
+          "name": "Telegram account 3"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "1|IGNORED",
+        "options": {}
+      },
+      "id": "dca814ed-eb4e-4721-b118-549f396f6328",
+      "name": "Respond Ignored",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -864,
+        2400
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook (ECPay Callback)": {
+      "main": [
+        [
+          {
+            "node": "Verify CheckMacValue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify CheckMacValue": {
+      "main": [
+        [
+          {
+            "node": "IF Valid Paid Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Valid Paid Callback": {
+      "main": [
+        [
+          {
+            "node": "Set Payment Record",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Ignored",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Payment Record": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Upsert Payment)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (Upsert Payment)": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Telegram Payment Notification",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Start Day 1 Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b95b8dc9845fc8a66f4915f0a59c417fd2e20164461d41121aa37087852de6a4"
+  }
+}

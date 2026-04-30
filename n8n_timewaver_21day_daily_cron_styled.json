@@ -1,0 +1,525 @@
+{
+  "name": "TimeWaver 21-Day Daily Cron Styled",
+  "nodes": [
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "hour": 9
+            }
+          ]
+        }
+      },
+      "id": "8dfce90f-cacf-497c-a026-6d9a7648ed57",
+      "name": "Daily 9AM Trigger1",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        -1760,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1471779915,
+          "mode": "list",
+          "cachedResultName": "購買名單",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY/edit#gid=1471779915"
+        },
+        "options": {}
+      },
+      "id": "d11c02eb-4c47-450e-a174-73e78652722c",
+      "name": "Google Sheets (Read Clients)1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1520,
+        720
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "naOPDNB4CMwotNnb",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const PRODUCT_DATA = {\n  A: {\n    prescription_name: '【A劑】斷路器・Theta波 4-7Hz',\n    focus_title: '這不只是一般的放鬆音頻',\n    focus_body: '而是一套結合量子信息場（TimeWaver）與精準腦波頻率概念所設計的調整工具，目的是協助您從長時間過載、持續運轉、難以放鬆的狀態中，慢慢切換回較能修復與釋放壓力的節奏。',\n    observation_indicators: '1. 入睡前腦袋「跑馬燈」的次數是否減少？<br>2. 早上醒來時，頭部的緊繃感是否有減輕？',\n    day3_content: '這三天請先觀察腦袋是否比較不會一路轉到睡前最後一刻。A 劑的重點不是立刻放空，而是讓夜晚的思緒密度先慢慢降下來。',\n    day7_content: '到第 7 天，理想狀態是你開始比較容易從工作模式切回休息模式。若還是會想很多，請把聆聽時間再提前 10 分鐘，讓身心提早轉場。',\n    day14_content: '進入第二週後半，請留意晚上的內在對話是否變短、變慢，或沒有那麼容易一路延伸。這表示 A 劑已經在建立新的睡前節奏。',\n    day21_content: '完成 21 天後，A 劑更像你的睡前降速開關。未來只要在思緒太滿的夜晚重新播放，就能更快回到比較穩定的夜間節奏。'\n  },\n  B: {\n    prescription_name: '【B劑】深海艙・Delta波 0.5-4Hz',\n    focus_title: '這不只是一般的助眠背景音',\n    focus_body: '它更像是一套幫身體慢慢沉下來、把夜間修復感重新拉回來的支持工具。',\n    observation_indicators: '1. 半夜醒來的次數是否減少？<br>2. 早上起床時，身體的痠痛與沉重感是否有所改善？',\n    day3_content: 'B 劑前幾天想追求的是身體卸力感。請先觀察半夜翻身、醒來或身體緊抓著不放的感覺，有沒有比原本更容易放掉一點。',\n    day7_content: '第 7 天時，理想變化通常不是睡超久，而是睡眠中斷減少、醒來時的身體負擔沒那麼重。這是 B 劑在幫你把夜間身體感受拉回更深層。',\n    day14_content: '到第 14 天，請留意是否比較容易連續睡完一段完整睡眠，或起床時沒那麼像剛打完仗。B 劑的目標，是讓夜裡的身體逐步回到更深的休息感。',\n    day21_content: '完成 21 天後，B 劑更像是一段固定的夜間深潛儀式。當你覺得身體累卻還沒真正鬆開時，它就是你重新找回沉下來感覺的入口。'\n  },\n  C: {\n    prescription_name: '【C劑】心流校準・Alpha波 8-12Hz',\n    focus_title: '這不只是一般的專注音頻',\n    focus_body: '它的目的不是讓你更緊繃，而是幫助你在平靜中保留清晰與秩序感。',\n    observation_indicators: '1. 對明天任務的預期性焦慮是否降低？<br>2. 隔天工作時，進入「專注狀態」的速度是否變快？',\n    day3_content: 'C 劑前三天請觀察的是白天殘留壓力到了晚上是否比較容易收回來。它不是把你變慢，而是讓你在平靜裡保留秩序感。',\n    day7_content: '到第 7 天，理想狀態是你對隔天任務的緊張感稍微鬆掉，不再一想到明天就整個人繃起來。這代表 C 劑開始幫你校準壓力與專注之間的切換。',\n    day14_content: '第 14 天後，請特別留意白天的專注進場速度。有些人會發現自己晚上較安定，白天也比較不容易被雜訊拉走，這是 C 劑常見的延伸效果。',\n    day21_content: '完成 21 天後，C 劑會成為你在高壓前夜或重要工作前的平衡工具。它的價值不是催眠，而是幫你在安定和清明之間找到更好的比例。'\n  },\n  D: {\n    prescription_name: '【D劑】豐盛錨點・Solfeggio 852Hz',\n    focus_title: '這不只是一般的放鬆陪伴',\n    focus_body: '它更像是幫你把內在安全感與安定感重新拉回來的頻率入口。',\n    observation_indicators: '1. 半夜驚醒時，那種匱乏感與恐懼感的強度是否減弱？<br>2. 白天面對財務或決策時，是否感覺更加安定？',\n    day3_content: 'D 劑前幾天請先觀察夜裡那種莫名不安、對未來的拉扯感有沒有稍微變小。它想做的，是讓你先回到一個比較能安住的內在位置。',\n    day7_content: '第 7 天時，理想變化通常是對金錢、安全感或未來的焦躁沒有那麼容易一路放大。這代表 D 劑正在幫你建立更穩的夜間心理底盤。',\n    day14_content: '進入第 14 天後，請留意自己是否比較能停在當下，不再被未來情境一路拖走。D 劑的重點，是讓夜裡的安全感慢慢從外部拉回內部。',\n    day21_content: '完成 21 天後，D 劑會更像你的安定錨點。未來遇到容易驚醒、容易被匱乏感拉走的夜晚，它能提醒你先回到穩定，再面對外面的變動。'\n  }\n};\n\nconst targetMap = { 0: 1, 2: 3, 6: 7, 13: 14, 20: 21 };\n\nfunction getTaipeiDateOnly() {\n  const now = new Date();\n  const parts = new Intl.DateTimeFormat('en-CA', {\n    timeZone: 'Asia/Taipei',\n    year: 'numeric',\n    month: '2-digit',\n    day: '2-digit'\n  }).format(now).split('-').map(Number);\n  return new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));\n}\n\nfunction parseDateOnly(dateStr) {\n  if (!dateStr) return null;\n  const clean = String(dateStr).trim().slice(0, 10);\n  const parts = clean.split('-').map(Number);\n  if (parts.length !== 3 || parts.some(Number.isNaN)) return null;\n  return new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));\n}\n\nfunction taipeiNowString() {\n  return new Intl.DateTimeFormat('sv-SE', {\n    timeZone: 'Asia/Taipei',\n    year: 'numeric',\n    month: '2-digit',\n    day: '2-digit',\n    hour: '2-digit',\n    minute: '2-digit',\n    second: '2-digit'\n  }).format(new Date()).replace(' ', ' ');\n}\n\nfunction escapeHtml(value) {\n  return String(value ?? '')\n    .replace(/&/g, '&amp;')\n    .replace(/</g, '&lt;')\n    .replace(/>/g, '&gt;')\n    .replace(/\"/g, '&quot;')\n    .replace(/'/g, '&#39;');\n}\n\nfunction renderEmail(title, eyebrow, headline, name, bodyHtml, footerNote = '此信件為身心平衡關懷內容，請依您的需求與節奏進行選擇。') {\n  const safeTitle = escapeHtml(title);\n  const safeEyebrow = escapeHtml(eyebrow);\n  const safeHeadline = headline;\n  const safeName = escapeHtml(name || '您好');\n  const safeFooter = escapeHtml(footerNote);\n\n  return `<!DOCTYPE html>\n<html lang=\"zh-Hant\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>${safeTitle}</title>\n</head>\n<body style=\"margin:0; padding:0; background-color:#f4f6f8; font-family:Arial, 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif; color:#333333;\">\n  <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:#f4f6f8; margin:0; padding:0;\">\n    <tr>\n      <td align=\"center\" style=\"padding:32px 16px;\">\n        <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"max-width:640px; background-color:#ffffff; border-radius:16px; overflow:hidden; box-shadow:0 4px 18px rgba(0,0,0,0.06);\">\n          <tr>\n            <td style=\"background:linear-gradient(135deg, #1f3c88 0%, #4b6cb7 100%); padding:32px 36px; text-align:left;\">\n              <div style=\"font-size:14px; line-height:1.6; color:#dfe8ff; letter-spacing:1px;\">${safeEyebrow}</div>\n              <div style=\"font-size:28px; line-height:1.4; font-weight:bold; color:#ffffff; margin-top:8px;\">${safeHeadline}</div>\n            </td>\n          </tr>\n          <tr>\n            <td style=\"padding:36px;\">\n              <p style=\"margin:0 0 20px; font-size:16px; line-height:1.9; color:#333333;\">${safeName} 您好，</p>\n              ${bodyHtml}\n            </td>\n          </tr>\n          <tr>\n            <td style=\"padding:20px 36px 28px; background-color:#fafbfc; border-top:1px solid #edf0f2;\">\n              <p style=\"margin:0; font-size:12px; line-height:1.8; color:#999999; text-align:center;\">${safeFooter}</p>\n            </td>\n          </tr>\n        </table>\n      </td>\n    </tr>\n  </table>\n</body>\n</html>`;\n}\n\nfunction buildCtaBlock() {\n  return `\n    <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" align=\"center\" style=\"margin:8px auto 28px;\">\n      <tr>\n        <td align=\"center\" bgcolor=\"#1f3c88\" style=\"border-radius:999px;\">\n          <a href=\"https://timewaver-audio-sales.netlify.app/\" target=\"_blank\" style=\"display:inline-block; padding:16px 32px; font-size:16px; font-weight:bold; color:#ffffff; text-decoration:none; border-radius:999px;\">\n            立即進入專屬調整入口\n          </a>\n        </td>\n      </tr>\n    </table>`;\n}\n\nfunction buildCallout(title, body) {\n  return `\n    <div style=\"margin:0 0 28px; padding:20px 22px; background-color:#f7f9fc; border-left:4px solid #4b6cb7; border-radius:10px;\">\n      <div style=\"font-size:18px; line-height:1.8; font-weight:bold; color:#1f3c88;\">${title}</div>\n      <div style=\"margin-top:8px; font-size:16px; line-height:1.9; color:#333333;\">${body}</div>\n    </div>`;\n}\n\nfunction buildWarmBox(title, body) {\n  return `\n    <div style=\"margin:28px 0; padding:22px; background-color:#fffaf0; border:1px solid #f2dfb0; border-radius:12px;\">\n      <div style=\"font-size:18px; line-height:1.8; font-weight:bold; color:#8a5a00; margin-bottom:8px;\">${title}</div>\n      <div style=\"font-size:16px; line-height:1.9; color:#5c4a1f;\">${body}</div>\n    </div>`;\n}\n\nfunction buildObservationBlock(observation) {\n  return `\n    <div style=\"margin:0 0 28px; padding:20px 22px; background-color:#f7f9fc; border-left:4px solid #4b6cb7; border-radius:10px;\">\n      <div style=\"font-size:18px; line-height:1.8; font-weight:bold; color:#1f3c88;\">💡 今晚 / 今日的觀察指標</div>\n      <div style=\"margin-top:8px; font-size:16px; line-height:1.9; color:#333333;\">${observation}</div>\n    </div>`;\n}\n\nfunction buildDay1(name, p) {\n  const body = `\n    ${buildCallout('⚖️ 專屬頻率已完成載入', `您的專屬方案是 <span style=\"font-weight:bold; color:#1f3c88;\">${escapeHtml(p.prescription_name)}</span>。${escapeHtml(p.focus_body)}`)}\n    <p style=\"margin:0 0 18px; font-size:16px; line-height:1.9; color:#333333;\">歡迎啟動這趟為期 21 天的神經重置旅程。這不是一般的背景音，而是一段幫助您慢慢校準節奏、回到比較穩定狀態的入口。</p>\n    ${buildObservationBlock(p.observation_indicators)}\n    <p style=\"margin:0 0 18px; font-size:16px; line-height:1.9; color:#333333;\">前幾天您可能會感受到特別放鬆，或反而出現多夢、思緒翻騰的現象，這都是潛意識正在釋放深層壓力的正常排毒反應。</p>\n    ${buildWarmBox('有些改變，不是從知道更多開始', '而是從您願意在對的時候，為自己做一次真正的調整開始。')}\n    <p style=\"margin:0 0 28px; font-size:16px; line-height:1.9; color:#333333;\">請保持每天聆聽的節奏，讓身心系統有機會在穩定重複中重新找到回穩的方式。</p>\n    ${buildCtaBlock()}\n    <p style=\"margin:0; font-size:15px; line-height:1.9; color:#666666; text-align:center;\">願您重新找回安定、放鬆與內在的平衡。我們 Day 3 見。</p>`;\n  return renderEmail('Day 1 啟動', '21 天神經重置旅程', '您的專屬調整，現在開始', name, body);\n}\n\nfunction buildStandardDay(name, title, subtitle, headline, intro, observation, closing) {\n  const body = `\n    <p style=\"margin:0 0 18px; font-size:16px; line-height:1.9; color:#333333;\">${intro}</p>\n    ${buildObservationBlock(observation)}\n    ${buildWarmBox('真正的改變，不會每一天都很戲劇化', '很多時候，系統真正穩下來的樣子，不是更強烈，而是更自然。')}\n    ${buildCtaBlock()}\n    <p style=\"margin:0; font-size:15px; line-height:1.9; color:#666666; text-align:center;\">${closing}</p>`;\n  return renderEmail(title, subtitle, headline, name, body);\n}\n\nfunction buildDay21(name, p) {\n  const body = `\n    <p style=\"margin:0 0 18px; font-size:16px; line-height:1.9; color:#333333;\">${escapeHtml(p.day21_content)}</p>\n    ${buildWarmBox('21 天不是結束，而是新的起點', '接下來的關鍵，不是等狀態掉下來，而是為自己安排下一段維持穩定的節奏。')}\n    <p style=\"margin:0 0 18px; font-size:16px; line-height:1.9; color:#333333;\">在過去的一週裡，我們提到了「同化效應」。為了幫助您在未來持續維持高頻狀態，避免大腦對單一頻率產生疲勞，並順應外在能量場的轉換，我為您準備了兩條進階的躍遷路徑：</p>\n    <div style=\"margin:0 0 18px; padding:20px 22px; background-color:#f7f9fc; border-left:4px solid #4b6cb7; border-radius:10px;\">\n      <div style=\"font-size:18px; line-height:1.8; font-weight:bold; color:#1f3c88;\">💡 路徑一：【四季頻率訂閱計畫】（多數菁英的日常防護罩）</div>\n      <div style=\"margin-top:8px; font-size:16px; line-height:1.9; color:#333333;\">這是一個專為維持心流與防禦雜訊設計的輕量級方案。系統將配合節氣與整體能量趨勢，每季自動為您派發全新的機能頻率音頻，確保您的大腦永遠保持在最佳的動態平衡，不再對單一頻率產生倦怠。<br><a href=\"[您的季更訂閱方案銷售頁連結]\" target=\"_blank\" style=\"color:#1f3c88; font-weight:bold; text-decoration:underline;\">👉 點此了解四季頻率訂閱，鎖定您的能量底線</a></div>\n    </div>\n    <div style=\"margin:0 0 28px; padding:20px 22px; background-color:#f7f9fc; border-left:4px solid #4b6cb7; border-radius:10px;\">\n      <div style=\"font-size:18px; line-height:1.8; font-weight:bold; color:#1f3c88;\">💡 路徑二：【企業醫生：30 天高階專屬體檢療程】（突破重大瓶頸專用）</div>\n      <div style=\"margin-top:8px; font-size:16px; line-height:1.9; color:#333333;\">若您目前正面臨事業轉型、重大決策，或感覺有深層的「木馬程式」在阻礙您，單純的音頻已經不夠。這項高階服務將透過 TimeWaver 進行深度的信息場掃描，為您產出專屬的個人解析報告，並提供連續 30 天「每日動態更新」的客製化頻率支持，從根源徹底清理阻礙。<br><a href=\"[您的高階 1v1 諮詢/30天療程銷售頁連結]\" target=\"_blank\" style=\"color:#1f3c88; font-weight:bold; text-decoration:underline;\">👉 點此申請高階專屬體檢，進行深層系統重灌</a></div>\n    </div>\n    ${buildCtaBlock()}\n    <p style=\"margin:0; font-size:15px; line-height:1.9; color:#666666; text-align:center;\">無論您選擇哪一條路徑，這 21 天的累積都不會白費。很高興能陪伴您走過這段找回平靜與專注的旅程。</p>`;\n  return renderEmail('Day 21：完成基礎重置', '神經重置達標', '下一步，讓穩定真正留住', name, body);\n}\n\nconst today = getTaipeiDateOnly();\nconst out = [];\n\nfor (const item of items) {\n  const row = item.json;\n  const startDate = parseDateOnly(row.start_date);\n  if (!startDate) continue;\n\n  const diffDays = Math.floor((today - startDate) / 86400000);\n  const targetDay = targetMap[diffDays] || null;\n  const lastSentDay = Number(row.last_sent_day || 0);\n  const status = String(row.status || '').trim();\n  const productCode = String(row.product_code || '').toUpperCase();\n  const buyerEmail = String(row.buyer_email || '').trim();\n\n  if (!targetDay) continue;\n  if (!buyerEmail) continue;\n  if (status === 'completed') continue;\n  if (lastSentDay >= targetDay) continue;\n  if (!PRODUCT_DATA[productCode]) continue;\n\n  const p = PRODUCT_DATA[productCode];\n  const buyerName = row.buyer_name || '';\n  let subject = '';\n  let html = '';\n\n  if (targetDay === 1) {\n    subject = `【專屬載入】您的 ${p.prescription_name} 已生成 (Day 1)`;\n    html = buildDay1(buyerName, p);\n  } else if (targetDay === 3) {\n    subject = '【頻率適應期】Day 3 觀察：您的大腦正在重新連線';\n    html = buildStandardDay(\n      buyerName,\n      'Day 3：系統開始整理',\n      '有反應，代表系統已經啟動',\n      '您的大腦正在重新連線',\n      p.day3_content,\n      p.observation_indicators,\n      '請繼續保持節奏，讓系統慢慢回到更穩定的位置。我們 Day 7 見。'\n    );\n  } else if (targetDay === 7) {\n    subject = '【頻率校準週報】Day 7 深空適應期狀態確認';\n    html = buildStandardDay(\n      buyerName,\n      'Day 7：第一週完成',\n      '改變，正在從底層發生',\n      '恭喜您完成了第一週的基礎校準',\n      `${p.day7_content} 這幾天，您可能會發現一個現象：第一天聆聽時那種「強烈的放鬆感或衝擊感」似乎變平淡了。千萬別誤以為是音頻失效！在神經科學與頻率應用中，這稱為「同化效應（Assimilation Effect）」。這是一個極佳的訊號，代表您的大腦已經習慣了這個高質量的波長，並將它視為新的「底線狀態」。您的抗壓閾值與基礎能量，正在不知不覺中往上升級。`,\n      p.observation_indicators,\n      '享受這個逐漸成為常態的平靜，我們下週繼續觀察。'\n    );\n  } else if (targetDay === 14) {\n    subject = '【深層清理期】Day 14：那些浮現的夢境與情緒';\n    html = buildStandardDay(\n      buyerName,\n      'Day 14：穩定感開始成形',\n      '第二週的關鍵，是讓系統真正鬆開',\n      '兩週過去了，您的頻率地基已經初步打穩',\n      `${p.day14_content} 現在，這組頻率已經成為您強大的防護罩。然而，如同重訓一樣，如果每天都舉同樣的重量，肌肉就不會再增長；大腦的神經迴路也是如此，長時間接收單一頻率，最終會產生「頻率疲勞」，導致成長停滯。要讓大腦持續擴充心智頻寬、避免舊有慣性與焦慮感反撲，我們需要的是「節奏性的頻率切換」與更深層的底層邏輯重置。`,\n      p.observation_indicators,\n      '請繼續陪自己的系統走完這段路，最後一週不是收尾，而是讓重置真正完成。我們 Day 21 見。'\n    );\n  } else {\n    subject = '【維度躍遷完成】Day 21：您的神經重置已達標';\n    html = buildDay21(buyerName, p);\n  }\n\n  out.push({\n    json: {\n      ...row,\n      target_day: targetDay,\n      email_subject: subject,\n      email_html: html,\n      status: targetDay === 21 ? 'completed' : `Day ${targetDay} - Sent`,\n      last_sent_day: String(targetDay),\n      last_sent_at: taipeiNowString()\n    }\n  });\n}\n\nreturn out;"
+      },
+      "id": "7a167477-bebc-4607-a03d-972c76a34fdf",
+      "name": "Prepare Daily Emails1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1264,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ Number($json.target_day) }}",
+              "operation": "equal",
+              "value2": 1
+            }
+          ]
+        }
+      },
+      "id": "8a0514cf-3d17-46ac-87a3-3ce8bd8193e9",
+      "name": "IF Day 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1024,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ Number($json.target_day) }}",
+              "operation": "equal",
+              "value2": 3
+            }
+          ]
+        }
+      },
+      "id": "8ae706f9-bffa-4f37-ae04-9ec1e462d306",
+      "name": "IF Day 3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1024,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ Number($json.target_day) }}",
+              "operation": "equal",
+              "value2": 7
+            }
+          ]
+        }
+      },
+      "id": "eb026410-5da5-4340-adf1-ce25d6b53f42",
+      "name": "IF Day 7",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1024,
+        704
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ Number($json.target_day) }}",
+              "operation": "equal",
+              "value2": 14
+            }
+          ]
+        }
+      },
+      "id": "79a86669-ccbb-4edf-a9a4-37a8fc785ed2",
+      "name": "IF Day 14",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1024,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ Number($json.target_day) }}",
+              "operation": "equal",
+              "value2": 21
+            }
+          ]
+        }
+      },
+      "id": "6f74add0-8c9c-49cc-a0d6-cf6a29a751a7",
+      "name": "IF Day 21",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1024,
+        976
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.buyer_email }}",
+        "subject": "={{ $json.email_subject }}",
+        "emailType": "html",
+        "message": "={{ $json.email_html }}",
+        "options": {}
+      },
+      "id": "d238515e-fe4c-4d6c-a33e-d0cd5aa12fda",
+      "name": "Send Day 1 Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -752,
+        416
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qU0NOcDO00qBXQ5L",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.buyer_email }}",
+        "subject": "={{ $json.email_subject }}",
+        "emailType": "html",
+        "message": "={{ $json.email_html }}",
+        "options": {}
+      },
+      "id": "fc32bf92-fa34-4dfd-ace4-7d81d4533237",
+      "name": "Send Day 3 Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -752,
+        560
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qU0NOcDO00qBXQ5L",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.buyer_email }}",
+        "subject": "={{ $json.email_subject }}",
+        "emailType": "html",
+        "message": "={{ $json.email_html }}",
+        "options": {}
+      },
+      "id": "35904f4f-71fa-44d9-b764-002c0f70c05e",
+      "name": "Send Day 7 Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -752,
+        704
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qU0NOcDO00qBXQ5L",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.buyer_email }}",
+        "subject": "={{ $json.email_subject }}",
+        "emailType": "html",
+        "message": "={{ $json.email_html }}",
+        "options": {}
+      },
+      "id": "137f9ddd-1e74-4859-868a-c71808ba8e32",
+      "name": "Send Day 14 Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -752,
+        848
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qU0NOcDO00qBXQ5L",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.buyer_email }}",
+        "subject": "={{ $json.email_subject }}",
+        "emailType": "html",
+        "message": "={{ $json.email_html }}",
+        "options": {}
+      },
+      "id": "6df317b9-69f0-4f33-91be-3fd2768b83ce",
+      "name": "Send Day 21 Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -752,
+        976
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qU0NOcDO00qBXQ5L",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1471779915,
+          "mode": "list",
+          "cachedResultName": "購買名單",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY/edit#gid=1471779915"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "start_date": "={{ $json.start_date }}",
+            "merchant_trade_no": "={{ $json.merchant_trade_no }}",
+            "trade_no": "={{ $json.trade_no }}",
+            "payment_status": "={{ $json.payment_status }}",
+            "rtn_code": "={{ $json.rtn_code }}",
+            "rtn_msg": "={{ $json.rtn_msg }}",
+            "trade_amt": "={{ $json.trade_amt }}",
+            "payment_type": "={{ $json.payment_type }}",
+            "simulate_paid": "={{ $json.simulate_paid }}",
+            "product_code": "={{ $json.product_code }}",
+            "product_name": "={{ $json.product_name }}",
+            "buyer_name": "={{ $json.buyer_name }}",
+            "buyer_email": "={{ $json.buyer_email }}",
+            "buyer_phone": "={{ $json.buyer_phone }}",
+            "status": "={{ $json.status }}",
+            "last_sent_day": "={{ $json.last_sent_day }}",
+            "last_sent_at": "={{ $json.last_sent_at }}",
+            "callback_payload": "={{ $json.callback_payload }}",
+            "callback_note": "={{ $json.callback_note }}"
+          },
+          "matchingColumns": [
+            "merchant_trade_no"
+          ]
+        },
+        "options": {}
+      },
+      "id": "677216cb-2139-4b87-913b-6a8d1b661fe1",
+      "name": "Google Sheets (Update Status)1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -480,
+        704
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "naOPDNB4CMwotNnb",
+          "name": "Google Sheets account 2"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Daily 9AM Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Read Clients)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (Read Clients)1": {
+      "main": [
+        [
+          {
+            "node": "Prepare Daily Emails1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Daily Emails1": {
+      "main": [
+        [
+          {
+            "node": "IF Day 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Day 1": {
+      "main": [
+        [
+          {
+            "node": "Send Day 1 Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF Day 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Day 3": {
+      "main": [
+        [
+          {
+            "node": "Send Day 3 Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF Day 7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Day 7": {
+      "main": [
+        [
+          {
+            "node": "Send Day 7 Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF Day 14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Day 14": {
+      "main": [
+        [
+          {
+            "node": "Send Day 14 Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF Day 21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Day 21": {
+      "main": [
+        [
+          {
+            "node": "Send Day 21 Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Day 1 Email": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Update Status)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Day 3 Email": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Update Status)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Day 7 Email": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Update Status)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Day 14 Email": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Update Status)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Day 21 Email": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Update Status)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b95b8dc9845fc8a66f4915f0a59c417fd2e20164461d41121aa37087852de6a4"
+  }
+}

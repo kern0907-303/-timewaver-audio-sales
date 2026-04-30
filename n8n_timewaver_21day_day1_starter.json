@@ -1,0 +1,290 @@
+{
+  "name": "TimeWaver 21-Day Day1 Starter",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "timewaver-21day-start",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "7f4f43f0-9bb4-4f8a-9bb2-1c1eb7d4e101",
+      "name": "Webhook (Start Day 1)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -1040,
+        320
+      ],
+      "webhookId": "timewaver-21day-start"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "created_at",
+              "value": "={{ $now.setZone('Asia/Taipei').toFormat('yyyy-LL-dd HH:mm:ss') }}"
+            },
+            {
+              "name": "start_date",
+              "value": "={{ $json.body.start_date || $json.start_date || $now.setZone('Asia/Taipei').toFormat('yyyy-LL-dd') }}"
+            },
+            {
+              "name": "merchant_trade_no",
+              "value": "={{ $json.body.merchant_trade_no || $json.merchant_trade_no || '' }}"
+            },
+            {
+              "name": "trade_no",
+              "value": "={{ $json.body.trade_no || $json.trade_no || '' }}"
+            },
+            {
+              "name": "payment_status",
+              "value": "={{ $json.body.payment_status || $json.payment_status || 'paid' }}"
+            },
+            {
+              "name": "rtn_code",
+              "value": "={{ $json.body.rtn_code || $json.rtn_code || '1' }}"
+            },
+            {
+              "name": "rtn_msg",
+              "value": "={{ $json.body.rtn_msg || $json.rtn_msg || '交易成功' }}"
+            },
+            {
+              "name": "trade_amt",
+              "value": "={{ $json.body.trade_amt || $json.trade_amt || '299' }}"
+            },
+            {
+              "name": "payment_type",
+              "value": "={{ $json.body.payment_type || $json.payment_type || 'Credit_CreditCard' }}"
+            },
+            {
+              "name": "simulate_paid",
+              "value": "={{ $json.body.simulate_paid || $json.simulate_paid || '0' }}"
+            },
+            {
+              "name": "product_code",
+              "value": "={{ (($json.body.product_code || $json.product_code || '').toString()).toUpperCase() }}"
+            },
+            {
+              "name": "product_name",
+              "value": "={{ $json.body.product_name || $json.product_name || '' }}"
+            },
+            {
+              "name": "buyer_name",
+              "value": "={{ $json.body.buyer_name || $json.buyer_name || '' }}"
+            },
+            {
+              "name": "buyer_email",
+              "value": "={{ $json.body.buyer_email || $json.buyer_email || '' }}"
+            },
+            {
+              "name": "buyer_phone",
+              "value": "={{ $json.body.buyer_phone || $json.buyer_phone || '' }}"
+            },
+            {
+              "name": "status",
+              "value": "Day 1 - Sent"
+            },
+            {
+              "name": "last_sent_day",
+              "value": "1"
+            },
+            {
+              "name": "last_sent_at",
+              "value": "={{ $now.setZone('Asia/Taipei').toFormat('yyyy-LL-dd HH:mm:ss') }}"
+            },
+            {
+              "name": "callback_payload",
+              "value": "={{ $json.body.callback_payload || $json.callback_payload || '' }}"
+            },
+            {
+              "name": "callback_note",
+              "value": "={{ $json.body.callback_note || $json.callback_note || '付款成功，已啟動 Day 1。' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9a61a00a-3966-4de4-a77f-6fe1f2d34b5f",
+      "name": "Normalize Day 1 Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -784,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const PRODUCT_DATA = {\n  A: {\n    prescription_name: '【A劑】斷路器・Theta波 4-7Hz',\n    report_label: '【A型 — 過載運轉的超級電腦】',\n    intro_problem: '明明身體已經很累了，腦袋卻還停不下來；想休息，卻像有一股力量讓自己始終無法真正放鬆。',\n    focus_body: '這不是您不夠努力，也不是您不懂得休息，而是整個人已經長時間維持在高負載運轉之中。很多時候，真正消耗一個人的，不只是事情很多，而是長期沒有機會切換回可以安定、修復、回穩的節奏。',\n    system_state: '目前的檢測顯示，您的身心系統仍處於偏緊繃、持續運算的狀態。表面上看起來還能撐，但內在其實已經累積了不少壓力與耗損。這時候，真正重要的，不是再多撐一下，而是給自己一個重新慢下來的入口。',\n    solution_text: '這次為您準備的，不只是一般的放鬆內容，而是一個更有方向性的釋放設計，協助您從原本過度緊繃的狀態中，逐步回到比較安穩、比較柔和、比較能夠真正休息的位置。'\n  },\n  B: {\n    prescription_name: '【B劑】深海艙・Delta波 0.5-4Hz',\n    report_label: '【B型 — 長夜待修的深海潛艇】',\n    intro_problem: '看起來有睡，卻像沒有真正沉下去；夜裡容易醒來，早上醒來時身體仍像沒有充到電。',\n    focus_body: '這不是您太敏感，也不是您睡眠習慣不好，而是身體長期停留在無法真正卸力的狀態。很多時候，真正的疲憊不是工作多，而是神經系統忘了怎麼進入深層修復。',\n    system_state: '目前的檢測顯示，您的身體夜間修復能力偏弱，像一艘長時間漂浮水面的潛艇，始終沒有真正下潛。表面像在休息，底層卻仍維持警戒。',\n    solution_text: '這次為您準備的，不只是助眠內容，而是一個幫助身體重新找回沉下來與深度休息感的調整入口，讓夜裡的修復有機會慢慢回來。'\n  },\n  C: {\n    prescription_name: '【C劑】心流校準・Alpha波 8-12Hz',\n    report_label: '【C型 — 高速切換的指揮中樞】',\n    intro_problem: '您可能不是無法專注，而是大腦太習慣高速切換，連該放鬆的時候也還在預備明天、分析下一步。',\n    focus_body: '這不是您控制欲太強，而是長期高壓下，大腦把清醒、警覺與責任感綁在一起，導致它很難平靜但不渙散、清楚但不緊繃。',\n    system_state: '目前的檢測顯示，您的心智系統仍處於持續運轉與預備切換的狀態。雖然表面效率不差，但底層其實累積了不少無形耗能。',\n    solution_text: '這次為您準備的，不只是專注內容，而是一個更有方向性的校準設計，協助您把清晰、安定與節奏重新排回正位，回到更穩定的心流狀態。'\n  },\n  D: {\n    prescription_name: '【D劑】豐盛錨點・Solfeggio 852Hz',\n    report_label: '【D型 — 安全感流失的能量容器】',\n    intro_problem: '有時候真正讓人睡不好、放不下的，不是事情本身，而是心裡一直有一種說不上來的不安、匱乏感與對未來的提早緊張。',\n    focus_body: '這不是您想太多，而是內在安全感被長期消耗後，系統會自動把外界變動放大，讓自己始終無法真正安住。',\n    system_state: '目前的檢測顯示，您的身心狀態偏向持續警覺與自我保護。表面上能運作，但底層其實一直在為不確定感付出能量成本。',\n    solution_text: '這次為您準備的，不只是放鬆內容，而是一個幫助您重新回到內在穩定、回收能量與安全感的入口，讓系統慢慢從緊抓轉向安定。'\n  }\n};\n\nfunction escapeHtml(value) {\n  return String(value ?? '')\n    .replace(/&/g, '&amp;')\n    .replace(/</g, '&lt;')\n    .replace(/>/g, '&gt;')\n    .replace(/\"/g, '&quot;')\n    .replace(/'/g, '&#39;');\n}\n\nfunction buildDay1(name, p) {\n  const safeName = escapeHtml(name || '您好');\n  return `<!DOCTYPE html>\n<html lang=\"zh-Hant\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>您的身心狀態提醒</title>\n</head>\n<body style=\"margin:0; padding:0; background-color:#f4f6f8; font-family:Arial, 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif; color:#333333;\">\n  <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:#f4f6f8; margin:0; padding:0;\">\n    <tr>\n      <td align=\"center\" style=\"padding:32px 16px;\">\n        <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"max-width:640px; background-color:#ffffff; border-radius:16px; overflow:hidden; box-shadow:0 4px 18px rgba(0,0,0,0.06);\">\n          <tr>\n            <td style=\"background:linear-gradient(135deg, #1f3c88 0%, #4b6cb7 100%); padding:32px 36px; text-align:left;\">\n              <div style=\"font-size:14px; line-height:1.6; color:#dfe8ff; letter-spacing:1px;\">身心平衡提醒</div>\n              <div style=\"font-size:28px; line-height:1.4; font-weight:bold; color:#ffffff; margin-top:8px;\">\n                您的身心狀態，可能已經在提醒您<br>該讓自己慢下來了\n              </div>\n            </td>\n          </tr>\n          <tr>\n            <td style=\"padding:36px;\">\n              <p style=\"margin:0 0 20px; font-size:16px; line-height:1.9; color:#333333;\">\n                ${safeName}，您好，\n              </p>\n              <div style=\"margin:0 0 28px; padding:20px 22px; background-color:#f7f9fc; border-left:4px solid #4b6cb7; border-radius:10px;\">\n                <div style=\"font-size:18px; line-height:1.8; font-weight:bold; color:#1f3c88;\">\n                  ⚖️ 能量診斷報告：您的身心平衡狀態\n                </div>\n                <div style=\"margin-top:8px; font-size:16px; line-height:1.8; color:#333333;\">\n                  診斷結果：<span style=\"font-weight:bold; color:#1f3c88;\">${escapeHtml(p.report_label)}</span>\n                </div>\n              </div>\n              <p style=\"margin:0 0 18px; font-size:16px; line-height:1.9; color:#333333;\">\n                您是否也常常有這樣的感覺？${escapeHtml(p.intro_problem)}\n              </p>\n              <p style=\"margin:0 0 18px; font-size:16px; line-height:1.9; color:#333333;\">\n                ${escapeHtml(p.focus_body)}\n              </p>\n              <p style=\"margin:0 0 18px; font-size:16px; line-height:1.9; color:#333333;\">\n                ${escapeHtml(p.system_state)}\n              </p>\n              <p style=\"margin:0 0 18px; font-size:16px; line-height:1.9; color:#333333;\">\n                ${escapeHtml(p.solution_text)}\n              </p>\n              <div style=\"margin:28px 0; padding:22px; background-color:#fffaf0; border:1px solid #f2dfb0; border-radius:12px;\">\n                <div style=\"font-size:18px; line-height:1.8; font-weight:bold; color:#8a5a00; margin-bottom:8px;\">\n                  有些改變，不是從知道更多開始\n                </div>\n                <div style=\"font-size:16px; line-height:1.9; color:#5c4a1f;\">\n                  而是從您願意在對的時候，為自己做一次真正的調整開始。\n                </div>\n              </div>\n              <p style=\"margin:0 0 28px; font-size:16px; line-height:1.9; color:#333333;\">\n                當您願意往前一步，有些緊繃才有機會鬆開，有些壓力才有機會被重新整理，而您，也才有機會慢慢回到比較像自己的狀態。\n              </p>\n              <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" align=\"center\" style=\"margin:8px auto 28px;\">\n                <tr>\n                  <td align=\"center\" bgcolor=\"#1f3c88\" style=\"border-radius:999px;\">\n                    <a href=\"https://timewaver-audio-sales.netlify.app/\" target=\"_blank\" style=\"display:inline-block; padding:16px 32px; font-size:16px; font-weight:bold; color:#ffffff; text-decoration:none; border-radius:999px;\">\n                      立即進入專屬調整入口\n                    </a>\n                  </td>\n                </tr>\n              </table>\n              <p style=\"margin:0 0 12px; font-size:15px; line-height:1.9; color:#666666; text-align:center;\">\n                有些照顧，越早開始，越能減少之後的消耗。\n              </p>\n              <p style=\"margin:0; font-size:15px; line-height:1.9; color:#666666; text-align:center;\">\n                願您重新找回安定、放鬆與內在的平衡。\n              </p>\n            </td>\n          </tr>\n          <tr>\n            <td style=\"padding:20px 36px 28px; background-color:#fafbfc; border-top:1px solid #edf0f2;\">\n              <p style=\"margin:0; font-size:12px; line-height:1.8; color:#999999; text-align:center;\">\n                此信件為身心平衡關懷內容，請依您的需求與節奏進行選擇。\n              </p>\n            </td>\n          </tr>\n        </table>\n      </td>\n    </tr>\n  </table>\n</body>\n</html>`;\n}\n\nconst row = items[0].json;\nconst productCode = String(row.product_code || '').toUpperCase();\nconst buyerEmail = String(row.buyer_email || '').trim();\n\nif (!buyerEmail) {\n  throw new Error('buyer_email is missing for Day 1 start');\n}\nif (!PRODUCT_DATA[productCode]) {\n  throw new Error(`Unsupported product_code for Day 1: ${productCode || '(empty)'}`);\n}\n\nconst p = PRODUCT_DATA[productCode];\nconst buyerName = row.buyer_name || '';\n\nreturn [{\n  json: {\n    ...row,\n    email_subject: `【身心平衡提醒】您的 ${p.prescription_name} 已準備完成`,\n    email_html: buildDay1(buyerName, p)\n  }\n}];"
+      },
+      "id": "b9a6c9d0-4b8c-4b7f-8e08-36f25d9d9fb2",
+      "name": "Build Day 1 Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -528,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.buyer_email }}",
+        "subject": "={{ $json.email_subject }}",
+        "emailType": "html",
+        "message": "={{ $json.email_html }}",
+        "options": {}
+      },
+      "id": "75d1a82d-bb3f-4c12-b922-d82becc6f761",
+      "name": "Send Day 1 Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        320
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qU0NOcDO00qBXQ5L",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1471779915,
+          "mode": "list",
+          "cachedResultName": "購買名單",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15AeFm73ATfDxlipIIakvy8DxvNxbo9xar5d-0vuHrvY/edit#gid=1471779915"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "created_at": "={{ $json.created_at }}",
+            "start_date": "={{ $json.start_date }}",
+            "merchant_trade_no": "={{ $json.merchant_trade_no }}",
+            "trade_no": "={{ $json.trade_no }}",
+            "payment_status": "={{ $json.payment_status }}",
+            "rtn_code": "={{ $json.rtn_code }}",
+            "rtn_msg": "={{ $json.rtn_msg }}",
+            "trade_amt": "={{ $json.trade_amt }}",
+            "payment_type": "={{ $json.payment_type }}",
+            "simulate_paid": "={{ $json.simulate_paid }}",
+            "product_code": "={{ $json.product_code }}",
+            "product_name": "={{ $json.product_name }}",
+            "buyer_name": "={{ $json.buyer_name }}",
+            "buyer_email": "={{ $json.buyer_email }}",
+            "buyer_phone": "={{ $json.buyer_phone }}",
+            "status": "Day 1 - Sent",
+            "last_sent_day": "1",
+            "last_sent_at": "={{ $now.setZone('Asia/Taipei').toFormat('yyyy-LL-dd HH:mm:ss') }}",
+            "callback_payload": "={{ $json.callback_payload }}",
+            "callback_note": "={{ $json.callback_note }}"
+          },
+          "matchingColumns": [
+            "merchant_trade_no"
+          ]
+        },
+        "options": {}
+      },
+      "id": "f6c9df16-1f6c-44df-b568-1ec31e9ac34f",
+      "name": "Google Sheets (Mark Day 1 Sent)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        16,
+        320
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "naOPDNB4CMwotNnb",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"ok\":true,\"merchant_trade_no\":\"{{$json.merchant_trade_no}}\",\"day\":1}",
+        "options": {}
+      },
+      "id": "e483183f-2402-40fc-a25f-7d3f81f4d124",
+      "name": "Respond Day 1 Started",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        288,
+        320
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook (Start Day 1)": {
+      "main": [
+        [
+          {
+            "node": "Normalize Day 1 Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Day 1 Data": {
+      "main": [
+        [
+          {
+            "node": "Build Day 1 Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Day 1 Email": {
+      "main": [
+        [
+          {
+            "node": "Send Day 1 Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Day 1 Email": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Mark Day 1 Sent)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (Mark Day 1 Sent)": {
+      "main": [
+        [
+          {
+            "node": "Respond Day 1 Started",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {}
+}

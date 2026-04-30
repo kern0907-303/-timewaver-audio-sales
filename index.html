@@ -40,24 +40,27 @@
         body { font-family: 'Noto Sans TC', sans-serif; background: radial-gradient(circle at top, rgba(212,175,55,0.08), transparent 22%), linear-gradient(180deg, #fbfbfc 0%, #f5f7fa 100%); color: var(--text-main); margin: 0; padding: 0; line-height: 1.7; overflow-x: hidden; letter-spacing: 0.03em; }
         
         /* Hero 區塊 */
-        header { position: relative; padding: 12rem 2rem 14rem; text-align: center; background: #0a0f1d; color: #fff; overflow: hidden; }
+        header { position: relative; min-height: 86vh; padding: 9rem 2rem 10rem; text-align: center; background: #0a0f1d url('images/frequency-meditation.png') center / cover no-repeat; color: #fff; overflow: hidden; display: grid; align-items: center; }
         header::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 200%; height: 100%;
-            background: linear-gradient(60deg, #0a0f1d, #1a365d, #090e17, #0a0f1d);
-            background-size: 50% 100%; opacity: 0.6; animation: rainbowFlow 20s linear infinite; z-index: 0;
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at center, rgba(10,15,29,0.16), rgba(10,15,29,0.72) 64%), linear-gradient(180deg, rgba(10,15,29,0.38), rgba(10,15,29,0.88));
+            z-index: 0;
         }
         header::after {
             content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 150px;
             background: linear-gradient(to top, var(--bg-light), transparent); z-index: 1;
         }
-        @keyframes rainbowFlow { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .header-content { position: relative; z-index: 2; max-width: 980px; margin: 0 auto; }
         .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.55rem 1rem; margin-bottom: 1.5rem; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: rgba(255,255,255,0.82); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; backdrop-filter: blur(10px); }
         h1 { font-size: 3.8rem; margin-bottom: 1.5rem; color: #fff; font-weight: 800; letter-spacing: 2px; line-height: 1.2; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .hero-subtitle { max-width: 760px; font-size: 1.25rem; color: rgba(255,255,255,0.85); margin: 0 auto 2.2rem; font-weight: 300; letter-spacing: 1px; }
-        .hero-value { max-width: 820px; margin: 0 auto; padding: 1.35rem 1.5rem; border-radius: 22px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 18px 40px rgba(0,0,0,0.12); backdrop-filter: blur(12px); }
+        .hero-value { max-width: 820px; margin: 0 auto; padding: 0; }
         .hero-value p { margin: 0; font-size: 1rem; line-height: 1.9; color: rgba(255,255,255,0.84); }
         .hero-value strong { color: #fff; font-weight: 600; }
+        .hero-actions { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin-top: 2rem; }
+        .hero-action { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0.78rem 1.2rem; border-radius: 999px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.12); color: #fff; text-decoration: none; font-weight: 600; backdrop-filter: blur(10px); }
+        .hero-action.primary { background: rgba(255,255,255,0.9); color: var(--primary); border-color: rgba(255,255,255,0.78); }
+        .hero-action:hover { transform: translateY(-1px); box-shadow: 0 14px 28px rgba(0,0,0,0.16); }
         
         /* 內容區塊共用 */
         section { padding: 8rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 5; }
@@ -279,6 +282,13 @@
         .faq-item { padding: 1.2rem 1.15rem; border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,248,251,0.96)); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 12px 26px rgba(10,15,29,0.04); }
         .faq-item h4 { margin: 0 0 0.55rem; color: var(--primary); font-size: 1.16rem; line-height: 1.55; }
         .faq-item p { margin: 0; color: var(--text-sub); font-size: 0.94rem; line-height: 1.8; }
+        .final-cta-section { max-width: 980px; margin: 0 auto 4rem; padding: 0 2rem; }
+        .final-cta-box { position: relative; overflow: hidden; border-radius: 28px; padding: 3.2rem 2.4rem; text-align: center; color: #fff; background: linear-gradient(160deg, rgba(10,15,29,0.98), rgba(31,58,95,0.94)); border: 1px solid rgba(212,175,55,0.18); box-shadow: 0 22px 54px rgba(10,15,29,0.16); }
+        .final-cta-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(212,175,55,0.18), transparent 46%); }
+        .final-cta-box > * { position: relative; z-index: 1; }
+        .final-cta-box h2 { color: #fff; margin-bottom: 0.9rem; }
+        .final-cta-box p { max-width: 660px; margin: 0 auto 1.6rem; color: rgba(255,255,255,0.8); font-size: 1rem; line-height: 1.9; }
+        .final-cta-link { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0.85rem 1.35rem; border-radius: 999px; background: #fff; color: var(--primary); text-decoration: none; font-weight: 700; box-shadow: 0 14px 28px rgba(0,0,0,0.14); }
         
         /* Footer & 法律聲明 */
         footer { background: linear-gradient(180deg, rgba(238,241,245,0.7), rgba(238,241,245,0.95)); color: var(--text-sub); text-align: center; padding: 4rem 2rem; font-size: 0.85rem; margin-top: 4rem; border-top: 1px solid var(--border-color); }
@@ -286,7 +296,7 @@
 
         @media (max-width: 768px) {
             body { line-height: 1.8; }
-            header { padding: 4.2rem 0.85rem 4.4rem; }
+            header { min-height: 82vh; padding: 4.2rem 0.85rem 4.4rem; background-position: center top; }
             header::after { height: 58px; }
             .header-content { max-width: 100%; }
             .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.07em; margin-bottom: 0.85rem; padding: 0.48rem 0.8rem; }
@@ -294,6 +304,8 @@
             .hero-subtitle { font-size: 0.98rem; line-height: 1.75; margin-bottom: 1.25rem; letter-spacing: 0.01em; }
             .hero-value { padding: 0.9rem 0.95rem; border-radius: 16px; }
             .hero-value p { font-size: 0.92rem; line-height: 1.72; }
+            .hero-actions { margin-top: 1.25rem; gap: 0.55rem; }
+            .hero-action { width: 100%; box-sizing: border-box; min-height: 42px; padding: 0.68rem 0.9rem; }
             section { padding: 2rem 0.85rem; }
             h2 { font-size: 1.8rem; line-height: 1.4; margin-bottom: 0.9rem; letter-spacing: 0.02em; }
             .section-desc { font-size: 0.98rem; line-height: 1.72; margin-bottom: 1rem; padding: 0; }
@@ -403,6 +415,10 @@
             .faq-item { padding: 0.92rem 0.82rem; border-radius: 16px; }
             .faq-item h4 { font-size: 1.05rem; line-height: 1.45; margin-bottom: 0.38rem; }
             .faq-item p { font-size: 0.9rem; line-height: 1.68; }
+            .final-cta-section { padding: 0 0.85rem; margin-bottom: 1.4rem; }
+            .final-cta-box { padding: 1.35rem 1rem; border-radius: 18px; }
+            .final-cta-box p { font-size: 0.92rem; line-height: 1.72; margin-bottom: 1rem; }
+            .final-cta-link { width: 100%; box-sizing: border-box; min-height: 42px; }
 
             footer { padding: 1.35rem 0.85rem; margin-top: 1.05rem; font-size: 0.8rem; }
             .legal-disclaimer { padding-top: 0.65rem; text-align: left; }
@@ -446,11 +462,15 @@
 
 <header>
     <div class="header-content">
-        <div class="hero-eyebrow">艾伯林量子頻率 | 比較容易睡下去的方法</div>
-        <h1>睡前沉浸：<br>讓自己慢慢回到安定狀態</h1>
-        <p class="hero-subtitle">謝謝你願意認真對待自己的狀態，為更好的生活品質做出實際選擇</p>
+        <div class="hero-eyebrow">艾伯林量子頻率 | 睡前聲音校準</div>
+        <h1>如果睡不著，問題可能不是你不夠累</h1>
+        <p class="hero-subtitle">有時候真正停不下來的，是白天還沒關機的大腦與神經系統</p>
         <div class="hero-value">
-            <p><strong>最累的時候，往往不是身體不想睡，而是頭腦停不下來。</strong>這套音頻不是要你更努力放鬆，而是幫你把夜晚從高速運轉慢慢拉回安定狀態。</p>
+            <p><strong>這套音頻不是要你更努力放鬆。</strong>它把 TimeWaver 頻率概念、腦波導引與正向語意腳本整理成一個睡前流程，幫你從高速運轉慢慢回到安定。</p>
+        </div>
+        <div class="hero-actions">
+            <a href="#pain-story" class="hero-action primary">先看看你是不是這種狀態</a>
+            <a href="#purchase" class="hero-action">直接選擇音頻</a>
         </div>
     </div>
 </header>
@@ -471,39 +491,21 @@
     </div>
 
     <div class="pain-card" style="border-left-color: #d4af37;">
-        <span class="pain-scene" style="color: #d4af37;">這套設計怎麼幫你</span>
-        <div class="pain-quote">「不是叫你更用力放鬆，而是幫夜晚比較容易降速。」</div>
-        <p class="pain-desc">這套音頻的重點，不是塞更多刺激，而是用更穩定、更低干擾的聲音，幫你把注意力從腦內噪音裡慢慢拉開。A / B / C / D 四型也不是複雜分類，而是對應四種常見的睡不著狀態。</p>
+        <span class="pain-scene" style="color: #d4af37;">常見卡點</span>
+        <div class="pain-quote">「你試著放鬆，但越想放鬆越像在用力。」</div>
+        <p class="pain-desc">很多助眠方法會要求你控制呼吸、清空念頭、不要想太多，但對高壓狀態的人來說，這些反而會變成另一個任務。真正需要的，是讓注意力有一條比較自然的降速路徑。</p>
     </div>
 
     <div class="pain-transition">
-        <h3>你要找的不是更多方法，而是一個今晚就能開始用的解法</h3>
-        <p>重點不是把睡前弄得更複雜，而是找到一個你今晚就能開始用、而且能反覆使用的方法。</p>
+        <h3>所以解法不是再逼自己睡，而是讓系統有路可以慢下來</h3>
+        <p>接下來你會看到這套音頻如何把睡前狀態拆成四種情境，再用對應的聲音頻率與語意引導，幫你建立一個可重複使用的夜間流程。</p>
     </div>
 </section>
 
-<section class="value-anchor-section">
-    <div class="value-anchor-shell">
-        <div class="value-anchor-grid">
-            <div class="value-anchor-copy">
-                <div class="section-kicker" style="text-align: left; color: rgba(212,175,55,0.92);">價格比較</div>
-                <h2>不用一次買整套，先選最符合你現在狀態的一款就好</h2>
-                <p>一套完整的高階睡前音頻方案，原價通常會落在 <strong>NT$6,000</strong> 左右。多數人真正需要的，不是一次買一整套，而是先找到最適合自己現在狀態的那一款。</p>
-                <p>所以你現在不用先花整套的錢。你可以先用 <strong>NT$299</strong>，選一款最接近你現在困擾的版本，從今晚開始使用。</p>
-            </div>
-            <aside class="value-anchor-card" aria-label="價格定錨資訊">
-                <div class="anchor-label">現在先買一款就可以</div>
-                <div class="anchor-old-price">整套方案原價 NT$6,000</div>
-                <div class="anchor-price">NT$299</div>
-                <p class="anchor-note">先選一款最符合你現在狀態的版本。先從今晚開始，再看看它適不適合你。</p>
-            </aside>
-        </div>
-    </div>
-</section>
 
 <section id="experience" class="section-shell">
-    <div class="section-kicker">產品介紹</div>
-    <h2>先了解它和一般助眠音有什麼不同，再選擇適合你的版本</h2>
+    <div class="section-kicker">解決方案</div>
+    <h2>先把你的夜晚狀態分清楚，再用對應的聲音路徑處理</h2>
     <p class="section-desc">這套音頻不是只靠放鬆旋律，而是把 <strong>TimeWaver 頻率校準</strong>、<strong>用於催眠與冥想的雙耳節拍</strong>、以及<strong>純正向語意引導</strong>結合成同一套睡前使用系統。</p>
     <div class="visual-proof-grid">
         <article class="visual-proof-card">
@@ -518,93 +520,36 @@
     </div>
 
     <div class="decision-helper">
-        <h3>如果你不確定選哪一款，先用最近最常發生的夜晚狀態判斷就好</h3>
-        <p>不用一次看完全部技術細節，也不用怕自己選錯。先找到最像你現在狀態的那一種夜晚，通常就已經很接近適合的版本。</p>
+        <h3>它不是一個版本賣給所有人，而是先對應你的夜晚狀態</h3>
+        <p>A / B / C / D 四型不是複雜分類，而是把常見睡前卡住的原因整理成四條路徑。先辨識狀態，再選擇音頻，會比盲目聽一段普通助眠聲音更清楚。</p>
         <div class="decision-grid">
             <article class="decision-card">
                 <strong>A 劑</strong>
                 <p>明明很累，腦袋還在跑工作、行程和明天。</p>
-                <a href="#experience" class="decision-link">看 A 劑</a>
+                <a href="#purchase" class="decision-link">看 A 劑</a>
             </article>
             <article class="decision-card">
                 <strong>B 劑</strong>
                 <p>身體很累，但半夜容易醒，醒來像沒有真正睡到。</p>
-                <a href="#experience" class="decision-link">看 B 劑</a>
+                <a href="#purchase" class="decision-link">看 B 劑</a>
             </article>
             <article class="decision-card">
                 <strong>C 劑</strong>
                 <p>明天有重要任務，整個人停在備戰模式，鬆不下來。</p>
-                <a href="#experience" class="decision-link">看 C 劑</a>
+                <a href="#purchase" class="decision-link">看 C 劑</a>
             </article>
             <article class="decision-card">
                 <strong>D 劑</strong>
                 <p>夜裡容易被未來、金錢和安全感的不安拉走。</p>
-                <a href="#experience" class="decision-link">看 D 劑</a>
+                <a href="#purchase" class="decision-link">看 D 劑</a>
             </article>
         </div>
     </div>
 
-    <div class="product-grid">
-        <!-- 產品 1 -->
-        <div class="product-card">
-            <div class="card-icon">🍃</div>
-            <h3 class="card-title">【A劑】斷路器・沉靜頻率</h3>
-            <span class="card-freq">Theta 波 (4-7Hz) · 對應 A 型大腦</span>
-            <div class="product-visual">
-                <span class="product-visual-label">適合這種狀態</span>
-                <h4 class="product-visual-title">過載中的大腦，需要先被切離。</h4>
-                <p class="product-visual-copy">像是把還在閃爍的腦內頁面，一格一格暗下來。</p>
-            </div>
-            <p class="card-desc">適合那種身體已經累了，腦袋卻還在跑行程、想工作、想明天的夜晚。這一款想幫你先收掉過載運轉，讓夜晚比較有機會慢下來。</p>
-            <button type="button" class="card-cta" data-purchase-trigger data-product-code="A" data-product-name="【A劑】斷路器・沉靜頻率" data-payment-url="https://p.ecpay.com.tw/8F74F17">立即購買 NT$299</button>
-        </div>
-
-        <!-- 產品 2 -->
-        <div class="product-card">
-            <div class="card-icon">🌙</div>
-            <h3 class="card-title">【B劑】深海艙・放鬆頻率</h3>
-            <span class="card-freq">Delta 波 (0.5-4Hz) · 對應 B 型大腦</span>
-            <div class="product-visual">
-                <span class="product-visual-label">適合這種狀態</span>
-                <h4 class="product-visual-title">身體很累，但神經系統還在警戒。</h4>
-                <p class="product-visual-copy">像慢慢沉進深海保護艙，把外面的干擾關在外面。</p>
-            </div>
-            <p class="card-desc">適合身體很累，但神經系統還在備戰、半夜容易醒、醒來像沒睡到的夜晚。這一款想幫你把夜裡那種鬆不開的狀態再往下放一層。</p>
-            <button type="button" class="card-cta" data-purchase-trigger data-product-code="B" data-product-name="【B劑】深海艙・放鬆頻率" data-payment-url="https://p.ecpay.com.tw/377EA05">立即購買 NT$299</button>
-        </div>
-
-        <!-- 產品 3 -->
-        <div class="product-card">
-            <div class="card-icon">⚡️</div>
-            <h3 class="card-title">【C劑】心流校準・專注頻率</h3>
-            <span class="card-freq">Alpha 波 (8-12Hz) · 對應 C 型大腦</span>
-            <div class="product-visual">
-                <span class="product-visual-label">適合這種狀態</span>
-                <h4 class="product-visual-title">高壓前夜，不必靠失控來準備明天。</h4>
-                <p class="product-visual-copy">讓緊繃感先退一步，清醒感才有機會變得穩定。</p>
-            </div>
-            <p class="card-desc">適合明天有重要任務、高壓會議、腦袋停在備戰模式的夜晚。這一款想幫你把緊繃感收回來，讓清醒不再等於一直繃著。</p>
-            <button type="button" class="card-cta" data-purchase-trigger data-product-code="C" data-product-name="【C劑】心流校準・專注頻率" data-payment-url="https://p.ecpay.com.tw/EA5427D">立即購買 NT$299</button>
-        </div>
-
-        <!-- 產品 4 -->
-        <div class="product-card gold-card">
-            <div class="card-icon">💎</div>
-            <h3 class="card-title">【D劑】豐盛錨點・安定頻率</h3>
-            <span class="card-freq">Solfeggio / 852Hz · 對應 D 型大腦</span>
-            <div class="product-visual">
-                <span class="product-visual-label">適合這種狀態</span>
-                <h4 class="product-visual-title">把夜裡那股匱乏與不安，重新壓回寂靜裡。</h4>
-                <p class="product-visual-copy">不是否定情緒，而是先把拉扯感降下來，讓人回到內在穩定。</p>
-            </div>
-            <p class="card-desc">適合一到夜裡就容易被未來、金錢和安全感拉走的狀態。這一款想幫你先把那種內在拉扯壓低，讓人比較回得來當下。</p>
-            <button type="button" class="card-cta" data-purchase-trigger data-product-code="D" data-product-name="【D劑】豐盛錨點・安定頻率" data-payment-url="https://p.ecpay.com.tw/5FB3A34">立即購買 NT$299</button>
-        </div>
-    </div>
 </section>
 
 <section id="tech-intro" class="section-shell" style="padding-bottom: 4rem;">
-    <div class="section-kicker">差別在哪裡</div>
+    <div class="section-kicker">為什麼有效</div>
     <h2>為什麼很多人聽了很多助眠內容，夜裡還是停不下來？</h2>
     <p class="section-desc">差別不只在聲音好不好聽，而在於底層有沒有技術結構。這一套的設計核心，是把頻率校準、腦波導引與語意引導一起用，目標是讓大腦比較容易從高張狀態切回休息與修復狀態。</p>
     <div class="tech-container">
@@ -687,6 +632,88 @@
     </div>
 </section>
 
+<section class="value-anchor-section">
+    <div class="value-anchor-shell">
+        <div class="value-anchor-grid">
+            <div class="value-anchor-copy">
+                <div class="section-kicker" style="text-align: left; color: rgba(212,175,55,0.92);">價格比較</div>
+                <h2>不用一次買整套，先選最符合你現在狀態的一款就好</h2>
+                <p>一套完整的高階睡前音頻方案，原價通常會落在 <strong>NT$6,000</strong> 左右。多數人真正需要的，不是一次買一整套，而是先找到最適合自己現在狀態的那一款。</p>
+                <p>所以你現在不用先花整套的錢。你可以先用 <strong>NT$299</strong>，選一款最接近你現在困擾的版本，從今晚開始使用。</p>
+            </div>
+            <aside class="value-anchor-card" aria-label="價格定錨資訊">
+                <div class="anchor-label">現在先買一款就可以</div>
+                <div class="anchor-old-price">整套方案原價 NT$6,000</div>
+                <div class="anchor-price">NT$299</div>
+                <p class="anchor-note">先選一款最符合你現在狀態的版本。先從今晚開始，再看看它適不適合你。</p>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<section id="purchase" class="section-shell">
+    <div class="section-kicker">購買選擇</div>
+    <h2>選一款最像你現在夜晚狀態的音頻，今晚就能開始</h2>
+    <p class="section-desc">每一款都是 NT$299。你不需要一次買整套，先用最接近自己狀態的一款建立睡前節奏。</p>
+    <div class="product-grid">
+        <!-- 產品 1 -->
+        <div class="product-card">
+            <div class="card-icon">🍃</div>
+            <h3 class="card-title">【A劑】斷路器・沉靜頻率</h3>
+            <span class="card-freq">Theta 波 (4-7Hz) · 對應 A 型大腦</span>
+            <div class="product-visual">
+                <span class="product-visual-label">適合這種狀態</span>
+                <h4 class="product-visual-title">過載中的大腦，需要先被切離。</h4>
+                <p class="product-visual-copy">像是把還在閃爍的腦內頁面，一格一格暗下來。</p>
+            </div>
+            <p class="card-desc">適合那種身體已經累了，腦袋卻還在跑行程、想工作、想明天的夜晚。這一款想幫你先收掉過載運轉，讓夜晚比較有機會慢下來。</p>
+            <button type="button" class="card-cta" data-purchase-trigger data-product-code="A" data-product-name="【A劑】斷路器・沉靜頻率" data-payment-url="https://p.ecpay.com.tw/8F74F17">立即購買 NT$299</button>
+        </div>
+
+        <!-- 產品 2 -->
+        <div class="product-card">
+            <div class="card-icon">🌙</div>
+            <h3 class="card-title">【B劑】深海艙・放鬆頻率</h3>
+            <span class="card-freq">Delta 波 (0.5-4Hz) · 對應 B 型大腦</span>
+            <div class="product-visual">
+                <span class="product-visual-label">適合這種狀態</span>
+                <h4 class="product-visual-title">身體很累，但神經系統還在警戒。</h4>
+                <p class="product-visual-copy">像慢慢沉進深海保護艙，把外面的干擾關在外面。</p>
+            </div>
+            <p class="card-desc">適合身體很累，但神經系統還在備戰、半夜容易醒、醒來像沒睡到的夜晚。這一款想幫你把夜裡那種鬆不開的狀態再往下放一層。</p>
+            <button type="button" class="card-cta" data-purchase-trigger data-product-code="B" data-product-name="【B劑】深海艙・放鬆頻率" data-payment-url="https://p.ecpay.com.tw/377EA05">立即購買 NT$299</button>
+        </div>
+
+        <!-- 產品 3 -->
+        <div class="product-card">
+            <div class="card-icon">⚡️</div>
+            <h3 class="card-title">【C劑】心流校準・專注頻率</h3>
+            <span class="card-freq">Alpha 波 (8-12Hz) · 對應 C 型大腦</span>
+            <div class="product-visual">
+                <span class="product-visual-label">適合這種狀態</span>
+                <h4 class="product-visual-title">高壓前夜，不必靠失控來準備明天。</h4>
+                <p class="product-visual-copy">讓緊繃感先退一步，清醒感才有機會變得穩定。</p>
+            </div>
+            <p class="card-desc">適合明天有重要任務、高壓會議、腦袋停在備戰模式的夜晚。這一款想幫你把緊繃感收回來，讓清醒不再等於一直繃著。</p>
+            <button type="button" class="card-cta" data-purchase-trigger data-product-code="C" data-product-name="【C劑】心流校準・專注頻率" data-payment-url="https://p.ecpay.com.tw/EA5427D">立即購買 NT$299</button>
+        </div>
+
+        <!-- 產品 4 -->
+        <div class="product-card gold-card">
+            <div class="card-icon">💎</div>
+            <h3 class="card-title">【D劑】豐盛錨點・安定頻率</h3>
+            <span class="card-freq">Solfeggio / 852Hz · 對應 D 型大腦</span>
+            <div class="product-visual">
+                <span class="product-visual-label">適合這種狀態</span>
+                <h4 class="product-visual-title">把夜裡那股匱乏與不安，重新壓回寂靜裡。</h4>
+                <p class="product-visual-copy">不是否定情緒，而是先把拉扯感降下來，讓人回到內在穩定。</p>
+            </div>
+            <p class="card-desc">適合一到夜裡就容易被未來、金錢和安全感拉走的狀態。這一款想幫你先把那種內在拉扯壓低，讓人比較回得來當下。</p>
+            <button type="button" class="card-cta" data-purchase-trigger data-product-code="D" data-product-name="【D劑】豐盛錨點・安定頻率" data-payment-url="https://p.ecpay.com.tw/5FB3A34">立即購買 NT$299</button>
+        </div>
+    </div>
+</section>
+
 <section class="faq-section section-shell" id="faq">
     <div class="section-kicker">常見問題</div>
     <div class="faq-grid">
@@ -710,6 +737,15 @@
             <h4>它是醫療產品嗎？</h4>
             <p>不是。它屬於一般身心放鬆與專注聆聽體驗的輔助內容，不取代醫療診斷或治療。如果你本身已有明確身心疾患，仍建議優先尋求專業醫療協助。</p>
         </article>
+    </div>
+</section>
+
+<section class="final-cta-section" aria-label="最後行動呼籲">
+    <div class="final-cta-box">
+        <div class="section-kicker" style="color: rgba(212,175,55,0.92);">今晚開始</div>
+        <h2>今晚不用再研究更多方法，先選一個能開始的版本</h2>
+        <p>如果你已經知道自己卡在哪一種夜晚狀態，就從最接近的那一款開始。先讓睡前有一條固定路徑，身心才有機會慢慢學會回到安定。</p>
+        <a href="#purchase" class="final-cta-link">回到音頻選擇區</a>
     </div>
 </section>
 
