@@ -60,8 +60,10 @@
         
         /* 內容區塊共用 */
         section { padding: 8rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 5; }
-        h2 { font-size: 2.4rem; margin-bottom: 1.2rem; color: var(--primary); text-align: center; font-weight: 700; letter-spacing: 1px; }
+        h2 { font-size: 2.4rem; margin-bottom: 1.2rem; color: var(--primary); text-align: center; font-weight: 700; letter-spacing: 1px; text-wrap: pretty; }
+        p, h3, h4, h5, .section-desc, .pain-story-title, .pain-quote, .card-title, .product-visual-title, .faq-item h4 { text-wrap: pretty; }
         .section-desc { text-align: center; color: var(--text-sub); max-width: 700px; margin: 0 auto 4rem; font-size: 1.15rem; font-weight: 300; line-height: 1.9; }
+        .purchase-desc { max-width: none; white-space: nowrap; }
         .section-kicker { text-align: center; color: var(--accent); font-size: 1.05rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 800; margin-bottom: 1rem; }
         .section-shell { position: relative; }
         .section-shell::before { content: ''; position: absolute; inset: -1.5rem 0 auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(10,15,29,0.1), transparent); }
@@ -303,6 +305,7 @@
             section { padding: 2rem 0.85rem; }
             h2 { font-size: 1.8rem; line-height: 1.4; margin-bottom: 0.9rem; letter-spacing: 0.02em; }
             .section-desc { font-size: 0.98rem; line-height: 1.72; margin-bottom: 1rem; padding: 0; }
+            .purchase-desc { max-width: 100%; white-space: normal; }
             .section-kicker { font-size: 0.96rem; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
 
             .pain-story-section { padding: 2rem 0.85rem; }
@@ -644,7 +647,7 @@
 
 <section id="purchase" class="section-shell">
     <h2>選一款最像你現在夜晚狀態的音頻，今晚就能開始</h2>
-    <p class="section-desc">每一款都是 NT$299。你不需要一次買整套，先用最接近自己狀態的一款建立睡前節奏。</p>
+    <p class="section-desc purchase-desc">每一款都是 NT$299。你不需要一次買整套，先用最接近自己狀態的一款建立睡前節奏。</p>
     <div class="product-grid">
         <!-- 產品 1 -->
         <div class="product-card">
