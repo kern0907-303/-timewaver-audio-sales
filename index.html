@@ -21,6 +21,86 @@
     src="https://www.facebook.com/tr?id=898572276545194&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
+    <script>
+        const ABL_ANALYTICS_ENDPOINT = "https://abl-conversion-dashboard.netlify.app/api/track";
+        const ABL_ANALYTICS_SITE_ID = "timewaver_audio_sales";
+
+        function getAblId(storage, key, prefix) {
+            const existing = storage.getItem(key);
+            if (existing) return existing;
+            const randomId = window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID() : Math.random().toString(36).slice(2);
+            const next = `${prefix}_${randomId}`;
+            storage.setItem(key, next);
+            return next;
+        }
+
+        function getAblUtm() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                utm_source: params.get("utm_source") || null,
+                utm_medium: params.get("utm_medium") || null,
+                utm_campaign: params.get("utm_campaign") || null,
+                utm_content: params.get("utm_content") || null
+            };
+        }
+
+        function trackAblEvent(eventName, metadata = {}) {
+            const payload = {
+                site_id: ABL_ANALYTICS_SITE_ID,
+                event_name: eventName,
+                visitor_id: getAblId(window.localStorage, "abl_visitor_id", "visitor"),
+                session_id: getAblId(window.sessionStorage, "abl_session_id", "session"),
+                page_url: window.location.href,
+                referrer: document.referrer || null,
+                ...getAblUtm(),
+                metadata
+            };
+
+            fetch(ABL_ANALYTICS_ENDPOINT, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+                keepalive: true
+            }).catch(() => {});
+        }
+
+        trackAblEvent("page_view");
+
+        const ablParams = new URLSearchParams(window.location.search);
+        if (
+            ablParams.get("payment_success") === "1" ||
+            ablParams.get("paid") === "1" ||
+            ablParams.get("status") === "success" ||
+            ablParams.get("RtnCode") === "1"
+        ) {
+            trackAblEvent("payment_success", {
+                order_no: ablParams.get("order_no") || ablParams.get("MerchantTradeNo") || null
+            });
+        }
+
+        document.addEventListener("click", (event) => {
+            const target = event.target.closest("a,button");
+            if (!target) return;
+
+            const href = target.href || "";
+            const text = (target.textContent || "").trim();
+
+            if (target.matches("[data-purchase-trigger]")) {
+                trackAblEvent("audio_purchase_click", {
+                    product_code: target.dataset.productCode,
+                    product_name: target.dataset.productName
+                });
+            }
+
+            if (/line|lin\.ee|line\.me/i.test(href) || /LINE/i.test(text)) {
+                trackAblEvent("line_click", { label: text.slice(0, 80) });
+            }
+
+            if (/預約|諮詢|consult/i.test(text + " " + href)) {
+                trackAblEvent("consultation_booking", { label: text.slice(0, 80) });
+            }
+        });
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         /* 基礎變數與重置 */
