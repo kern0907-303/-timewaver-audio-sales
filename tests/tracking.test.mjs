@@ -27,3 +27,8 @@ test("sales page acknowledges visitors coming from the sleep checkpoint test", (
   assert.match(html, /如果你剛完成睡前卡點檢測/);
   assert.match(html, /先看對應你的那一款/);
 });
+
+test("keeps the hero headline on a single line", () => {
+  assert.match(html, /<h1 class="hero-nowrap">如果睡不著，問題可能不是你不夠累<\/h1>/);
+  assert.match(html, /\.hero-nowrap\s*\{[^}]*white-space:\s*nowrap/);
+});
