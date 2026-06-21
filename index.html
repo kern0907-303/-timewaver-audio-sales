@@ -257,6 +257,9 @@
         @media (max-width: 768px) { .product-grid { grid-template-columns: 1fr; } }
         .product-card { background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,249,250,0.96)); backdrop-filter: blur(10px); border: 1px solid rgba(10,15,29,0.08); border-radius: 22px; padding: 2.5rem 2rem; display: flex; flex-direction: column; height: 100%; transition: all 0.4s ease; box-shadow: 0 18px 36px rgba(10,15,29,0.06); }
         .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); border-color: rgba(31, 58, 95, 0.2); }
+        .product-card.is-recommended { border-color: rgba(212,175,55,0.72); box-shadow: 0 24px 52px rgba(212,175,55,0.18); }
+        .recommendation-badge { display: none; align-self: flex-start; margin-bottom: 1rem; padding: 0.38rem 0.7rem; border-radius: 999px; background: rgba(212,175,55,0.13); border: 1px solid rgba(212,175,55,0.32); color: #8a6a12; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em; }
+        .product-card.is-recommended .recommendation-badge { display: inline-flex; }
         .card-icon { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; opacity: 0.9; }
         .card-title { font-size: 1.35rem; margin-bottom: 0.5rem; color: var(--primary); font-weight: 700; }
         .card-freq { font-size: 0.8rem; color: var(--text-sub); letter-spacing: 1px; margin-bottom: 1.5rem; font-weight: 500; text-transform: uppercase; }
@@ -728,9 +731,14 @@
 <section id="purchase" class="section-shell">
     <h2>選一款最符合你解析結果的音頻，今晚就能開始</h2>
     <p class="section-desc purchase-desc">每一款都是 NT$299。你不需要一次買整套，先用最接近自己解析結果的一款建立睡前節奏。</p>
+    <div class="decision-helper" data-assessment-handoff>
+        <h3>如果你剛完成睡前卡點檢測，請先看對應你的那一款</h3>
+        <p>測驗結果不是要你一次買完整套，而是幫你先縮小選擇。先從最接近目前狀態的一款開始，今晚就有一條比較清楚的睡前路徑。</p>
+    </div>
     <div class="product-grid">
         <!-- 產品 1 -->
-        <div class="product-card">
+        <div class="product-card" data-product-card="A">
+            <span class="recommendation-badge">你的檢測推薦</span>
             <div class="card-icon">🍃</div>
             <h3 class="card-title">【A劑】斷路器・沉靜頻率</h3>
             <span class="card-freq">Theta 波 (4-7Hz) · A 型：腦內雜訊 / 復盤</span>
@@ -744,7 +752,8 @@
         </div>
 
         <!-- 產品 2 -->
-        <div class="product-card">
+        <div class="product-card" data-product-card="B">
+            <span class="recommendation-badge">你的檢測推薦</span>
             <div class="card-icon">🌙</div>
             <h3 class="card-title">【B劑】深海艙・放鬆頻率</h3>
             <span class="card-freq">Delta 波 (0.5-4Hz) · B 型：淺眠 / 修復不足</span>
@@ -758,7 +767,8 @@
         </div>
 
         <!-- 產品 3 -->
-        <div class="product-card">
+        <div class="product-card" data-product-card="C">
+            <span class="recommendation-badge">你的檢測推薦</span>
             <div class="card-icon">⚡️</div>
             <h3 class="card-title">【C劑】心流校準・專注頻率</h3>
             <span class="card-freq">Alpha 波 (8-12Hz) · C 型：明天壓力 / 神經備戰</span>
@@ -772,7 +782,8 @@
         </div>
 
         <!-- 產品 4 -->
-        <div class="product-card gold-card">
+        <div class="product-card gold-card" data-product-card="D">
+            <span class="recommendation-badge">你的檢測推薦</span>
             <div class="card-icon">💎</div>
             <h3 class="card-title">【D劑】豐盛錨點・安定頻率</h3>
             <span class="card-freq">Solfeggio / 852Hz · D 型：底層不安 / 安全感</span>
@@ -881,6 +892,19 @@
 
 <script>
     const PAYMENT_ORDER_WEBHOOK = 'https://erick303.app.n8n.cloud/webhook/timewaver-create-ecpay-order';
+
+    const highlightRecommendedProduct = () => {
+        const resultType = new URLSearchParams(window.location.search).get('result');
+        if (!/^[ABCD]$/.test(resultType || '')) return;
+
+        const recommendedCard = document.querySelector(`[data-product-card="${resultType}"]`);
+        if (!recommendedCard) return;
+
+        recommendedCard.classList.add('is-recommended');
+        trackAblEvent('recommended_product_view', { result_type: resultType });
+    };
+
+    highlightRecommendedProduct();
 
     const purchaseModal = document.querySelector('[data-purchase-modal]');
     const purchaseForm = purchaseModal.querySelector('[data-purchase-form]');
