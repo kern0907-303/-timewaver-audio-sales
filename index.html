@@ -1163,6 +1163,14 @@
         .hero-panel .bg-green-300, .desktop-shell .bg-green-300 { background: #08765a !important; }
         main .border-cyan-300\/20, .funnel-content:not(.desktop-shell) .border-cyan-300\/20 { border-color: rgba(185,142,23,0.28) !important; }
         /* ===== 同意勾選 ===== */
+        /* ===== 結帳狀態訊息 ===== */
+        .purchase-status.is-error {
+            color: #b3261e !important; font-weight: 700; font-size: 0.95rem !important;
+            background: rgba(179,38,30,0.08); border-left: 3px solid #b3261e;
+            padding: 0.7rem 0.95rem; border-radius: 0 0.6rem 0.6rem 0;
+            display: block; margin-top: 0.75rem;
+        }
+
         .consent-row {
             display: flex; align-items: flex-start; gap: 0.6rem;
             font-size: 0.85rem !important; line-height: 1.7; color: var(--muted);
@@ -1599,7 +1607,7 @@
                     <span class="rounded-full border border-slate-700 px-3 py-1.5">12 小時內交付</span>
                     <span class="rounded-full border border-slate-700 px-3 py-1.5">可換一次</span>
                 </div>
-                <p id="purchase-status" class="text-sm text-slate-400" aria-live="polite">付款前不會扣款。</p>
+                <p id="purchase-status" class="purchase-status text-sm text-slate-400" aria-live="polite">付款前不會扣款。</p>
             </form>
         </div>
     </section>
@@ -1614,7 +1622,7 @@
     </section>
 
     <footer class="px-6 pb-6 text-xs text-slate-500 leading-relaxed">
-        <p class="footer-links"><a href="privacy.html">隱私權政策與服務條款</a>　·　<a href="privacy.html#refund">交付與退款說明</a>　·　<a href="mailto:ikit178@gmail.com">聯絡我們</a></p>
+        <p class="footer-links"><a href="privacy.html">隱私權政策與服務條款</a>　·　<a href="privacy.html#refund">交付與退款說明</a>　·　<a href="mailto:care@abliene.com">聯絡我們</a></p>
         <p>自付款日起 7 天內，可以原訂單 Email 來信申請全額退款，無需說明原因；退款後停止後續內容寄送。逾 7 天或已選擇換款者，不再適用退款。</p>
         <p class="mt-2">本產品為一般身心放鬆與專注聆聽的輔助內容，不屬醫療器材，不提供疾病診斷、治療或預防。</p>
     </footer>
@@ -2033,8 +2041,20 @@
         const productCode = document.getElementById('purchase-product-code').value;
         const status = document.getElementById('purchase-status');
         const submit = document.getElementById('purchase-submit');
+
+        // 一般提示用灰色，需要使用者處理的錯誤用紅色並捲到看得見的地方
+        const setStatus = (msg, isError) => {
+            status.textContent = msg;
+            status.classList.toggle('is-error', !!isError);
+            if (isError) {
+                status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        };
+
         if (!productCode) {
-            status.textContent = '請先從檢測結果或四款方案中選擇一款。';
+            setStatus('請先從檢測結果或四款方案中選擇一款。', true);
+            const picker = document.getElementById('solutions') || document.getElementById('offer-stack');
+            if (picker) picker.scrollIntoView({ behavior: 'smooth', block: 'start' });
             return;
         }
         const BASE_TYPES = ['A', 'B', 'C', 'D'];
@@ -2059,7 +2079,7 @@
             primary_code: payload.primary_code
         });
         submit.disabled = true;
-        status.textContent = '正在建立綠界訂單…';
+        setStatus('正在建立綠界訂單…', false);
         if (typeof fbq === 'function') {
             ablApplyMatching(payload.buyer_name, payload.buyer_email, payload.buyer_phone);
             fbq('track', 'InitiateCheckout', {
