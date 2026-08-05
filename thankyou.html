@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>付款完成｜你的音頻正在寄出</title>
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+(function () {
+    var match = null;
+    try { match = JSON.parse(window.localStorage.getItem('abl_match') || 'null'); } catch (e) {}
+    if (match && (match.em || match.ph)) { fbq('init', '933759515940221', match); }
+    else { fbq('init', '933759515940221'); }
+})();
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=933759515940221&ev=PageView&noscript=1" /></noscript>
+
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-626919500"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-626919500');
+</script>
+
+<style>
+  :root { --ink:#17253a; --primary:#0a0f1d; --muted:#46566a; --gold:#8c6812; --line:#e4e7eb; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; padding:0; color:var(--ink); font-size:17px; line-height:1.9;
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',Arial,sans-serif;
+    background:linear-gradient(180deg,#ffffff 0%,#fbfaf7 55%,#f5f6f7 100%);
+    min-height:100vh; letter-spacing:0.012em;
+  }
+  .wrap { max-width:40rem; margin:0 auto; padding:3.5rem 1.25rem 4rem; }
+  .card {
+    background:#fff; border:1px solid var(--line); border-radius:1.5rem;
+    padding:2.5rem 2rem; box-shadow:0 10px 30px rgba(23,37,58,0.05);
+  }
+  .tick {
+    width:64px; height:64px; border-radius:999px; margin:0 auto 1.5rem;
+    background:rgba(8,118,90,0.10); display:flex; align-items:center; justify-content:center;
+    font-size:30px; color:#08765a;
+  }
+  .eyebrow { font-size:0.72rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); font-weight:600; text-align:center; }
+  h1 { font-size:1.75rem; line-height:1.35; font-weight:800; color:var(--primary); text-align:center; margin:0.75rem 0 1rem; }
+  @media (min-width:640px){ h1 { font-size:2.1rem; } }
+  .lead { text-align:center; color:#2b3a4d; margin:0 0 2rem; }
+  .order { text-align:center; font-size:0.9rem; color:var(--muted); margin:0 0 2rem; }
+  .order strong { color:var(--primary); }
+  .steps { border-top:1px solid var(--line); padding-top:1.75rem; }
+  .step { display:flex; gap:1rem; margin-bottom:1.35rem; }
+  .num {
+    flex:0 0 auto; width:1.9rem; height:1.9rem; border-radius:999px;
+    background:rgba(212,175,55,0.16); color:#7a5a08; font-weight:800; font-size:0.85rem;
+    display:flex; align-items:center; justify-content:center; margin-top:0.15rem;
+  }
+  .step strong { display:block; color:var(--primary); }
+  .step p { margin:0.2rem 0 0; font-size:0.95rem; color:var(--muted); line-height:1.75; }
+  .note {
+    background:rgba(212,175,55,0.08); border-left:4px solid var(--gold);
+    border-radius:0 0.6rem 0.6rem 0; padding:1rem 1.15rem; margin:1.75rem 0 0;
+    font-size:0.92rem; line-height:1.75;
+  }
+  .note p { margin:0; }
+  .foot { text-align:center; margin-top:2rem; font-size:0.85rem; color:var(--muted); }
+  a { color:var(--gold); text-decoration:underline; text-underline-offset:3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="tick" aria-hidden="true">✓</div>
+    <p class="eyebrow">付款完成</p>
+    <h1 id="ty-title">收到了。<br>你的音頻正在寄往你的信箱</h1>
+    <p class="lead" id="ty-lead">今晚睡前就可以開始。</p>
+    <p class="order" id="order-line" hidden>訂單編號：<strong id="order-no"></strong></p>
+
+    <div class="steps" id="steps-wave" hidden>
+      <div class="step">
+        <span class="num">1</span>
+        <div>
+          <strong>現在去收信</strong>
+          <p>一封說明信幾分鐘內會到，裡面寫了接下來一年會發生什麼。<b>如果沒看到，先查一下垃圾郵件匣</b>，並把寄件者加入聯絡人。</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="num">2</span>
+        <div>
+          <strong>48 小時內，我完成你的定錨</strong>
+          <p>用你剛才填的資料建立個人頻率檔案。完成後我會再寄一封信告訴你，你不需要做任何事。</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="num">3</span>
+        <div>
+          <strong>現在加入能量氣象台</strong>
+          <p>這是我這一年聯繫你的主要管道，關鍵節點我會主動提醒你。<a href="https://lin.ee/pre5crq" target="_blank" rel="noopener"><b>點這裡加入 LINE →</b></a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps" id="steps-audio">
+      <div class="step">
+        <span class="num">1</span>
+        <div>
+          <strong>現在去收信</strong>
+          <p>交付信通常幾分鐘內就會到，最遲十二小時內。信裡有你這一款的下載連結。<b>如果沒看到，先查一下垃圾郵件匣</b>，並把寄件者加入聯絡人。</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="num">2</span>
+        <div>
+          <strong>今晚就用一次</strong>
+          <p>把手機放遠一點，燈光調暗，戴不戴耳機都可以。按下播放之後不用做任何事，讓它在背景放著就好。</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="num">3</span>
+        <div>
+          <strong>接下來我會陪你 21 個晚上</strong>
+          <p>第 1、3、7、14、21 個晚上各一封信，告訴你今晚該觀察什麼、哪些反應是正常的，讓它真的變成你的睡前習慣。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <p>七天內若覺得不合適，直接回覆那封交付信告訴我，全額退還，不需要說明原因。也可以選擇換另一款方案。</p>
+    </div>
+
+    <p class="foot">
+      沒收到信或有任何問題，來信 <a href="mailto:care@abliene.com">care@abliene.com</a><br>
+      <a href="privacy.html">隱私權政策與服務條款</a>
+    </p>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var p = new URLSearchParams(window.location.search);
+    // 我們在 ClientBackURL 自行帶回 t=訂單編號.金額（單一參數，避免 & 影響綠界檢查碼）
+    var t = (p.get('t') || '').split('.');
+    var orderNo = t[0] || p.get('MerchantTradeNo') || p.get('order_no') || '';
+    var amount  = t[1] || p.get('TradeAmt') || p.get('amount') || '';
+
+    if (orderNo) {
+      document.getElementById('order-no').textContent = orderNo;
+      document.getElementById('order-line').hidden = false;
+    }
+
+    // 年度頻率訂單的編號以 W 開頭，換一組對應的說明
+    var isWave = /^W/i.test(orderNo);
+    if (isWave) {
+      document.getElementById('ty-title').innerHTML = '收到了。<br>你的年度頻率正在建立';
+      document.getElementById('ty-lead').textContent = '接下來這一年，你不需要記得任何事。';
+      document.getElementById('steps-audio').hidden = true;
+      document.getElementById('steps-wave').hidden = false;
+    }
+
+    // 金額：優先用回傳值，否則依訂單編號前綴推估（A/B/C/D=299、BUNDLE 訂單以 B 開頭無法區分，故預設 299）
+    var value = parseInt(amount, 10);
+    if (!value || isNaN(value)) value = 299;
+
+    // 同一筆訂單只計一次，避免使用者重新整理造成重複回報
+    var key = 'abl_purchase_' + (orderNo || 'noref');
+    var already = false;
+    try { already = window.localStorage.getItem(key) === '1'; } catch (e) {}
+
+    if (!already) {
+      if (typeof fbq === 'function') {
+        fbq('track', 'Purchase', {
+          value: value,
+          currency: 'TWD',
+          content_type: 'product',
+          content_ids: [orderNo || 'unknown']
+        });
+      }
+      if (typeof gtag === 'function') {
+        gtag('event', 'conversion', {
+          send_to: 'AW-626919500',
+          value: value,
+          currency: 'TWD',
+          transaction_id: orderNo || undefined
+        });
+      }
+      try { window.localStorage.setItem(key, '1'); } catch (e) {}
+    }
+  })();
+</script>
+</body>
+</html>

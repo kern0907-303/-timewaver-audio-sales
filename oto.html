@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你的啟動資訊正在準備｜ABL</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Meta Pixel -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    (function () {
+        var match = null;
+        try { match = JSON.parse(window.localStorage.getItem('abl_match') || 'null'); } catch (e) {}
+        if (match && (match.em || match.ph)) { fbq('init', '933759515940221', match); }
+        else { fbq('init', '933759515940221'); }
+    })();
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=933759515940221&ev=PageView&noscript=1" /></noscript>
+
+    <!-- Google tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-626919500"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-626919500');
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg-1: #06111f;
+            --bg-2: #0f1d31;
+            --panel: rgba(7, 18, 33, 0.82);
+            --line: rgba(148, 163, 184, 0.18);
+            --text-main: #e2e8f0;
+            --brand: #67e8f9;
+            --brand-2: #38bdf8;
+        }
+        * { box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'PingFang TC', 'Noto Sans TC', 'Helvetica Neue', sans-serif;
+            color: var(--text-main);
+            background:
+                radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 28%),
+                radial-gradient(circle at top right, rgba(103, 232, 249, 0.12), transparent 26%),
+                linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+        }
+        .glass-panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            box-shadow: 0 20px 80px rgba(2, 8, 23, 0.45);
+            backdrop-filter: blur(18px);
+        }
+        .primary-btn {
+            border: none;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, var(--brand-2), var(--brand));
+            color: #062033;
+            font-weight: 700;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            box-shadow: 0 18px 40px rgba(14, 165, 233, 0.18);
+        }
+        .primary-btn:hover { transform: translateY(-1px); box-shadow: 0 20px 48px rgba(34, 211, 238, 0.24); }
+        .secondary-btn {
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 9999px;
+            background: rgba(15, 23, 42, 0.55);
+            color: var(--text-main);
+            transition: border-color 0.18s ease, background 0.18s ease;
+        }
+        .secondary-btn:hover { border-color: rgba(103, 232, 249, 0.32); background: rgba(15, 23, 42, 0.82); }
+        .brand-chip { border: 1px solid rgba(103, 232, 249, 0.24); background: rgba(8, 47, 73, 0.3); color: #cffafe; }
+        .offer-panel { border-color: rgba(103, 232, 249, 0.3); background: linear-gradient(160deg, rgba(8, 47, 73, 0.42), rgba(7, 18, 33, 0.9)); }
+    </style>
+</head>
+<body class="p-4 sm:p-6">
+    <main class="mx-auto max-w-2xl space-y-5 py-4 sm:py-10">
+        <section class="glass-panel rounded-[2rem] p-6 sm:p-10" aria-labelledby="order-confirmation-title">
+            <div class="inline-flex items-center gap-2 brand-chip rounded-full px-4 py-2 text-xs tracking-[0.18em] uppercase">
+                <span class="h-2 w-2 rounded-full bg-cyan-300"></span>
+                付款完成後
+            </div>
+            <h1 id="order-confirmation-title" class="mt-5 text-3xl font-bold leading-tight text-white sm:text-4xl">你的 <span id="ordered-product-name">睡前音頻</span> 已在路上</h1>
+            <p class="mt-4 leading-relaxed text-slate-300">啟動資訊會依你的訂單準備並寄到 Email；你現在不需要再做任何確認。</p>
+        </section>
+
+        <section class="glass-panel rounded-[2rem] p-6 sm:p-10" aria-labelledby="transition-title">
+            <p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">如果你想把下一步看得更清楚</p>
+            <h2 id="transition-title" class="mt-3 text-2xl font-bold leading-tight text-white sm:text-3xl">音頻處理的是今晚；場域分析處理的是，為什麼你一直回到同一種夜晚。</h2>
+            <p class="mt-4 leading-relaxed text-slate-300">有些夜晚不只是當下的聲音或念頭，而是一天裡反覆累積、尚未被看清的比例。這個選項是給想把脈絡整理得更具體的人。</p>
+        </section>
+
+        <section class="glass-panel offer-panel rounded-[2rem] p-6 sm:p-10" aria-labelledby="oto-offer-title">
+            <p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">本頁限定升級選項</p>
+            <h2 id="oto-offer-title" class="mt-3 text-3xl font-bold text-white">ABL 個人場域比例分析</h2>
+            <p class="mt-4 leading-relaxed text-slate-200">把你目前的狀態放回生活脈絡中整理，幫你辨識下一步應該從哪裡開始看，而不是再多加一個方法。</p>
+
+            <!-- TODO: Erick 提供分析包含的具體內容後，才在此公開。 -->
+            <!-- TODO: Erick 確認每次分析的正式時長後，才在此公開。 -->
+            <!-- TODO: Erick 確認進行方式（線上／實體）與預約流程後，才在此公開。 -->
+            <!-- TODO: 待 Erick 確認正式售價。 -->
+
+            <div class="mt-7 border-y border-cyan-200/15 py-5">
+                <p class="text-sm font-semibold text-cyan-100">你剛付的 NT$299 全額折抵</p>
+                <p class="mt-2 text-sm leading-relaxed text-slate-300">若你選擇這個升級，剛完成付款的睡前音頻 NT$299 會從分析正式售價中全額扣除；不是另外再收一次音頻費。正式售價確認前，此頁不開放付款。</p>
+            </div>
+
+            <button type="button" class="primary-btn mt-7 w-full px-6 py-4" onclick="handleOtoAccept()">我想保留這個升級選項</button>
+            <p id="oto-accept-status" class="mt-3 text-center text-sm text-slate-400" aria-live="polite"></p>
+            <p class="mt-5 text-center text-xs leading-relaxed text-slate-500">此優惠僅在本頁提供，離開後不再顯示。</p>
+        </section>
+
+        <a id="oto-decline" class="secondary-btn block w-full px-6 py-4 text-center text-sm" href="index.html">這次先用一款就好</a>
+    </main>
+
+    <script>
+        const ABL_ANALYTICS_ENDPOINT = "https://abl-conversion-dashboard.netlify.app/api/track";
+        const ABL_ANALYTICS_SITE_ID = "quantum_frequency_assessment";
+        const params = new URLSearchParams(window.location.search);
+        // 綠界導回時帶的是 t=訂單編號.金額（單一參數，避免 & 影響檢查碼）
+        const backRef = (params.get("t") || "").split(".");
+        const orderNo = backRef[0] || params.get("order_no") || params.get("MerchantTradeNo") || null;
+        const productCode = params.get("product_code") || null;
+        const productName = params.get("product_name") || "睡前音頻";
+
+        /* ---------- 成交回報 ----------
+           這一頁是網站主要結帳流程付款完成後的落點，所以 Purchase 事件必須在這裡送出。
+           同一筆訂單只計一次，重新整理不會重複回報。 */
+        (function reportPurchase() {
+            let value = parseInt(backRef[1] || params.get("TradeAmt") || params.get("amount"), 10);
+            if (!value || isNaN(value)) value = 799;
+
+            const key = 'abl_purchase_' + (orderNo || 'noref');
+            let already = false;
+            try { already = window.localStorage.getItem(key) === '1'; } catch (e) {}
+            if (already) return;
+
+            if (typeof fbq === 'function') {
+                fbq('track', 'Purchase', {
+                    value: value,
+                    currency: 'TWD',
+                    content_type: 'product',
+                    content_ids: [orderNo || 'unknown']
+                });
+            }
+            if (typeof gtag === 'function') {
+                gtag('event', 'conversion', {
+                    send_to: 'AW-626919500',
+                    value: value,
+                    currency: 'TWD',
+                    transaction_id: orderNo || undefined
+                });
+            }
+            try { window.localStorage.setItem(key, '1'); } catch (e) {}
+        })();
+
+        function getAblId(storage, key, prefix) {
+            const existing = storage.getItem(key);
+            if (existing) return existing;
+            const randomId = window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID() : Math.random().toString(36).slice(2);
+            const next = `${prefix}_${randomId}`;
+            storage.setItem(key, next);
+            return next;
+        }
+
+        function getAblUtm() {
+            return {
+                utm_source: params.get("utm_source") || null,
+                utm_medium: params.get("utm_medium") || null,
+                utm_campaign: params.get("utm_campaign") || null,
+                utm_content: params.get("utm_content") || null
+            };
+        }
+
+        function trackAblEvent(eventName, metadata = {}) {
+            const payload = {
+                site_id: ABL_ANALYTICS_SITE_ID,
+                event_name: eventName,
+                visitor_id: getAblId(window.localStorage, "abl_visitor_id", "visitor"),
+                session_id: getAblId(window.sessionStorage, "abl_session_id", "session"),
+                page_url: window.location.href,
+                referrer: document.referrer || null,
+                ...getAblUtm(),
+                metadata
+            };
+            fetch(ABL_ANALYTICS_ENDPOINT, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+                keepalive: true
+            }).catch(() => {});
+        }
+
+        document.getElementById("ordered-product-name").textContent = productName;
+        trackAblEvent("oto_view", { order_no: orderNo, product_code: productCode, offer_code: "OTO_FIELD_ANALYSIS" });
+
+        function handleOtoAccept() {
+            trackAblEvent("oto_accept", { order_no: orderNo, product_code: productCode, offer_code: "OTO_FIELD_ANALYSIS" });
+            document.getElementById("oto-accept-status").textContent = "正式售價與進行方式確認後，升級入口會在這裡開放。";
+        }
+
+        document.getElementById("oto-decline").addEventListener("click", () => {
+            trackAblEvent("oto_decline", { order_no: orderNo, product_code: productCode, offer_code: "OTO_FIELD_ANALYSIS" });
+        });
+    </script>
+</body>
+</html>

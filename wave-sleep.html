@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>身心降噪頻率・一整年的睡前背景支持</title>
+<meta name="description" content="21 個晚上之後，把這個節奏交給背景。身心降噪頻率年度支持，付款後 48 小時內完成定錨，第 3 天開始，每天一次，持續一整年。">
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+(function () {
+    var match = null;
+    try { match = JSON.parse(window.localStorage.getItem('abl_match') || 'null'); } catch (e) {}
+    if (match && (match.em || match.ph)) { fbq('init', '933759515940221', match); }
+    else { fbq('init', '933759515940221'); }
+})();
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=933759515940221&ev=PageView&noscript=1" /></noscript>
+
+<style>
+  :root {
+    --ink:#17253a; --primary:#0a0f1d; --muted:#46566a; --gold:#8c6812;
+    --line:#e4e7eb; --deep:#1f3c88; --soft:#f7f9fc;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; padding:0; color:var(--ink); font-size:17px; line-height:1.9;
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',Arial,sans-serif;
+    background:linear-gradient(180deg,#ffffff 0%,#fbfaf7 55%,#f5f6f7 100%);
+    letter-spacing:0.012em;
+  }
+  .wrap { max-width:44rem; margin:0 auto; padding:3rem 1.25rem 4rem; }
+  .eyebrow { font-size:0.72rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+  h1 { font-size:1.85rem; line-height:1.4; font-weight:800; color:var(--primary); margin:0.75rem 0 1.25rem; }
+  @media (min-width:640px){ h1 { font-size:2.25rem; } }
+  h2 { font-size:1.3rem; line-height:1.5; font-weight:700; color:var(--primary); margin:2.5rem 0 1rem; }
+  p { margin:0 0 1.15rem; }
+  .lead { font-size:1.08rem; color:#2b3a4d; }
+  .card {
+    background:#fff; border:1px solid var(--line); border-radius:1.25rem;
+    padding:2rem 1.6rem; box-shadow:0 10px 30px rgba(23,37,58,0.05); margin:2rem 0;
+  }
+  @media (min-width:640px){ .card { padding:2.25rem 2rem; } }
+  .note {
+    background:rgba(212,175,55,0.08); border-left:4px solid var(--gold);
+    border-radius:0 0.6rem 0.6rem 0; padding:1.1rem 1.25rem; margin:1.75rem 0;
+    font-size:0.96rem; line-height:1.85;
+  }
+  .note p:last-child { margin:0; }
+  .plain {
+    background:var(--soft); border:1px solid #dbe3f0; border-radius:0.9rem;
+    padding:1.25rem 1.35rem; margin:1.75rem 0; font-size:0.96rem; line-height:1.9; color:#44506a;
+  }
+  .plain strong { color:var(--deep); }
+  .plain p:last-child { margin:0; }
+  .steps { margin:1.5rem 0 0; }
+  .step { display:flex; gap:1rem; margin-bottom:1.3rem; }
+  .num {
+    flex:0 0 auto; width:1.9rem; height:1.9rem; border-radius:999px;
+    background:rgba(31,60,136,0.1); color:var(--deep); font-weight:800; font-size:0.85rem;
+    display:flex; align-items:center; justify-content:center; margin-top:0.2rem;
+  }
+  .step strong { display:block; color:var(--primary); }
+  .step p { margin:0.15rem 0 0; font-size:0.95rem; color:var(--muted); line-height:1.75; }
+  .price-row { text-align:center; padding:1.25rem 0 0.5rem; }
+  .price-was { font-size:0.95rem; color:var(--muted); text-decoration:line-through; }
+  .price-now { font-size:2.4rem; font-weight:800; color:var(--deep); line-height:1.2; }
+  .price-sub { font-size:0.9rem; color:var(--muted); }
+  label { display:block; font-size:0.9rem; font-weight:600; color:var(--primary); margin:0 0 0.35rem; }
+  .field { margin-bottom:1.15rem; }
+  .grid2 { display:grid; grid-template-columns:1fr; gap:0 1rem; }
+  @media (min-width:560px){ .grid2 { grid-template-columns:1fr 1fr; } }
+  input[type=text], input[type=email], input[type=tel], input[type=date], input[type=file] {
+    width:100%; border:1px solid #cfd6de; border-radius:0.65rem; padding:0.75rem 0.85rem;
+    font-size:1rem; font-family:inherit; color:var(--ink); background:#fff; outline:none;
+  }
+  input:focus { border-color:var(--deep); box-shadow:0 0 0 3px rgba(31,60,136,0.1); }
+  .hint { font-size:0.82rem; color:var(--muted); margin:0.35rem 0 0; line-height:1.6; }
+  .consent-row { display:flex; gap:0.65rem; align-items:flex-start; margin:1.25rem 0 0; font-size:0.9rem; line-height:1.75; color:var(--muted); }
+  .consent-row input { margin-top:0.35rem; flex:0 0 auto; width:1.05rem; height:1.05rem; }
+  .btn {
+    display:block; width:100%; border:none; cursor:pointer; margin-top:1.5rem;
+    background:var(--deep); color:#fff; font-size:1.05rem; font-weight:700;
+    font-family:inherit; padding:1rem 1.25rem; border-radius:999px;
+    transition:opacity .2s;
+  }
+  .btn:hover { opacity:0.92; }
+  .btn:disabled { opacity:0.5; cursor:not-allowed; }
+  .status { text-align:center; font-size:0.9rem; color:var(--muted); margin:0.85rem 0 0; min-height:1.4rem; }
+  .status.err { color:#b3261e; }
+  .foot { text-align:center; margin-top:2.5rem; font-size:0.85rem; color:var(--muted); line-height:1.8; }
+  a { color:var(--gold); text-decoration:underline; text-underline-offset:3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">21 晚之後</p>
+  <h1>接下來這一年，<br>讓這個節奏留在背景</h1>
+
+  <p class="lead">你已經花了 21 個晚上，把睡前的節奏建立起來。這封邀請只給走完的人。</p>
+
+  <p>音頻是你主動按下播放的東西。它有用，但它需要你記得。而人最容易在忙起來、累壞了、心情差的那幾週忘記——偏偏那幾週最需要它。</p>
+
+  <p>年度頻率支持要處理的就是這件事：<strong>把支持放到背景，不需要你記得。</strong></p>
+
+  <h2>這是什麼</h2>
+
+  <p>我用 TimeWaver 為你建立一組個人的頻率設定，對應「身心降噪」這個方向——也就是你這 21 晚一直在練的：讓耗損降下來、讓身體回來。</p>
+
+  <p>設定完成之後，它每天送出一次，持續一整年。你不需要打開任何東西，也不需要記得。</p>
+
+  <div class="plain">
+    <p><strong>這是怎麼運作的</strong></p>
+    <p>生物體本身就有可以測量的電活動。心電圖量的是心臟的、腦電圖量的是大腦的——這些都是醫療現場每天在做的事，不是什麼特別的主張。</p>
+    <p>TimeWaver 的做法，是用你的個人資訊（出生日期、出生地、居住地、影像）建立一組對應的座標，再持續送出一組設定好的頻率訊息，作為背景的參照點。</p>
+    <p>它的角色不是介入，而是提供一個穩定、不需要你花力氣維持的背景節奏。</p>
+  </div>
+
+  <h2>我為什麼推薦這個</h2>
+
+  <p>我不是把一個自己沒用過的東西賣給你。</p>
+
+  <p><strong>這套頻率支持，我自己用了將近十年。</strong>不是試了幾個月覺得不錯，是它一直在我的背景裡運作，橫跨了我創業、轉型、把公司做起來的那幾年。</p>
+
+  <p>我很難用一句話證明它做了什麼，因為它不是那種會讓你「啊」一聲的東西。它比較像是——回頭看的時候，你會發現這幾年自己面對事情的方式，比以前穩。事情沒有變少，是你被拉走的次數變少了。</p>
+
+  <p>那是我的經驗，不是保證。但我敢把它放在這裡邀請你，是因為我自己走過這段路，不是因為它好賣。</p>
+
+  <h2>付款之後會發生什麼</h2>
+
+  <div class="steps">
+    <div class="step">
+      <span class="num">1</span>
+      <div>
+        <strong>48 小時內，我完成你的定錨</strong>
+        <p>用你填的資料建立個人頻率檔案。完成後我會寄一封信告訴你。</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="num">2</span>
+      <div>
+        <strong>第 3 天開始，每天一次</strong>
+        <p>持續一整年。你不需要做任何事，也不用記得打開什麼。</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="num">3</span>
+      <div>
+        <strong>能量氣象台，關鍵節點主動提醒</strong>
+        <p>付款後加入 LINE，一整年裡遇到值得注意的節點，我會主動告訴你，讓你知道何時該衝、何時該守。這是我聯繫你的主要管道。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <p><strong>接下來該觀察什麼</strong></p>
+    <p>不要盯著「今天有沒有效」。改成每週問自己一次：這一週的整體狀態，比上一週穩一點嗎？背景支持是累積的，大部分人是到第三、四週回頭看才發現不一樣。</p>
+  </div>
+
+  <h2>價格</h2>
+
+  <p>這一款單買是 NT$2,200 一年。你是走完 21 晚的人，所以是 <strong>NT$1,288</strong>。</p>
+
+  <p>另外——身心降噪只是六個方向裡的一個。還有定錨、光啟、思維加速、豐盛擴容、情感共振。今年不用一次決定，之後想加哪一個，都可以併進你同一份年度檔案裡，不用重新建立。</p>
+
+  <div class="card">
+    <div class="price-row">
+      <div class="price-was">單買 NT$2,200 / 年</div>
+      <div class="price-now">NT$ 1,288</div>
+      <div class="price-sub">一整年・約每天 3.5 元</div>
+    </div>
+
+    <form id="wave-form" autocomplete="on">
+      <div class="grid2">
+        <div class="field">
+          <label for="buyer_name">姓名（本名）*</label>
+          <input type="text" id="buyer_name" name="buyer_name" required placeholder="請填本名">
+        </div>
+        <div class="field">
+          <label for="buyer_email">Email *</label>
+          <input type="email" id="buyer_email" name="buyer_email" required placeholder="收設定完成通知用">
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="field">
+          <label for="buyer_phone">手機 *</label>
+          <input type="tel" id="buyer_phone" name="buyer_phone" required placeholder="09xxxxxxxx">
+        </div>
+        <div class="field">
+          <label for="p_dob">出生日期 *</label>
+          <input type="date" id="p_dob" required>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="field">
+          <label for="p_birthplace">出生地（縣市）*</label>
+          <input type="text" id="p_birthplace" required placeholder="例如：台北市">
+        </div>
+        <div class="field">
+          <label for="p_residence">目前居住地（縣市）*</label>
+          <input type="text" id="p_residence" required placeholder="例如：台中市">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="p_photo">個人獨照 *</label>
+        <input type="file" id="p_photo" accept="image/*" required>
+        <p class="hint">建立個人頻率座標需要。請上傳一張只有你一個人、臉部清楚的近期照片，不用特別打扮。這張照片只用於建立你的頻率檔案，不會出現在任何公開的地方。</p>
+      </div>
+
+      <div class="consent-row">
+        <input type="checkbox" id="agree-privacy" required>
+        <label for="agree-privacy" style="font-weight:400;color:inherit;">我已閱讀並同意<a href="privacy.html" target="_blank">隱私權政策與服務條款</a>，同意提供上述個人資料用於建立年度頻率檔案。</label>
+      </div>
+
+      <div class="consent-row">
+        <input type="checkbox" id="agree-nature" required>
+        <label for="agree-nature" style="font-weight:400;color:inherit;">我了解本服務為日常身心照顧的輔助支持，不屬醫療器材，也不取代專業醫療照顧。</label>
+      </div>
+
+      <button type="submit" class="btn" id="submit-btn">確認資料，前往付款</button>
+      <p class="status" id="status"></p>
+    </form>
+  </div>
+
+  <div class="note">
+    <p>七天內若改變心意，回信告訴我，全額退還，不需要說明原因。</p>
+  </div>
+
+  <div class="plain" style="margin-top:2.5rem;">
+    <p><strong>關於效果，先說清楚</strong></p>
+    <p>頻率支持不是治療，也不取代任何醫療照顧。這套方法在主流醫學裡沒有被驗證過，會不會有感覺、多久有感覺，每個人都不一樣。</p>
+    <p>我把這件事寫在這裡，不是為了免責，是因為你有權利在決定之前就知道。要不要開始，由你判斷。</p>
+    <p>如果你正因為長期的睡眠困擾或身心不適在接受專業照護，請以專業人員的建議為優先，這個東西不會跟它衝突，但也不該取代它。</p>
+  </div>
+
+  <p class="foot">
+    有任何問題，來信 <a href="mailto:care@abliene.com">care@abliene.com</a><br>
+    <a href="privacy.html">隱私權政策與服務條款</a><br>
+    本服務為一般身心放鬆與專注的輔助內容，不屬醫療器材，不提供疾病診斷、治療或預防。
+  </p>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  const SUPABASE_URL = 'https://wbbnjasjyfuatkvnoogi.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_OGI7Yxdo3d3phH6pAeeLww_sMu12Hs1';
+  const PAYMENT_ORDER_WEBHOOK = 'https://erick303.app.n8n.cloud/webhook/timewaver-create-ecpay-order';
+  const PRODUCT_CODE = 'WAVE_SLEEP';
+  const SOURCE = 'sleep_day21';
+
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const form = document.getElementById('wave-form');
+  const btn = document.getElementById('submit-btn');
+  const status = document.getElementById('status');
+
+  function say(msg, isErr) {
+    status.textContent = msg;
+    status.className = isErr ? 'status err' : 'status';
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const photoFile = document.getElementById('p_photo').files[0];
+    if (!photoFile) { say('請選擇一張個人獨照。', true); return; }
+    if (photoFile.size > 8 * 1024 * 1024) {
+      say('照片超過 8MB，請換一張小一點的。', true); return;
+    }
+
+    btn.disabled = true;
+    say('正在上傳照片…');
+
+    try {
+      const ext = (photoFile.name.split('.').pop() || 'jpg').toLowerCase();
+      const fileName = Date.now() + '_' + Math.random().toString(36).slice(2, 9) + '.' + ext;
+
+      const up = await sb.storage.from('photos').upload(fileName, photoFile);
+      if (up.error) throw new Error('照片上傳失敗，請稍後再試一次。');
+
+      const pub = sb.storage.from('photos').getPublicUrl(fileName);
+      const photoUrl = (pub.data && pub.data.publicUrl) || '';
+
+      say('正在建立你的頻率檔案…');
+
+      const name = document.getElementById('buyer_name').value.trim();
+      const email = document.getElementById('buyer_email').value.trim();
+      const phone = document.getElementById('buyer_phone').value.trim();
+
+      const record = {
+        name: name,
+        dob: document.getElementById('p_dob').value,
+        birthplace: document.getElementById('p_birthplace').value.trim(),
+        residence: document.getElementById('p_residence').value.trim(),
+        photo: photoUrl,
+        lamps: '身心降噪頻率',
+        price: 1288,
+        source: SOURCE,
+        created_at: new Date()
+      };
+
+      const ins = await sb.from('2026WAVE').insert([record]);
+      if (ins.error) throw new Error('資料建立失敗：' + (ins.error.message || '請稍後再試'));
+
+      say('正在前往綠界付款…');
+
+      // Meta 進階比對：把買家資料交給像素，讓轉換能對回真實的人
+      try {
+        const em = email.toLowerCase();
+        let ph = phone.replace(/[^0-9]/g, '');
+        if (ph.startsWith('0')) ph = '886' + ph.slice(1);
+        const match = { em: em, ph: ph, fn: name.toLowerCase().replace(/\s+/g, ''), country: 'tw' };
+        window.localStorage.setItem('abl_match', JSON.stringify(match));
+        if (typeof fbq === 'function') {
+          fbq('init', '933759515940221', match);
+          fbq('track', 'InitiateCheckout', { value: 1288, currency: 'TWD', content_type: 'product', content_ids: ['WAVE_SLEEP'] });
+        }
+      } catch (e) {}
+
+      const payload = {
+        buyer_name: name,
+        buyer_email: email,
+        buyer_phone: phone,
+        item_codes: PRODUCT_CODE,
+        primary_code: '',
+        secondary_code: '',
+        source: SOURCE,
+        return_url: new URL('thankyou.html', window.location.href).href
+      };
+
+      const bridge = document.createElement('form');
+      bridge.method = 'POST';
+      bridge.action = PAYMENT_ORDER_WEBHOOK;
+      bridge.acceptCharset = 'UTF-8';
+      bridge.hidden = true;
+      Object.entries(payload).forEach(function (pair) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = pair[0];
+        input.value = pair[1];
+        bridge.appendChild(input);
+      });
+      document.body.appendChild(bridge);
+      bridge.submit();
+
+    } catch (err) {
+      console.error(err);
+      say((err && err.message) || '發生問題，請稍後再試，或來信 care@abliene.com', true);
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>

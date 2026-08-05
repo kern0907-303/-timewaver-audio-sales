@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>音頻腦波校準｜全息神經重置防護罩</title>
-    <!-- Meta Pixel Code -->
+    <title>60 秒睡前卡點檢測｜白噪音、早點躺都沒錯，錯在沒先分清你卡在哪一型</title>
+    <meta name="description" content="用 60 秒回答 8 題，不用先購買，先找出你今晚卡在哪一型，再選擇適合的睡前聲音路徑。">
+    <link rel="canonical" href="https://timewaver-audio-sales.netlify.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://timewaver-audio-sales.netlify.app/">
+    <meta property="og:title" content="60 秒睡前卡點檢測｜白噪音、早點躺都沒錯，錯在沒先分清你卡在哪一型">
+    <meta property="og:description" content="用 60 秒回答 8 題，不用先購買，先找出你今晚卡在哪一型，再選擇適合的睡前聲音路徑。">
+    <!-- TODO: 製作 1200×630 分享圖後，放置於 assets/og-cover.jpg。 -->
+    <meta property="og:image" content="https://timewaver-audio-sales.netlify.app/assets/og-cover.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="60 秒睡前卡點檢測｜白噪音、早點躺都沒錯，錯在沒先分清你卡在哪一型">
+    <meta name="twitter:description" content="用 60 秒回答 8 題，不用先購買，先找出你今晚卡在哪一型，再選擇適合的睡前聲音路徑。">
+    <meta name="twitter:image" content="https://timewaver-audio-sales.netlify.app/assets/og-cover.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -14,16 +26,24 @@
         t.src=v;s=b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '898572276545194');
+        fbq('init', '933759515940221');
         fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=898572276545194&ev=PageView&noscript=1"
+    src="https://www.facebook.com/tr?id=933759515940221&ev=PageView&noscript=1"
     /></noscript>
-    <!-- End Meta Pixel Code -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-626919500"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'AW-626919500');
+    </script>
     <script>
         const ABL_ANALYTICS_ENDPOINT = "https://abl-conversion-dashboard.netlify.app/api/track";
-        const ABL_ANALYTICS_SITE_ID = "timewaver_audio_sales";
+        const ABL_ANALYTICS_SITE_ID = "quantum_frequency_assessment";
 
         function getAblId(storage, key, prefix) {
             const existing = storage.getItem(key);
@@ -66,16 +86,46 @@
 
         trackAblEvent("page_view");
 
-        const ablParams = new URLSearchParams(window.location.search);
-        if (
-            ablParams.get("payment_success") === "1" ||
-            ablParams.get("paid") === "1" ||
-            ablParams.get("status") === "success" ||
-            ablParams.get("RtnCode") === "1"
-        ) {
-            trackAblEvent("payment_success", {
-                order_no: ablParams.get("order_no") || ablParams.get("MerchantTradeNo") || null
-            });
+        /* ---------- Meta 進階比對（Advanced Matching） ----------
+           把使用者留下的 Email／電話／姓名交給像素，讓 Meta 能把轉換對回真實的人。
+           值只做正規化（去空白、轉小寫），雜湊由 Meta 的 SDK 自己處理，
+           我們不會把原始值送到自己的後端以外的地方。 */
+        const ABL_PIXEL_ID = '933759515940221';
+
+        function ablBuildMatching(name, email, phone) {
+            const out = {};
+            const em = String(email || '').trim().toLowerCase();
+            if (em.includes('@')) out.em = em;
+
+            let ph = String(phone || '').replace(/[^0-9]/g, '');
+            if (ph.startsWith('0')) ph = '886' + ph.slice(1);      // 09xxxxxxxx → 8869xxxxxxxx
+            else if (ph.length === 9 && ph.startsWith('9')) ph = '886' + ph;
+            if (ph.length >= 10) out.ph = ph;
+
+            const nm = String(name || '').trim().toLowerCase().replace(/\s+/g, '');
+            if (nm) {
+                // 中文姓名不分姓與名，整串放 fn 即可；英文姓名才拆
+                if (/^[a-z\s]+$/.test(String(name || '').trim().toLowerCase())) {
+                    const parts = String(name).trim().toLowerCase().split(/\s+/);
+                    out.fn = parts[0];
+                    if (parts.length > 1) out.ln = parts[parts.length - 1];
+                } else {
+                    out.fn = nm;
+                }
+            }
+
+            out.country = 'tw';
+            return out;
+        }
+
+        function ablApplyMatching(name, email, phone) {
+            const data = ablBuildMatching(name, email, phone);
+            if (!data.em && !data.ph) return data;
+            try {
+                if (typeof fbq === 'function') fbq('init', ABL_PIXEL_ID, data);
+                window.localStorage.setItem('abl_match', JSON.stringify(data));
+            } catch (e) {}
+            return data;
         }
 
         document.addEventListener("click", (event) => {
@@ -85,11 +135,8 @@
             const href = target.href || "";
             const text = (target.textContent || "").trim();
 
-            if (target.matches("[data-purchase-trigger]")) {
-                trackAblEvent("audio_purchase_click", {
-                    product_code: target.dataset.productCode,
-                    product_name: target.dataset.productName
-                });
+            if (target.id === "result-sales-link") {
+                trackAblEvent("recommended_audio_click", { result_type: target.dataset.resultType || null });
             }
 
             if (/line|lin\.ee|line\.me/i.test(href) || /LINE/i.test(text)) {
@@ -101,894 +148,1932 @@
             }
         });
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 基礎變數與重置 */
+        :root {
+            --bg-1: #06111f;
+            --bg-2: #0f1d31;
+            --panel: rgba(7, 18, 33, 0.82);
+            --line: rgba(148, 163, 184, 0.18);
+            --line-strong: rgba(125, 211, 252, 0.45);
+            --text-main: #e2e8f0;
+            --text-soft: #94a3b8;
+            --brand: #67e8f9;
+            --brand-2: #38bdf8;
+            --accent: #f8fafc;
+            --success: #86efac;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'PingFang TC', 'Noto Sans TC', 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text-main);
+            background:
+                radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 28%),
+                radial-gradient(circle at top right, rgba(103, 232, 249, 0.12), transparent 26%),
+                linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+        }
+        .step { display: none; }
+        .step.active { display: block; animation: fadeIn 0.45s ease; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .glass-panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            box-shadow: 0 20px 80px rgba(2, 8, 23, 0.45);
+            backdrop-filter: blur(18px);
+        }
+        .desktop-shell {
+            position: relative;
+        }
+        .desktop-shell::before {
+            content: "";
+            position: absolute;
+            inset: -1.5rem 8% auto 8%;
+            height: 14rem;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.12), transparent 68%);
+            filter: blur(24px);
+            pointer-events: none;
+        }
+        .desktop-panel {
+            position: relative;
+            height: 100%;
+        }
+        .desktop-panel::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 24%);
+            pointer-events: none;
+        }
+        .desktop-panel > * {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+            background-size: 22px 22px;
+        }
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            padding: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            border-radius: 1rem;
+            background: rgba(15, 23, 42, 0.72);
+            transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+            cursor: pointer;
+        }
+        .option-btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(103, 232, 249, 0.38);
+            background: rgba(15, 23, 42, 0.92);
+            box-shadow: 0 12px 24px rgba(8, 47, 73, 0.18);
+        }
+        .option-btn.selected {
+            border-color: var(--line-strong);
+            background: linear-gradient(135deg, rgba(12, 74, 110, 0.9), rgba(14, 116, 144, 0.7));
+            box-shadow: 0 16px 32px rgba(14, 116, 144, 0.2);
+        }
+        .option-key {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(103, 232, 249, 0.26);
+            color: #cffafe;
+            background: rgba(8, 47, 73, 0.45);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .field-input {
+            width: 100%;
+            background: rgba(2, 6, 23, 0.66);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 0.9rem;
+            padding: 0.95rem 1rem;
+            color: white;
+            outline: none;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+        .field-input:focus {
+            border-color: rgba(103, 232, 249, 0.55);
+            box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.08);
+        }
+        .primary-btn {
+            border: none;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, var(--brand-2), var(--brand));
+            color: #062033;
+            font-weight: 700;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+            box-shadow: 0 18px 40px rgba(14, 165, 233, 0.18);
+        }
+        .primary-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 20px 48px rgba(34, 211, 238, 0.24);
+        }
+        .secondary-btn {
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            background: rgba(15, 23, 42, 0.55);
+            color: var(--text-main);
+            border-radius: 9999px;
+            transition: border-color 0.18s ease, background 0.18s ease;
+        }
+        .secondary-btn:hover {
+            border-color: rgba(103, 232, 249, 0.32);
+            background: rgba(15, 23, 42, 0.82);
+        }
+        .brand-chip {
+            border: 1px solid rgba(103, 232, 249, 0.24);
+            background: rgba(8, 47, 73, 0.3);
+            color: #cffafe;
+        }
+        .mini-card {
+            border: 1px solid rgba(148, 163, 184, 0.14);
+            background: rgba(15, 23, 42, 0.45);
+        }
+        .funnel-content { max-width: 46rem; margin-left: auto; margin-right: auto; }
+        .funnel-stage { padding: clamp(1.5rem, 5vw, 3.5rem); }
+        .funnel-stage .grid { grid-template-columns: minmax(0, 1fr) !important; }
+        .funnel-stage .hero-metrics { display: block; margin-top: 1.75rem; }
+        .funnel-stage .hero-metrics .mini-card { display: flex; align-items: baseline; justify-content: space-between; padding: 0.9rem 0; border: 0; border-bottom: 1px solid rgba(148, 163, 184, 0.14); background: transparent; border-radius: 0; }
+        .funnel-stage .hero-metrics .mini-card p:first-child { margin: 0; }
+        .funnel-stage .hero-metrics .mini-card p:last-child { margin: 0; font-size: 1rem; }
+        .funnel-stage .visual-stack { margin-top: 1.5rem; }
+        .funnel-stage .visual-frame-grid { display: block; }
+        .funnel-stage .visual-card-4 { display: none; }
+        .funnel-stage .entry-cards .mini-card { padding: 0; border: 0; background: transparent; }
+        .funnel-stage .entry-cards .mini-card + .mini-card { border-top: 1px solid rgba(148, 163, 184, 0.14); padding-top: 1rem; }
+        .funnel-stage .flex.flex-col { align-items: stretch; }
+        .funnel-section { padding: clamp(1.75rem, 5vw, 3.5rem); }
+        .funnel-section .grid { grid-template-columns: minmax(0, 1fr) !important; }
+        .funnel-list > * + * { border-top: 1px solid rgba(148, 163, 184, 0.14); }
+        .flow-step { display: grid; grid-template-columns: 2.25rem 1fr; gap: 1rem; padding: 1.1rem 0; }
+        .flow-step-number { display: flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 999px; background: rgba(34, 211, 238, 0.14); color: #a5f3fc; font-weight: 700; }
+        .offer-stack-item { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr) auto; gap: 0.75rem; align-items: start; padding: 1rem 0; }
+        .offer-stack-check { color: #67e8f9; font-weight: 700; }
+        .offer-stack-value { color: #a5f3fc; font-weight: 700; white-space: nowrap; }
+        .offer-stack-todo { color: #fcd34d; }
+        .signal-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(125, 211, 252, 0.16);
+            background:
+                linear-gradient(180deg, rgba(7, 18, 33, 0.9), rgba(2, 6, 23, 0.82)),
+                radial-gradient(circle at top right, rgba(103, 232, 249, 0.08), transparent 34%);
+        }
+        .signal-card::after {
+            content: "";
+            position: absolute;
+            inset: auto -10% -35% auto;
+            width: 10rem;
+            height: 10rem;
+            border-radius: 9999px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.22), transparent 68%);
+            pointer-events: none;
+        }
+        .signal-card > * {
+            position: relative;
+            z-index: 1;
+        }
+        .visual-stack {
+            display: grid;
+            gap: 0.9rem;
+            margin-top: 1.5rem;
+        }
+        .visual-frame {
+            padding: 0.9rem;
+            border-radius: 1.5rem;
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            background: linear-gradient(180deg, rgba(7, 18, 33, 0.88), rgba(2, 6, 23, 0.96));
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+        .visual-frame-grid {
+            display: grid;
+            gap: 0.85rem;
+            align-items: stretch;
+        }
+        .visual-frame-top {
+            grid-template-columns: minmax(0, 2.7fr) minmax(0, 0.78fr);
+        }
+        .visual-frame-middle {
+            grid-template-columns: minmax(0, 1fr);
+        }
+        .visual-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.15rem;
+            border: 1px solid rgba(103, 232, 249, 0.18);
+            background:
+                linear-gradient(180deg, rgba(10, 21, 38, 0.12), rgba(2, 6, 23, 0.58)),
+                rgba(2, 6, 23, 0.82);
+            box-shadow:
+                0 16px 38px rgba(2, 8, 23, 0.28),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+        .visual-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5, 14, 27, 0.04), rgba(5, 14, 27, 0.28));
+            pointer-events: none;
+        }
+        .visual-card img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            padding: 0;
+            background: transparent;
+        }
+        .visual-card-3 img,
+        .visual-card-4 img {
+            object-position: center center;
+        }
+        .visual-card-5 img {
+            object-position: center 36%;
+        }
+        .visual-card-3 {
+            aspect-ratio: 2.55 / 1;
+        }
+        .visual-card-4 {
+            aspect-ratio: 1 / 1;
+        }
+        .visual-card-5 {
+            aspect-ratio: 2.55 / 1;
+        }
+        .start-feature-image {
+            margin-top: 1.25rem;
+            overflow: hidden;
+            border-radius: 1.4rem;
+            border: 1px solid rgba(103, 232, 249, 0.18);
+            background:
+                linear-gradient(180deg, rgba(10, 21, 38, 0.12), rgba(2, 6, 23, 0.58)),
+                rgba(2, 6, 23, 0.82);
+            box-shadow:
+                0 16px 38px rgba(2, 8, 23, 0.28),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+        .start-feature-image img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .mobile-compact-hide {
+            display: block;
+        }
+        .sticky-mobile-cta {
+            display: none;
+        }
+        @media (min-width: 1024px) {
+            .visual-frame-middle {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .desktop-balance {
+                display: grid;
+                grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
+                gap: 1.5rem;
+                align-items: stretch;
+            }
+            .desktop-side-panel,
+            .desktop-main-panel {
+                min-height: 860px;
+            }
+            .desktop-side-panel {
+                padding: 2.25rem;
+            }
+            .desktop-main-panel {
+                padding: 2.25rem;
+            }
+            .desktop-main-panel .step {
+                min-height: 100%;
+                display: none;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .desktop-main-panel .step.active {
+                display: flex;
+            }
+            .desktop-main-panel #step-start.step.active {
+                justify-content: flex-start;
+                align-items: flex-start;
+                text-align: left;
+                padding-top: 3.5rem;
+            }
+            .desktop-main-panel #step-start .entry-note {
+                max-width: 32rem;
+                margin-left: 0;
+                margin-right: 0;
+            }
+            .desktop-main-panel #step-start .entry-cards {
+                width: 100%;
+                max-width: 100%;
+            }
+            .desktop-main-panel #step-start .brand-chip {
+                align-self: flex-start;
+            }
+            .desktop-main-panel #step-start .primary-btn {
+                align-self: flex-start;
+            }
+            .desktop-main-panel #quiz-container.step.active {
+                justify-content: flex-start;
+            }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+            body {
+                padding: 1rem;
+            }
+            .desktop-shell {
+                max-width: 980px;
+            }
+            .desktop-balance {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr);
+                gap: 1rem;
+            }
+            .desktop-side-panel,
+            .desktop-main-panel {
+                padding: 1.5rem;
+                border-radius: 1.75rem;
+            }
+            .desktop-side-panel > .mt-8,
+            .desktop-main-panel > .step.active {
+                margin-top: 0;
+            }
+            .desktop-side-panel h1 {
+                font-size: 2.8rem;
+                line-height: 1.05;
+            }
+            .hero-metrics {
+                gap: 0.75rem;
+                margin-top: 1.25rem;
+            }
+            .hero-metrics .mini-card,
+            .entry-cards .mini-card {
+                padding: 0.9rem;
+            }
+            .hero-points {
+                margin-top: 1.1rem;
+            }
+            .visual-stack {
+                gap: 0.75rem;
+                margin-top: 1.1rem;
+            }
+            .visual-frame {
+                padding: 0.75rem;
+                border-radius: 1.2rem;
+            }
+            .visual-frame-grid {
+                gap: 0.7rem;
+            }
+            .visual-card {
+                border-radius: 0.95rem;
+            }
+            .start-feature-image {
+                border-radius: 1.15rem;
+            }
+            .entry-heading {
+                font-size: 2.2rem;
+            }
+            .entry-note,
+            .mobile-lead-copy,
+            .mobile-result-copy {
+                margin-bottom: 1.25rem;
+                line-height: 1.65;
+            }
+            .entry-cards {
+                margin-bottom: 1.25rem;
+            }
+            .mobile-question-card {
+                padding: 1.1rem;
+                margin-bottom: 1rem;
+            }
+            .mobile-question-title {
+                font-size: 1.35rem;
+                line-height: 1.6;
+            }
+            .option-btn {
+                padding: 0.9rem;
+            }
+        }
+        @media (max-width: 767px) {
+            body {
+                padding: 0.65rem;
+            }
+            .mobile-main-first {
+                display: flex;
+                flex-direction: column;
+            }
+            .mobile-main-first > .mobile-main-panel {
+                order: 1;
+            }
+            .mobile-main-first > .mobile-side-panel {
+                order: 2;
+            }
+            .mobile-main-panel,
+            .mobile-side-panel {
+                border-radius: 1.25rem;
+            }
+            .mobile-side-panel {
+                padding: 1rem;
+            }
+            .mobile-side-panel {
+                position: relative;
+                overflow: hidden;
+            }
+            .mobile-side-panel::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background:
+                    radial-gradient(circle at 20% 18%, rgba(103, 232, 249, 0.22), transparent 24%),
+                    radial-gradient(circle at 82% 14%, rgba(56, 189, 248, 0.18), transparent 22%),
+                    linear-gradient(180deg, rgba(6, 17, 31, 0.15) 0%, rgba(6, 17, 31, 0.75) 100%);
+                pointer-events: none;
+            }
+            .mobile-side-panel > * {
+                position: relative;
+                z-index: 1;
+            }
+            .mobile-side-panel .brand-chip {
+                font-size: 0.7rem;
+                letter-spacing: 0.14em;
+            }
+            .mobile-side-panel h1 {
+                font-size: 1.8rem;
+                line-height: 1.02;
+                letter-spacing: -0.03em;
+            }
+            .mobile-side-panel .hero-summary {
+                font-size: 0.88rem;
+                line-height: 1.55;
+            }
+            .mobile-side-panel .hero-metrics {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 0.4rem;
+                margin-top: 0.65rem;
+            }
+            .mobile-side-panel .hero-metrics .mini-card {
+                padding: 0.55rem 0.45rem;
+                border-radius: 0.82rem;
+                text-align: center;
+            }
+            .mobile-side-panel .hero-metrics .mini-card p:first-child {
+                font-size: 0.62rem;
+                letter-spacing: 0.12em;
+            }
+            .mobile-side-panel .hero-metrics .mini-card p:last-child {
+                margin-top: 0.18rem;
+                font-size: 0.74rem;
+            }
+            .mobile-side-panel .hero-points {
+                margin-top: 0.7rem;
+                gap: 0.42rem;
+                padding-top: 0.55rem;
+                border-top: 1px solid rgba(148, 163, 184, 0.12);
+            }
+            .mobile-side-panel .hero-points p {
+                font-size: 0.74rem;
+                line-height: 1.38;
+            }
+            .mobile-side-panel .visual-stack {
+                gap: 0.4rem;
+                margin-top: 0.7rem;
+            }
+            .mobile-side-panel .visual-frame {
+                padding: 0.45rem;
+                border-radius: 0.95rem;
+            }
+            .mobile-side-panel .visual-frame-grid {
+                gap: 0.42rem;
+            }
+            .mobile-side-panel .visual-card {
+                border-radius: 0.68rem;
+            }
+            .mobile-main-panel .start-feature-image {
+                margin-top: 1rem;
+                border-radius: 1rem;
+            }
+            .mobile-side-panel .mobile-compact-hide.visual-stack {
+                display: grid;
+            }
+            .mobile-side-panel .visual-frame-top {
+                grid-template-columns: minmax(0, 2.2fr) minmax(0, 0.9fr);
+            }
+            .mobile-side-panel .visual-frame-middle {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .mobile-main-panel {
+                padding: 1rem;
+            }
+            .mobile-main-panel .entry-heading {
+                font-size: 1.6rem;
+                line-height: 1.18;
+            }
+            .mobile-main-panel .entry-cards {
+                grid-template-columns: 1fr;
+                gap: 0.65rem;
+            }
+            .mobile-main-panel .entry-note {
+                margin-bottom: 0.85rem;
+                line-height: 1.5;
+            }
+            .mobile-progress {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.45rem;
+            }
+            .mobile-progress .progress-track {
+                width: 100%;
+            }
+            .mobile-question-card {
+                padding: 0.85rem;
+                margin-bottom: 0.85rem;
+            }
+            .mobile-question-title {
+                font-size: 1.02rem;
+                line-height: 1.55;
+            }
+            .option-btn {
+                padding: 0.8rem;
+                border-radius: 0.9rem;
+            }
+            .option-btn .option-key {
+                width: 1.7rem;
+                height: 1.7rem;
+                font-size: 0.78rem;
+            }
+            .option-btn .option-text {
+                font-size: 0.89rem;
+                line-height: 1.52;
+            }
+            .mobile-quiz-actions {
+                flex-direction: column;
+                align-items: stretch;
+                margin-top: 0.9rem;
+            }
+            .mobile-quiz-actions p,
+            .mobile-quiz-actions button {
+                width: 100%;
+                text-align: center;
+            }
+            .mobile-lead-title,
+            .mobile-result-title {
+                font-size: 1.5rem;
+                line-height: 1.2;
+            }
+            .mobile-lead-copy,
+            .mobile-result-copy {
+                font-size: 0.9rem;
+                line-height: 1.58;
+            }
+            .field-input {
+                font-size: 16px;
+            }
+            .primary-btn,
+            .secondary-btn {
+                min-height: 2.85rem;
+            }
+        }
+        @media (max-width: 639px) {
+            body {
+                padding-bottom: calc(5.9rem + env(safe-area-inset-bottom));
+            }
+            .sticky-mobile-cta {
+                display: block;
+                position: fixed;
+                z-index: 60;
+                right: 0.65rem;
+                bottom: 0;
+                left: 0.65rem;
+                padding: 0.65rem 0.65rem calc(0.65rem + env(safe-area-inset-bottom));
+                border-radius: 1.25rem 1.25rem 0 0;
+                transition: opacity 0.22s ease, transform 0.22s ease;
+            }
+            .sticky-mobile-cta.is-hidden {
+                opacity: 0;
+                transform: translateY(120%);
+                pointer-events: none;
+            }
+            .sticky-mobile-cta .primary-btn {
+                min-height: 3.2rem;
+            }
+        }
+
+        /* Reference direction: timewaver-audio-sales.netlify.app
+           深海軍藍的信任感、暖白閱讀面與香檳金重點；保留本頁檢測漏斗功能。 */
         :root {
             --primary: #0a0f1d;
             --secondary: #1f3a5f;
-            --accent: #d4af37;
-            --bg-light: #f8f9fa;
-            --bg-section: #eef1f5;
-            --text-main: #1a202c;
-            --text-sub: #4a5568;
-            --border-color: #cbd5e0;
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.4);
+            --gold: #d4af37;
+            --paper: #f8f9fa;
+            --paper-muted: #eef1f5;
+            --ink: #17253a;
+            --muted: #46566a;
         }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Noto Sans TC', sans-serif; background: radial-gradient(circle at top, rgba(212,175,55,0.08), transparent 22%), linear-gradient(180deg, #fbfbfc 0%, #f5f7fa 100%); color: var(--text-main); margin: 0; padding: 0; line-height: 1.7; overflow-x: hidden; letter-spacing: 0.03em; }
-        
-        /* Hero 區塊 */
-        header { position: relative; min-height: 86vh; padding: 9rem 2rem 10rem; text-align: center; background: #0a0f1d url('images/frequency-meditation.png') center / cover no-repeat; color: #fff; overflow: hidden; display: grid; align-items: center; }
-        header::before {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle at center, rgba(10,15,29,0.16), rgba(10,15,29,0.72) 64%), linear-gradient(180deg, rgba(10,15,29,0.38), rgba(10,15,29,0.88));
-            z-index: 0;
+        body {
+            padding: 0 !important;
+            font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
+            font-size: 18px;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.07), transparent 23rem),
+                linear-gradient(180deg, #ffffff 0%, #fbfaf7 55%, #f5f6f7 100%);
+            letter-spacing: 0.012em;
         }
-        header::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 150px;
-            background: linear-gradient(to top, var(--bg-light), transparent); z-index: 1;
+        .funnel-content { max-width: 68rem; }
+        .funnel-section { padding: clamp(2rem, 6vw, 4.75rem); }
+        .glass-panel {
+            background: #ffffff;
+            border: 1px solid #e4e7eb;
+            box-shadow: 0 10px 30px rgba(23, 37, 58, 0.05);
+            backdrop-filter: none;
         }
-        .header-content { position: relative; z-index: 2; max-width: 980px; margin: 0 auto; }
-        .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.55rem 1rem; margin-bottom: 1.5rem; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: rgba(255,255,255,0.82); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; backdrop-filter: blur(10px); }
-        h1 { font-size: 3.8rem; margin-bottom: 1.5rem; color: #fff; font-weight: 800; letter-spacing: 2px; line-height: 1.2; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-        .hero-nowrap { white-space: nowrap; font-size: clamp(1.24rem, 5.45vw, 3.8rem); letter-spacing: clamp(0px, 0.16vw, 2px); }
-        .hero-subtitle { max-width: 760px; font-size: 1.25rem; color: rgba(255,255,255,0.85); margin: 0 auto 2.2rem; font-weight: 300; letter-spacing: 1px; }
-        .hero-value { max-width: 820px; margin: 0 auto; padding: 0; }
-        .hero-value p { margin: 0; font-size: 1rem; line-height: 1.9; color: rgba(255,255,255,0.84); }
-        .hero-value strong { color: #fff; font-weight: 600; }
-        
-        /* 內容區塊共用 */
-        section { padding: 8rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 5; }
-        h2 { font-size: 2.4rem; margin-bottom: 1.2rem; color: var(--primary); text-align: center; font-weight: 700; letter-spacing: 1px; text-wrap: pretty; }
-        p, h3, h4, h5, .section-desc, .pain-story-title, .pain-quote, .card-title, .product-visual-title, .faq-item h4 { text-wrap: pretty; }
-        .section-desc { text-align: center; color: var(--text-sub); max-width: 700px; margin: 0 auto 4rem; font-size: 1.15rem; font-weight: 300; line-height: 1.9; }
-        .purchase-desc { max-width: none; white-space: nowrap; }
-        .section-kicker { text-align: center; color: var(--accent); font-size: 1.05rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 800; margin-bottom: 1rem; }
-        .section-shell { position: relative; }
-        .section-shell::before { content: ''; position: absolute; inset: -1.5rem 0 auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(10,15,29,0.1), transparent); }
-        
-/* 個人故事區塊 (Dan Koe Framework) */
-        .founder-story { background: #0a0f1d; color: #fff; padding: 6rem 2rem; margin: 4rem auto; border-radius: 16px; position: relative; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.2); }
-        .founder-story::before { content: '”'; position: absolute; top: -20px; left: 20px; font-size: 15rem; color: rgba(255,255,255,0.03); font-family: serif; line-height: 1; }
-        .founder-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
-        .founder-title { font-size: 2rem; color: var(--accent); margin-bottom: 2rem; font-weight: 700; text-align: center; }
-        .founder-text { font-size: 1.1rem; line-height: 1.9; color: rgba(255,255,255,0.85); font-weight: 300; margin-bottom: 1.5rem; text-align: justify; }
-        .founder-highlight { color: #fff; font-weight: 500; border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
-        .founder-sign { text-align: right; margin-top: 3rem; font-size: 1.2rem; color: var(--accent); font-style: italic; }
-
-        /* 痛點情境區塊 (Pain Point Story) */
-        .pain-story-section { padding: 8rem 2rem; max-width: 900px; margin: 0 auto; position: relative; z-index: 5; }
-        .pain-story-title { font-size: 2.2rem; color: var(--primary); font-weight: 700; text-align: center; margin-bottom: 3rem; letter-spacing: 1px; }
-        .pain-card { background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 3rem; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.02); border-left: 4px solid var(--secondary); transition: transform 0.3s ease; }
-        .pain-card:hover { transform: translateX(5px); border-color: var(--secondary); }
-        .pain-scene { font-size: 0.9rem; color: var(--accent); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; display: block; }
-        .pain-quote { font-size: 1.4rem; color: var(--primary); font-style: italic; font-weight: 500; margin-bottom: 1.5rem; line-height: 1.6; }
-        .pain-desc { font-size: 1.05rem; color: var(--text-sub); font-weight: 300; line-height: 1.8; margin-bottom: 0; }
-        .pain-transition { text-align: center; margin-top: 5rem; padding-top: 4rem; border-top: 1px dashed rgba(0,0,0,0.1); }
-        .pain-transition h3 { font-size: 1.8rem; color: var(--primary); font-weight: 700; margin-bottom: 1rem; }
-        .pain-transition p { font-size: 1.1rem; color: var(--text-sub); font-weight: 300; max-width: 600px; margin: 0 auto; line-height: 1.8; }
-        .value-anchor-section { max-width: 980px; margin: 0 auto; padding: 0 2rem 7rem; }
-        .value-anchor-shell { background: linear-gradient(160deg, rgba(10,15,29,0.98), rgba(20,35,58,0.94)); color: #fff; border-radius: 28px; padding: 3rem; border: 1px solid rgba(212,175,55,0.18); box-shadow: 0 22px 54px rgba(10,15,29,0.16); }
-        .value-anchor-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr); gap: 1.5rem; align-items: stretch; }
-        .value-anchor-copy h2 { color: #fff; text-align: left; margin-bottom: 1rem; }
-        .value-anchor-copy p { margin: 0 0 1rem; color: rgba(255,255,255,0.82); font-size: 1rem; line-height: 1.9; }
-        .value-anchor-copy p:last-child { margin-bottom: 0; }
-        .value-anchor-copy strong { color: #fff; }
-        .value-anchor-card { padding: 1.5rem; border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04)); border: 1px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; justify-content: center; }
-        .anchor-label { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.64); margin-bottom: 0.8rem; }
-        .anchor-old-price { font-size: 1rem; color: #f87171; text-decoration: line-through; margin-bottom: 0.5rem; }
-        .anchor-price { font-size: 3rem; line-height: 1; color: var(--accent); font-weight: 800; margin-bottom: 0.85rem; }
-        .anchor-note { margin: 0; color: rgba(255,255,255,0.76); font-size: 0.92rem; line-height: 1.8; }
-        .comparison-wrapper { background: linear-gradient(180deg, rgba(238,241,245,0.55), rgba(238,241,245,0.9)); padding: 7rem 0; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; }
-        .comparison-shell { max-width: 1040px; margin: 0 auto; padding: 0 2rem; }
-        .comparison-header { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0 auto 1rem; }
-        .comparison-brand-card { padding: 1.35rem 1.5rem; border-radius: 22px; border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 16px 32px rgba(10,15,29,0.05); backdrop-filter: blur(12px); }
-        .comparison-brand-card.them { background: linear-gradient(145deg, rgba(255,255,255,0.78), rgba(240,243,247,0.92)); }
-        .comparison-brand-card.us { background: linear-gradient(145deg, rgba(10,15,29,0.94), rgba(31,58,95,0.9)); color: #fff; border-color: rgba(255,255,255,0.08); }
-        .comparison-brand-label { display: block; margin-bottom: 0.45rem; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.7; }
-        .comparison-brand-title { margin: 0; font-size: 1.25rem; line-height: 1.4; font-weight: 700; }
-        .comparison-cards { display: grid; gap: 1rem; }
-        .comparison-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-        .comparison-card { min-height: 100%; padding: 1.5rem; border-radius: 22px; border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 16px 32px rgba(10,15,29,0.04); }
-        .comparison-card.them { background: linear-gradient(145deg, rgba(255,255,255,0.86), rgba(243,246,249,0.96)); }
-        .comparison-card.us { background: linear-gradient(145deg, rgba(255,255,255,0.94), rgba(248,250,252,0.98)); border-color: rgba(10,15,29,0.06); }
-        .comparison-card-header { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.9rem; }
-        .comparison-badge { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-        .comparison-card.them .comparison-badge { background: rgba(239,68,68,0.1); color: #b91c1c; }
-        .comparison-card.us .comparison-badge { background: rgba(16,185,129,0.12); color: #047857; }
-        .comparison-card-title { margin: 0; font-size: 1.02rem; line-height: 1.5; font-weight: 700; color: var(--primary); }
-        .comparison-card-text { margin: 0; font-size: 0.98rem; line-height: 1.85; color: var(--text-sub); }
-
-        /* 產品與體驗區 */
-        .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 1.5rem; row-gap: 3rem; margin-top: 2rem; align-items: stretch; }
-        @media (max-width: 1024px) {
-            header { padding: 6.4rem 1.15rem 6.8rem; }
-            header::after { height: 88px; }
-            .hero-subtitle { margin-bottom: 1.6rem; }
-            .hero-value { max-width: 720px; padding: 1rem 1.1rem; }
-            section { padding: 3.6rem 1.15rem; }
-            .section-desc { margin-bottom: 1.65rem; max-width: 100%; }
-            .pain-story-section { padding: 3.6rem 1.15rem; }
-            .pain-story-title { margin-bottom: 1.45rem; }
-            .pain-card { padding: 1.35rem 1.05rem; margin-bottom: 0.95rem; }
-            .pain-transition { margin-top: 2rem; padding-top: 1.6rem; }
-            .value-anchor-section { padding: 0 1.15rem 3.4rem; }
-            .value-anchor-shell { padding: 1.35rem 1.15rem; }
-            .visual-proof-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; margin-bottom: 0.95rem; }
-            .decision-helper { padding: 1.1rem 0.95rem; margin-bottom: 1rem; }
-            .decision-helper h3 { font-size: 1.18rem; margin-bottom: 0.4rem; }
-            .decision-helper p { font-size: 0.9rem; line-height: 1.7; }
-            .decision-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; margin-top: 0.9rem; }
-            .decision-card { padding: 0.9rem 0.82rem; }
-            .decision-card p { margin-bottom: 0.55rem; font-size: 0.86rem; line-height: 1.6; }
-            .decision-link { width: 100%; box-sizing: border-box; padding: 0.52rem 0.72rem; }
-            .product-grid { grid-template-columns: repeat(2, 1fr); column-gap: 1rem; row-gap: 1.2rem; align-items: stretch; }
-            .product-card { height: auto; padding: 1.3rem 1rem 0.95rem; }
-            .card-desc { margin-bottom: 1rem; }
-            .product-visual { min-height: 164px; margin-bottom: 1rem; }
-            .card-cta {
-                width: 100%;
-                max-width: 100%;
-                min-height: 48px;
-                padding: 0.82rem 0.9rem;
-                margin-top: 0.45rem;
-                margin-bottom: 0;
-                border-radius: 18px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 0.88rem;
-                letter-spacing: 0.02em;
-                white-space: nowrap;
-            }
-            .tech-container { padding: 1.35rem 1.05rem; }
-            .tech-bg-image { margin-bottom: 1rem; }
-            .tech-pillars,
-            .brainwave-grid { gap: 0.8rem; margin: 1rem 0; }
-            .tech-evidence-grid { gap: 0.75rem; margin: 1rem 0 1.2rem; }
-            .tech-list li { margin-bottom: 0.9rem; }
-            .research-note { margin-top: 1.2rem; }
-            .quantum-anchor-box { margin-top: 1.2rem; padding: 1.15rem 1rem; }
-            .guarantee-box { margin-top: 1.35rem; padding: 1.45rem 1.15rem; }
-            .faq-item { padding: 1rem 0.95rem; }
-            footer { padding: 2rem 1.15rem; margin-top: 1.8rem; }
+        .mini-card {
+            background: #ffffff;
+            border-color: #e2e6eb;
+            box-shadow: none;
         }
-        @media (max-width: 768px) { .product-grid { grid-template-columns: 1fr; } }
-        .product-card { background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,249,250,0.96)); backdrop-filter: blur(10px); border: 1px solid rgba(10,15,29,0.08); border-radius: 22px; padding: 2.5rem 2rem; display: flex; flex-direction: column; height: 100%; transition: all 0.4s ease; box-shadow: 0 18px 36px rgba(10,15,29,0.06); }
-        .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); border-color: rgba(31, 58, 95, 0.2); }
-        .product-card.is-recommended { border-color: rgba(212,175,55,0.72); box-shadow: 0 24px 52px rgba(212,175,55,0.18); }
-        .recommendation-badge { display: none; align-self: flex-start; margin-bottom: 1rem; padding: 0.38rem 0.7rem; border-radius: 999px; background: rgba(212,175,55,0.13); border: 1px solid rgba(212,175,55,0.32); color: #8a6a12; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em; }
-        .product-card.is-recommended .recommendation-badge { display: inline-flex; }
-        .card-icon { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; opacity: 0.9; }
-        .card-title { font-size: 1.35rem; margin-bottom: 0.5rem; color: var(--primary); font-weight: 700; }
-        .card-freq { font-size: 0.8rem; color: var(--text-sub); letter-spacing: 1px; margin-bottom: 1.5rem; font-weight: 500; text-transform: uppercase; }
-        .card-desc { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 2.5rem; flex-grow: 1; font-weight: 300; }
-        .visual-proof-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; margin-bottom: 2.5rem; }
-        .visual-proof-card { overflow: hidden; border-radius: 24px; background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,247,250,0.94)); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 18px 36px rgba(10,15,29,0.06); }
-        .visual-proof-image { width: 100%; aspect-ratio: 1.2 / 1; object-fit: cover; display: block; }
-        .decision-helper { margin: 0 0 2.2rem; padding: 1.5rem; border-radius: 24px; background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,247,250,0.94)); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 18px 36px rgba(10,15,29,0.05); }
-        .decision-helper h3 { margin: 0 0 0.55rem; color: var(--primary); font-size: 1.3rem; line-height: 1.45; }
-        .decision-helper p { margin: 0; color: var(--text-sub); font-size: 0.95rem; line-height: 1.8; }
-        .decision-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.95rem; margin-top: 1.2rem; }
-        .decision-card { padding: 1rem; border-radius: 18px; background: rgba(10,15,29,0.03); border: 1px solid rgba(10,15,29,0.08); }
-        .decision-card strong { display: block; margin-bottom: 0.4rem; color: var(--primary); font-size: 1rem; }
-        .decision-card p { margin: 0 0 0.8rem; font-size: 0.9rem; line-height: 1.7; color: var(--text-sub); }
-        .decision-link { display: inline-flex; align-items: center; justify-content: center; padding: 0.55rem 0.8rem; border-radius: 999px; border: 1px solid rgba(10,15,29,0.12); color: var(--primary); font-size: 0.8rem; font-weight: 600; text-decoration: none; background: rgba(255,255,255,0.78); }
-        .decision-link:hover { background: rgba(10,15,29,0.9); color: #fff; }
-        .product-visual { position: relative; overflow: hidden; min-height: 180px; border-radius: 18px; margin-bottom: 1.2rem; padding: 1.25rem; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(145deg, rgba(10,15,29,0.94), rgba(28,50,80,0.92)); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 16px 32px rgba(10,15,29,0.12); }
-        .product-visual::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at top left, rgba(212,175,55,0.22), transparent 36%), radial-gradient(circle at bottom right, rgba(59,130,246,0.22), transparent 42%); opacity: 0.92; }
-        .product-visual > * { position: relative; z-index: 1; }
-        .product-visual-label { display: inline-flex; width: fit-content; padding: 0.35rem 0.7rem; border-radius: 999px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.14); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.76); margin-bottom: auto; }
-        .product-visual-title { margin: 0 0 0.45rem; font-size: 1.2rem; line-height: 1.4; font-weight: 700; }
-        .product-visual-copy { margin: 0; color: rgba(255,255,255,0.82); font-size: 0.9rem; line-height: 1.7; }
-        .mystery-note { margin: -0.2rem 0 1.3rem; font-size: 0.82rem; color: var(--text-sub); line-height: 1.7; }
-        .card-cta { width: fit-content; max-width: 100%; padding: 0.85rem 1.15rem; background: linear-gradient(145deg, rgba(255,255,255,0.72), rgba(238,241,245,0.5)); color: var(--primary); border: 1px solid rgba(10,15,29,0.18); border-radius: 999px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-align: center; display: block; text-decoration: none; font-size: 0.84rem; letter-spacing: 0.04em; margin: auto 0 0; align-self: center; backdrop-filter: blur(10px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 8px 18px rgba(10,15,29,0.06); white-space: nowrap; line-height: 1.3; }
-        .card-cta:hover { background: linear-gradient(145deg, rgba(10,15,29,0.9), rgba(31,58,95,0.92)); color: #fff; border-color: rgba(10,15,29,0.4); box-shadow: 0 12px 24px rgba(10,15,29,0.14); }
-        /* 金色特別版 */
-        .gold-card { background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,249,250,0.96)); border-color: rgba(10,15,29,0.08); }
-        .gold-card .card-cta { border-color: var(--primary); color: var(--primary); }
-        .gold-card .card-cta:hover { background: var(--primary); color: #fff; }
-        .purchase-modal[hidden] { display: none; }
-        .purchase-modal { position: fixed; inset: 0; z-index: 40; display: flex; align-items: center; justify-content: center; padding: 1.5rem; background: rgba(10,15,29,0.64); backdrop-filter: blur(10px); }
-        .purchase-dialog { width: min(100%, 560px); max-height: calc(100vh - 3rem); overflow-y: auto; background: rgba(255,255,255,0.96); border: 1px solid rgba(10,15,29,0.1); border-radius: 24px; box-shadow: 0 24px 60px rgba(10,15,29,0.2); padding: 2rem; }
-        .purchase-dialog-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
-        .purchase-dialog-title { margin: 0; font-size: 1.5rem; color: var(--primary); line-height: 1.4; }
-        .purchase-dialog-subtitle { margin: 0.45rem 0 0; color: var(--text-sub); font-size: 0.95rem; line-height: 1.8; }
-        .purchase-close { width: 40px; height: 40px; border: 1px solid rgba(10,15,29,0.12); border-radius: 999px; background: #fff; color: var(--primary); cursor: pointer; font-size: 1.2rem; transition: all 0.2s ease; }
-        .purchase-close:hover { background: var(--primary); color: #fff; }
-        .purchase-summary { padding: 1rem 1.1rem; margin-bottom: 1.25rem; border-radius: 18px; background: linear-gradient(145deg, rgba(10,15,29,0.04), rgba(31,58,95,0.06)); border: 1px solid rgba(10,15,29,0.08); }
-        .purchase-summary-label { display: inline-flex; padding: 0.24rem 0.6rem; border-radius: 999px; background: rgba(10,15,29,0.08); color: var(--primary); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; }
-        .purchase-summary h4 { margin: 0.75rem 0 0.35rem; font-size: 1.15rem; color: var(--primary); }
-        .purchase-summary p { margin: 0; color: var(--text-sub); font-size: 0.92rem; }
-        .purchase-reassurance { margin-bottom: 1.15rem; padding: 1rem 1.05rem; border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,248,251,0.96)); border: 1px solid rgba(10,15,29,0.08); }
-        .purchase-reassurance h4 { margin: 0 0 0.6rem; color: var(--primary); font-size: 1rem; }
-        .purchase-reassurance ul { margin: 0; padding-left: 1.1rem; color: var(--text-sub); font-size: 0.88rem; line-height: 1.8; }
-        .purchase-reassurance li + li { margin-top: 0.28rem; }
-        .purchase-form { display: grid; gap: 1rem; }
-        .purchase-field { display: grid; gap: 0.45rem; }
-        .purchase-field label { font-size: 0.92rem; font-weight: 600; color: var(--primary); }
-        .purchase-field input { width: 100%; box-sizing: border-box; padding: 0.9rem 1rem; border: 1px solid rgba(10,15,29,0.14); border-radius: 14px; font: inherit; color: var(--text-main); background: rgba(255,255,255,0.98); }
-        .purchase-field input:focus { outline: none; border-color: rgba(31,58,95,0.5); box-shadow: 0 0 0 4px rgba(31,58,95,0.08); }
-        .purchase-help { margin: -0.1rem 0 0; color: var(--text-sub); font-size: 0.83rem; line-height: 1.7; }
-        .purchase-status { min-height: 1.6rem; color: #b45309; font-size: 0.9rem; line-height: 1.6; }
-        .purchase-status[data-tone="error"] { color: #b91c1c; }
-        .purchase-status[data-tone="success"] { color: #166534; }
-        .purchase-actions { display: flex; gap: 0.8rem; justify-content: flex-end; flex-wrap: wrap; margin-top: 0.35rem; }
-        .purchase-secondary, .purchase-primary { border-radius: 999px; padding: 0.9rem 1.25rem; font: inherit; cursor: pointer; transition: all 0.2s ease; }
-        .purchase-secondary { border: 1px solid rgba(10,15,29,0.16); background: #fff; color: var(--primary); }
-        .purchase-secondary:hover { background: rgba(10,15,29,0.04); }
-        .purchase-primary { border: 1px solid rgba(10,15,29,0.2); background: linear-gradient(145deg, rgba(10,15,29,0.94), rgba(31,58,95,0.94)); color: #fff; font-weight: 600; box-shadow: 0 12px 24px rgba(10,15,29,0.16); }
-        .purchase-primary:hover { transform: translateY(-1px); }
-        .purchase-primary:disabled { cursor: wait; opacity: 0.7; transform: none; }
-
-        /* 技術背書 */
-        .tech-container { max-width: 900px; margin: 0 auto; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(248,249,250,0.96)); backdrop-filter: blur(10px); padding: 4rem; border-radius: 24px; box-shadow: 0 18px 38px rgba(10,15,29,0.05); border: 1px solid rgba(10,15,29,0.06); position: relative; overflow: hidden; }
-        .tech-bg-image { width: 100%; max-height: 350px; object-fit: cover; border-radius: 12px; margin-bottom: 2.5rem; opacity: 0.95; border: 1px solid rgba(0,0,0,0.05); }
-        .tech-evidence-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 2rem 0 2.5rem; }
-        .tech-evidence-card { overflow: hidden; border-radius: 20px; background: rgba(255,255,255,0.88); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 14px 28px rgba(10,15,29,0.05); }
-        .tech-evidence-card img { width: 100%; aspect-ratio: 1.15 / 1; object-fit: cover; display: block; }
-        .tech-pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 2rem 0; }
-        .tech-pillar { padding: 1.4rem 1.2rem; border-radius: 20px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(244,247,250,0.92)); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 14px 28px rgba(10,15,29,0.05); }
-        .tech-pillar-label { display: inline-flex; margin-bottom: 0.7rem; padding: 0.28rem 0.6rem; border-radius: 999px; background: rgba(10,15,29,0.08); color: var(--primary); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; }
-        .tech-pillar h4 { margin: 0 0 0.7rem; color: var(--primary); font-size: 1.14rem; line-height: 1.45; }
-        .tech-pillar p { margin: 0; color: var(--text-sub); font-size: 0.94rem; line-height: 1.8; }
-        .brainwave-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; margin: 2rem 0; }
-        .brainwave-card { padding: 1.15rem 1.1rem; border-radius: 18px; background: rgba(10,15,29,0.03); border: 1px solid rgba(10,15,29,0.08); }
-        .brainwave-card h5 { margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem; }
-        .brainwave-card p { margin: 0; color: var(--text-sub); font-size: 0.92rem; line-height: 1.75; }
-        .research-note { margin-top: 2rem; padding: 1.4rem 1.2rem; border-radius: 18px; background: linear-gradient(180deg, rgba(212,175,55,0.08), rgba(255,255,255,0.7)); border: 1px solid rgba(212,175,55,0.22); }
-        .research-note h4 { margin: 0 0 0.8rem; color: var(--primary); font-size: 1.08rem; }
-        .research-note p { margin: 0 0 0.85rem; color: var(--text-sub); font-size: 0.93rem; line-height: 1.8; }
-        .research-note p:last-child { margin-bottom: 0; }
-        .tech-list { list-style: none; padding: 0; }
-        .tech-list li { margin-bottom: 2rem; padding-left: 2.5rem; position: relative; font-weight: 300; font-size: 1.05rem; }
-        .tech-list li::before { content: '✦'; color: var(--accent); position: absolute; left: 0; font-size: 1.2rem; top: -2px; }
-        .tech-list strong { font-weight: 500; color: var(--primary); }
-
-        /* 進階說明區塊 */
-        .quantum-anchor-box { margin-top: 3rem; padding: 2.5rem; background: linear-gradient(135deg, #0a0f1d, #1a2a40); border-radius: 16px; color: #fff; position: relative; overflow: hidden; }
-        .quantum-anchor-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 60%); z-index: 1; }
-        .quantum-anchor-box h4 { position: relative; z-index: 2; color: var(--accent); margin-top: 0; font-size: 1.2rem; letter-spacing: 1px; font-weight: 500; display: flex; align-items: center; }
-        .quantum-anchor-box h4::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; margin-right: 12px; box-shadow: 0 0 10px var(--accent); animation: pulseDot 3s infinite; }
-        @keyframes pulseDot { 0% { opacity: 0.5; box-shadow: 0 0 5px var(--accent); } 50% { opacity: 1; box-shadow: 0 0 15px var(--accent); } 100% { opacity: 0.5; box-shadow: 0 0 5px var(--accent); } }
-        .quantum-anchor-box p { position: relative; z-index: 2; color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.8; margin-bottom: 0; font-weight: 300; }
-
-        /* 零風險承諾 */
-        .guarantee-box { max-width: 800px; margin: 5rem auto 0; background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(248,249,250,0.95)); border: 1px solid rgba(10,15,29,0.08); padding: 4rem 3rem; border-radius: 24px; text-align: center; box-shadow: 0 16px 34px rgba(10,15,29,0.04); }
-        .guarantee-box h3 { color: var(--primary); font-size: 1.5rem; margin-top: 0; font-weight: 500; letter-spacing: 1px; }
-        .guarantee-box p { font-weight: 300; color: var(--text-sub); }
-        .faq-section { max-width: 900px; margin: 0 auto; padding-top: 1rem; }
-        .faq-grid { display: grid; gap: 0.9rem; }
-        .faq-item { padding: 1.2rem 1.15rem; border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,248,251,0.96)); border: 1px solid rgba(10,15,29,0.08); box-shadow: 0 12px 26px rgba(10,15,29,0.04); }
-        .faq-item h4 { margin: 0 0 0.55rem; color: var(--primary); font-size: 1.16rem; line-height: 1.55; }
-        .faq-item p { margin: 0; color: var(--text-sub); font-size: 0.94rem; line-height: 1.8; }
-        .final-cta-section { max-width: 980px; margin: 0 auto 4rem; padding: 0 2rem; }
-        .final-cta-box { position: relative; overflow: hidden; border-radius: 28px; padding: 3.2rem 2.4rem; text-align: center; color: #fff; background: linear-gradient(160deg, rgba(10,15,29,0.98), rgba(31,58,95,0.94)); border: 1px solid rgba(212,175,55,0.18); box-shadow: 0 22px 54px rgba(10,15,29,0.16); }
-        .final-cta-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(212,175,55,0.18), transparent 46%); }
-        .final-cta-box > * { position: relative; z-index: 1; }
-        .final-cta-box h2 { color: #fff; margin-bottom: 0.9rem; }
-        .final-cta-box p { max-width: 660px; margin: 0 auto 1.6rem; color: rgba(255,255,255,0.8); font-size: 1rem; line-height: 1.9; }
-        .final-cta-link { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0.85rem 1.35rem; border-radius: 999px; background: #fff; color: var(--primary); text-decoration: none; font-weight: 700; box-shadow: 0 14px 28px rgba(0,0,0,0.14); }
-        
-        /* Footer & 法律聲明 */
-        footer { background: linear-gradient(180deg, rgba(238,241,245,0.7), rgba(238,241,245,0.95)); color: var(--text-sub); text-align: center; padding: 4rem 2rem; font-size: 0.85rem; margin-top: 4rem; border-top: 1px solid var(--border-color); }
-        .legal-disclaimer { max-width: 800px; margin: 0 auto; padding-top: 2rem; text-align: justify; font-weight: 300; opacity: 0.8; }
-
-        @media (max-width: 768px) {
-            body { line-height: 1.8; }
-            header { min-height: 82vh; padding: 4.2rem 0.85rem 4.4rem; background-position: center top; }
-            header::after { height: 58px; }
-            .header-content { max-width: 100%; }
-            .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.07em; margin-bottom: 0.85rem; padding: 0.48rem 0.8rem; }
-            h1 { font-size: 2.12rem; letter-spacing: 0.4px; line-height: 1.2; margin-bottom: 0.8rem; }
-            .hero-subtitle { font-size: 0.98rem; line-height: 1.75; margin-bottom: 1.25rem; letter-spacing: 0.01em; }
-            .hero-value { padding: 0.9rem 0.95rem; border-radius: 16px; }
-            .hero-value p { font-size: 0.92rem; line-height: 1.72; }
-            section { padding: 2rem 0.85rem; }
-            h2 { font-size: 1.8rem; line-height: 1.4; margin-bottom: 0.9rem; letter-spacing: 0.02em; }
-            .section-desc { font-size: 0.98rem; line-height: 1.72; margin-bottom: 1rem; padding: 0; }
-            .purchase-desc { max-width: 100%; white-space: normal; }
-            .section-kicker { font-size: 0.96rem; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
-
-            .pain-story-section { padding: 2rem 0.85rem; }
-            .pain-story-title { font-size: 1.62rem; line-height: 1.38; margin-bottom: 0.95rem; }
-            .pain-card { padding: 0.95rem 0.85rem; margin-bottom: 0.7rem; border-radius: 14px; }
-            .pain-scene { font-size: 0.78rem; letter-spacing: 0.12em; }
-            .pain-quote { font-size: 1.04rem; line-height: 1.52; margin-bottom: 0.65rem; }
-            .pain-desc { font-size: 0.95rem; line-height: 1.72; }
-            .pain-transition { margin-top: 1.25rem; padding-top: 1rem; }
-            .pain-transition h3 { font-size: 1.24rem; line-height: 1.42; margin-bottom: 0.7rem; }
-            .pain-transition p { font-size: 0.96rem; line-height: 1.72; }
-            .value-anchor-section { padding: 0 0.85rem 1.8rem; }
-            .value-anchor-shell { padding: 1rem 0.85rem; border-radius: 18px; }
-            .value-anchor-grid { grid-template-columns: 1fr; gap: 0.7rem; }
-            .value-anchor-copy h2 { text-align: left; }
-            .value-anchor-copy p { font-size: 0.95rem; line-height: 1.72; }
-            .anchor-label { margin-bottom: 0.55rem; }
-            .anchor-old-price { margin-bottom: 0.35rem; }
-            .anchor-price { font-size: 2.1rem; margin-bottom: 0.55rem; }
-            .anchor-note { font-size: 0.88rem; line-height: 1.65; }
-
-            .founder-story { padding: 1.9rem 0.9rem; margin: 1.2rem 0.5rem; border-radius: 18px; }
-            .founder-story::before { font-size: 8rem; top: -6px; left: 10px; }
-            .founder-title { font-size: 1.55rem; line-height: 1.5; margin-bottom: 0.9rem; }
-            .founder-text { font-size: 1rem; line-height: 1.8; text-align: left; margin-bottom: 0.9rem; }
-            .founder-sign { margin-top: 1rem; font-size: 1.05rem; }
-
-            .comparison-wrapper { padding: 2rem 0; }
-            .comparison-shell { padding: 0 0.85rem; }
-            .comparison-header,
-            .comparison-row { grid-template-columns: 1fr; }
-            .comparison-brand-card,
-            .comparison-card { padding: 0.9rem; border-radius: 18px; }
-            .comparison-brand-title { font-size: 1.1rem; }
-            .comparison-card-title { font-size: 0.98rem; }
-            .comparison-card-text { font-size: 0.95rem; line-height: 1.72; }
-
-            .product-grid { column-gap: 0.75rem; row-gap: 0.9rem; margin-top: 0.8rem; }
-            .product-card { padding: 0.88rem 0.72rem 0.72rem; border-radius: 18px; }
-            .visual-proof-grid { grid-template-columns: 1fr; gap: 0.55rem; margin-bottom: 0.55rem; }
-            .visual-proof-card { border-radius: 18px; }
-            .visual-proof-image { aspect-ratio: 1.35 / 1; }
-            .product-visual { min-height: 126px; padding: 0.8rem; margin-bottom: 0.65rem; }
-            .product-visual-label { padding: 0.28rem 0.58rem; font-size: 0.68rem; }
-            .product-visual-title { font-size: 1.04rem; line-height: 1.35; }
-            .product-visual-copy { font-size: 0.84rem; line-height: 1.55; }
-            .card-icon { font-size: 2rem; margin-bottom: 0.45rem; }
-            .card-title { font-size: 1.12rem; line-height: 1.38; }
-            .card-freq { font-size: 0.73rem; margin-bottom: 0.45rem; }
-            .card-desc { font-size: 0.93rem; line-height: 1.6; margin-bottom: 0.55rem; flex-grow: 0; }
-            .card-cta {
-                width: 100%;
-                max-width: 100%;
-                min-height: 42px;
-                padding: 0.72rem 0.78rem;
-                font-size: 0.84rem;
-                margin-top: 0.15rem;
-                border-radius: 16px;
-                letter-spacing: 0.01em;
-                white-space: nowrap;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .purchase-modal { padding: 0.85rem; }
-            .purchase-dialog { padding: 1rem; border-radius: 18px; max-height: calc(100vh - 1.7rem); }
-            .purchase-dialog-title { font-size: 1.18rem; }
-            .purchase-dialog-subtitle { margin-top: 0.3rem; font-size: 0.9rem; line-height: 1.65; }
-            .purchase-summary { padding: 0.88rem 0.92rem; margin-bottom: 0.8rem; }
-            .purchase-reassurance { padding: 0.85rem 0.9rem; margin-bottom: 0.8rem; }
-            .purchase-reassurance h4 { font-size: 0.95rem; margin-bottom: 0.4rem; }
-            .purchase-reassurance ul { font-size: 0.84rem; line-height: 1.65; }
-            .purchase-form { gap: 0.82rem; }
-            .purchase-actions { flex-direction: column-reverse; }
-            .purchase-secondary, .purchase-primary { width: 100%; }
-
-            .tech-container { padding: 0.9rem 0.78rem; border-radius: 18px; }
-            .tech-bg-image { max-height: 180px; margin-bottom: 0.75rem; }
-            .tech-pillars,
-            .brainwave-grid { grid-template-columns: 1fr; gap: 0.65rem; margin: 0.9rem 0; }
-            .tech-pillar,
-            .brainwave-card,
-            .research-note { padding: 0.9rem 0.8rem; border-radius: 16px; }
-            .tech-pillar h4,
-            .research-note h4 { font-size: 1rem; line-height: 1.45; }
-            .tech-container p,
-            .tech-pillar p,
-            .brainwave-card p,
-            .research-note p,
-            .tech-list li,
-            .quantum-anchor-box p,
-            .guarantee-box p,
-            .legal-disclaimer { font-size: 0.95rem; line-height: 1.72; }
-            .tech-list li { padding-left: 1.35rem; margin-bottom: 0.65rem; }
-            .tech-evidence-grid { grid-template-columns: 1fr; gap: 0.7rem; margin: 1rem 0 1.2rem; }
-
-            .quantum-anchor-box { margin-top: 0.9rem; padding: 0.9rem 0.8rem; border-radius: 16px; }
-            .quantum-anchor-box h4 { font-size: 1rem; line-height: 1.45; align-items: flex-start; }
-
-            .guarantee-box { margin-top: 1rem; padding: 1rem 0.82rem; border-radius: 18px; text-align: left; }
-            .guarantee-box h3 { font-size: 1.15rem; line-height: 1.4; text-align: center; margin-bottom: 0.7rem; }
-            .guarantee-box p { margin: 0 0 0.45rem; }
-            .faq-section { padding-top: 0.35rem; }
-            .faq-grid { gap: 0.55rem; }
-            .faq-item { padding: 0.92rem 0.82rem; border-radius: 16px; }
-            .faq-item h4 { font-size: 1.05rem; line-height: 1.45; margin-bottom: 0.38rem; }
-            .faq-item p { font-size: 0.9rem; line-height: 1.68; }
-            .final-cta-section { padding: 0 0.85rem; margin-bottom: 1.4rem; }
-            .final-cta-box { padding: 1.35rem 1rem; border-radius: 18px; }
-            .final-cta-box p { font-size: 0.92rem; line-height: 1.72; margin-bottom: 1rem; }
-            .final-cta-link { width: 100%; box-sizing: border-box; min-height: 42px; }
-
-            footer { padding: 1.35rem 0.85rem; margin-top: 1.05rem; font-size: 0.8rem; }
-            .legal-disclaimer { padding-top: 0.65rem; text-align: left; }
+        .funnel-list > * + * { border-top-color: rgba(10, 15, 29, 0.1); }
+        .flow-step-number {
+            background: rgba(212, 175, 55, 0.15);
+            color: #8c6812;
+            border: 1px solid rgba(212, 175, 55, 0.28);
+        }
+        .offer-stack-check, .offer-stack-value { color: #987517; }
+        .brand-chip {
+            border-color: rgba(212, 175, 55, 0.38);
+            background: rgba(212, 175, 55, 0.12);
+            color: #86640f;
+        }
+        .primary-btn {
+            background: linear-gradient(135deg, #d8b33f, #b98e17);
+            color: #101723;
+            box-shadow: 0 16px 32px rgba(185, 142, 23, 0.22);
+        }
+        .primary-btn:hover { box-shadow: 0 20px 40px rgba(185, 142, 23, 0.30); }
+        .secondary-btn {
+            border-color: rgba(10, 15, 29, 0.18);
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--secondary);
+        }
+        .secondary-btn:hover { border-color: rgba(31, 58, 95, 0.5); background: #fff; }
+        .field-input {
+            background: rgba(255,255,255,0.96);
+            border-color: rgba(10,15,29,0.16);
+            color: var(--ink);
+        }
+        .field-input::placeholder { color: #8a95a5; }
+        .field-input:focus { border-color: rgba(212,175,55,0.85); box-shadow: 0 0 0 4px rgba(212,175,55,0.13); }
+        .option-btn {
+            background: rgba(255,255,255,0.88);
+            border-color: rgba(10,15,29,0.13);
+            color: var(--ink);
+        }
+        .option-btn:hover { border-color: rgba(31,58,95,0.45); background: #fff; box-shadow: 0 12px 24px rgba(10,15,29,0.08); }
+        .option-key { border-color: rgba(212,175,55,0.4); background: rgba(212,175,55,0.12); color: #8c6812; }
+        .option-btn.selected { background: #fff6dc; color: var(--ink); box-shadow: 0 12px 24px rgba(185,142,23,0.12); }
+        .option-btn.selected .option-key { color: #77570a; border-color: rgba(185,142,23,0.45); background: rgba(212,175,55,0.16); }
+        .hero-grid { background-image: none; }
+        .hero-panel {
+            position: relative;
+            color: var(--ink);
+            background: #fffdfa;
+            border-color: #e5dfcf;
+            box-shadow: 0 10px 30px rgba(23,37,58,0.05);
+        }
+        .hero-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(255,255,255,0.62), rgba(255,255,255,0.90));
+        }
+        .hero-panel > * { position: relative; z-index: 1; }
+        .hero-panel .mini-card, .hero-panel .visual-frame, .hero-panel .visual-card, .hero-panel .start-feature-image {
+            background: #ffffff;
+            border-color: #e2e6eb;
+            box-shadow: none;
+        }
+        .hero-panel .brand-chip { color: #86640f; background: rgba(212,175,55,0.13); border-color: rgba(212,175,55,0.42); }
+        .hero-panel .text-white { color: var(--primary) !important; }
+        .hero-panel .text-slate-500 { color: #788598 !important; }
+        .hero-panel .text-slate-300 { color: var(--muted) !important; }
+        .hero-panel .text-slate-400 { color: #627083 !important; }
+        .hero-panel .text-cyan-200\/80, .hero-panel .text-cyan-200, .hero-panel .text-cyan-300 { color: #927017 !important; }
+        .hero-panel .bg-cyan-300 { background-color: var(--gold) !important; }
+        .hero-intro {
+            min-height: 44rem;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 86% 28%, rgba(212,175,55,0.13), transparent 14rem),
+                linear-gradient(135deg, #fffdf8 0%, #faf7ef 100%);
+        }
+        .hero-intro h1,
+        .hero-intro .hero-summary,
+        .hero-intro .hero-metrics,
+        .hero-intro .hero-points,
+        .hero-intro .visual-stack { max-width: 43rem; }
+        .hero-cta-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.75rem;
+        }
+        .hero-cta-row span {
+            color: #627083;
+            font-size: 0.92rem;
+            font-weight: 600;
+        }
+        .hero-art {
+            position: absolute;
+            top: 3.25rem;
+            right: 3.25rem;
+            width: 13rem;
+            height: 13rem;
+            border: 1px solid rgba(185,142,23,0.42);
+            border-radius: 50%;
+            background: rgba(255,255,255,0.55);
+            box-shadow: 0 0 0 1.2rem rgba(212,175,55,0.06), 0 0 0 3.2rem rgba(212,175,55,0.035);
+        }
+        .hero-art::before,
+        .hero-art::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(185,142,23,0.28);
+        }
+        .hero-art::before { inset: 1.1rem; }
+        .hero-art::after { inset: 2.25rem; border-color: rgba(23,37,58,0.16); }
+        .hero-art-core {
+            position: absolute;
+            inset: 3.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 8px 20px rgba(23,37,58,0.08);
+            color: var(--primary);
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .hero-art-core small { margin-top: 0.38rem; color: #8c6812; font-size: 0.78rem; letter-spacing: 0.18em; }
+        .hero-art-caption {
+            position: absolute;
+            right: -1.2rem;
+            bottom: -2.5rem;
+            margin: 0;
+            color: #745b20;
+            font-size: 0.84rem !important;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            line-height: 1.7 !important;
+            text-align: right;
+        }
+        @media (max-width: 640px) {
+            .hero-cta-row { align-items: flex-start; flex-direction: column; }
+        }
+        .impact-panel {
+            max-width: 68rem;
+            margin: 0 auto 2.25rem;
+            border: 0;
+            color: var(--ink);
+            background: #fffdfa;
+            border: 1px solid #e5dfcf;
+            box-shadow: 0 10px 30px rgba(23,37,58,0.05);
+        }
+        .impact-panel .text-white { color: var(--primary) !important; }
+        .impact-panel .text-slate-400 { color: #627083 !important; }
+        .impact-panel .text-cyan-200\/80 { color: #927017 !important; }
+        .impact-panel .primary-btn { background: linear-gradient(135deg, #d8b33f, #b98e17); color: #101723; box-shadow: none; }
+        .impact-panel { position: relative; overflow: hidden; }
+        .impact-panel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 9%;
+            width: 8rem;
+            height: 0.25rem;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        }
+        main .text-white, main strong.text-white, .funnel-content:not(.impact-panel):not(.desktop-shell) .text-white { color: var(--primary) !important; }
+        main .text-slate-300, .funnel-content:not(.impact-panel):not(.desktop-shell) .text-slate-300 { color: var(--muted) !important; }
+        main .text-slate-400, .funnel-content:not(.impact-panel):not(.desktop-shell) .text-slate-400 { color: #627083 !important; }
+        main .text-slate-500, .funnel-content:not(.impact-panel):not(.desktop-shell) .text-slate-500 { color: #7c8796 !important; }
+        main .text-cyan-200, main .text-cyan-200\/80, main .text-cyan-300 { color: #927017 !important; }
+        main .border-slate-700, main .border-cyan-300\/20, main .border-cyan-400\/20 { border-color: rgba(10,15,29,0.11) !important; }
+        main .bg-slate-950\/60 { background: rgba(238,241,245,0.80) !important; }
+        main .bg-green-500\/20 { background: rgba(16,185,129,0.12) !important; }
+        main .text-green-300 { color: #08765a !important; }
+        main .text-amber-200\/70 { color: #8c6812 !important; }
+        #purchase, #guarantee { border-color: rgba(212,175,55,0.28); }
+        #purchase { background: linear-gradient(145deg, #fffdf6, rgba(255,255,255,0.96)); }
+        #guarantee { background: linear-gradient(145deg, #fffdf6, #f4f6f8); }
+        #guarantee .text-white { color: var(--primary) !important; }
+        #guarantee .text-slate-300, #guarantee .text-slate-400 { color: var(--muted) !important; }
+        #guarantee .text-cyan-200\/80 { color: #927017 !important; }
+        main .text-slate-200 { color: #38485f !important; }
+        .funnel-section p, .funnel-section li { font-size: 1.1rem; line-height: 1.9; }
+        .funnel-section .text-xs { font-size: 0.9rem !important; }
+        .funnel-section .text-sm { font-size: 1rem !important; }
+        .funnel-section h2 { line-height: 1.32; letter-spacing: -0.018em; }
+        .funnel-section h3, .funnel-section strong { letter-spacing: 0; }
+        .price-decision { font-size: 1.45rem !important; color: var(--primary) !important; }
+        .price-highlight { color: #c7362f !important; font-size: 1.65em; letter-spacing: 0.02em; }
+        .price-note { font-size: 1.12rem !important; color: #7d2430 !important; font-weight: 600; }
+        #abl-method-title + p { color: #263750 !important; font-size: 1.16rem !important; line-height: 2 !important; font-weight: 500; }
+        footer { color: #748093 !important; }
+        .desktop-shell::before { display: none; }
+        .sticky-mobile-cta { background: #ffffff; border-color: #e5dfcf; box-shadow: 0 -8px 26px rgba(23,37,58,0.09); }
+        @media (max-width: 767px) {
+            .funnel-section { border-radius: 1.35rem !important; }
+            .impact-panel { margin: 0 0.65rem 1rem; }
+            .hero-panel { border-radius: 1.35rem !important; }
+            .hero-panel::before { background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.94)); }
+            .hero-intro { min-height: auto; }
+            .hero-intro h1,
+            .hero-intro .hero-summary,
+            .hero-intro .hero-metrics,
+            .hero-intro .hero-points,
+            .hero-intro .visual-stack { max-width: none; }
+            .hero-art { display: none; }
         }
 
-        @media (max-width: 480px) {
-            h1 { font-size: 1.94rem; }
-            h2 { font-size: 1.48rem; }
-            .pain-story-title { font-size: 1.42rem; }
-            .hero-subtitle { font-size: 0.95rem; }
-            .hero-value p { font-size: 0.89rem; }
-            section { padding: 1.65rem 0.7rem; }
-            .product-card { padding: 0.82rem 0.68rem 0.68rem; }
-            .product-grid { row-gap: 0.8rem; }
-            .product-visual { min-height: 118px; }
-            .card-desc { margin-bottom: 0.5rem; font-size: 0.9rem; line-height: 1.58; }
-            .card-cta { min-height: 40px; padding: 0.68rem 0.6rem; font-size: 0.78rem; }
-            .visual-proof-grid { gap: 0.45rem; margin-bottom: 0.45rem; }
-            .decision-grid { grid-template-columns: 1fr; }
-            .decision-helper { padding: 0.88rem 0.72rem; margin-bottom: 0.72rem; border-radius: 18px; }
-            .decision-helper h3 { font-size: 1.04rem; line-height: 1.42; }
-            .decision-helper p { font-size: 0.88rem; line-height: 1.62; }
-            .decision-card { padding: 0.78rem 0.72rem; border-radius: 16px; }
-            .decision-card strong { font-size: 0.95rem; }
-            .decision-card p { font-size: 0.86rem; line-height: 1.56; margin-bottom: 0.48rem; }
-            .decision-link { font-size: 0.78rem; padding: 0.48rem 0.66rem; }
-            .tech-container { padding: 0.8rem 0.7rem; }
-            .brainwave-card,
-            .tech-pillar,
-            .research-note,
-            .faq-item { padding: 0.82rem 0.7rem; }
-            .faq-item h4 { font-size: 0.98rem; }
-            .faq-item p { font-size: 0.88rem; line-height: 1.62; }
-            .purchase-summary { padding: 0.8rem 0.78rem; margin-bottom: 0.68rem; }
-            .purchase-reassurance { padding: 0.78rem 0.75rem; margin-bottom: 0.7rem; border-radius: 16px; }
-            .purchase-reassurance ul { font-size: 0.82rem; line-height: 1.58; padding-left: 1rem; }
+        /* ===== 視覺層級系統 ===== */
+        .section-eyebrow {
+            font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
+            color: #7dd3fc; font-weight: 600;
         }
+        main .section-eyebrow, .funnel-content:not(.desktop-shell) .section-eyebrow { color: #927017; }
+
+        .tier-hero { padding-top: 3.25rem !important; padding-bottom: 3.25rem !important; position: relative; }
+        .tier-hero::before {
+            content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+            border: 1px solid rgba(125,211,252,0.30);
+            box-shadow: inset 0 0 60px rgba(56,189,248,0.07);
+        }
+        main .tier-hero::before, .funnel-content:not(.desktop-shell) .tier-hero::before {
+            border-color: rgba(212,175,55,0.42);
+            box-shadow: inset 0 0 60px rgba(212,175,55,0.06);
+        }
+        .tier-hero-title { font-size: 1.9rem; line-height: 1.25; font-weight: 800; letter-spacing: -0.01em; color: #fff; }
+        main .tier-hero-title { color: var(--primary) !important; }
+        @media (min-width: 640px) { .tier-hero-title { font-size: 2.6rem; } }
+
+        .tier-support { padding-top: 2rem !important; padding-bottom: 2rem !important; opacity: 0.97; }
+        .tier-support h2 { font-size: 1.5rem !important; }
+        @media (min-width: 640px) { .tier-support h2 { font-size: 1.85rem !important; } }
+
+        .tier-fine { background: transparent !important; border: 1px dashed rgba(70,86,106,0.28) !important;
+            box-shadow: none !important; padding-top: 1.75rem !important; padding-bottom: 1.75rem !important; }
+        .tier-fine h2 { font-size: 1.3rem !important; }
+        .tier-fine p, .tier-fine .text-sm { font-size: 0.86rem; }
+
+        /* ===== 三層結構 ===== */
+        .layer-stack { display: grid; gap: 0.85rem; max-width: 44rem; margin: 0 auto; }
+        .layer-band {
+            display: flex; align-items: center; gap: 1.15rem;
+            padding: 1.25rem 1.5rem; border-radius: 1.15rem;
+            border: 1px solid rgba(148,163,184,0.20);
+            transition: transform .25s ease, border-color .25s ease;
+        }
+        .layer-band:hover { transform: translateX(4px); border-color: rgba(125,211,252,0.5); }
+        .layer-band-1 { background: linear-gradient(100deg, rgba(103,232,249,0.16), rgba(103,232,249,0.04)); }
+        .layer-band-2 { background: linear-gradient(100deg, rgba(56,189,248,0.16), rgba(56,189,248,0.04)); margin-left: 1.5rem; }
+        .layer-band-3 { background: linear-gradient(100deg, rgba(212,175,55,0.18), rgba(212,175,55,0.04)); margin-left: 3rem; }
+        @media (max-width: 640px) { .layer-band-2, .layer-band-3 { margin-left: 0; } }
+        .layer-index { font-size: 0.8rem; letter-spacing: 0.15em; color: #7dd3fc; font-weight: 700; min-width: 2rem; }
+        .layer-band-3 .layer-index { color: #e3c96a; }
+        .layer-name { font-size: 1.2rem; font-weight: 700; color: #fff; }
+        .layer-desc { font-size: 0.92rem; color: #94a3b8; margin-top: 0.15rem; }
+        .layer-note { text-align: center; margin-top: 2rem; color: #cbd5e1; font-size: 1rem; }
+        .layer-note strong { color: #7dd3fc; }
+
+        /* ===== 價格錨定 ===== */
+        .price-anchor {
+            display: grid; grid-template-columns: 1fr auto minmax(9rem, 1fr); align-items: center; gap: 1.25rem;
+            max-width: 40rem; margin: 1.75rem auto 0; text-align: center;
+        }
+        @media (max-width: 640px) { .price-anchor { grid-template-columns: 1fr; gap: 0.6rem; } }
+        .price-anchor-side { font-size: 0.86rem; color: var(--muted); line-height: 1.7; }
+        .price-anchor-arrow { font-size: 1.4rem; color: #b98e17; }
+        .price-anchor-main {
+            display: flex; align-items: baseline; justify-content: center; gap: 0.12em;
+            font-size: 3rem; font-weight: 800; color: var(--primary);
+            line-height: 1; letter-spacing: -0.02em; white-space: nowrap;
+        }
+        @media (min-width: 640px) { .price-anchor-main { font-size: 3.6rem; } }
+        .price-anchor-unit {
+            font-size: 0.46em; font-weight: 800; letter-spacing: 0.01em;
+            vertical-align: baseline; position: relative; top: -0.02em;
+        }
+
+        /* ===== 中段 CTA ===== */
+        .mid-cta { text-align: center; margin-top: 2.25rem; }
+        .mid-cta .primary-btn { padding: 0.95rem 2rem; }
+        .mid-cta-note { font-size: 0.78rem; color: var(--muted); margin-top: 0.65rem; }
+
+        /* ===== 淺色主題校正（機制區塊在 desktop-shell 內，不吃 main 的色彩覆寫） ===== */
+        #mechanism .text-white, #mechanism .tier-hero-title, #mechanism .layer-name { color: var(--primary) !important; }
+        #mechanism .text-slate-300 { color: var(--muted) !important; }
+        #mechanism .text-slate-500 { color: #7c8796 !important; }
+        #mechanism .section-eyebrow { color: #927017; }
+        #mechanism .tier-hero::before, #mechanism.tier-hero::before {
+            border-color: rgba(212,175,55,0.42);
+            box-shadow: inset 0 0 60px rgba(212,175,55,0.06);
+        }
+        #mechanism .layer-band { border-color: rgba(23,37,58,0.10); }
+        #mechanism .layer-band:hover { border-color: rgba(185,142,23,0.45); }
+        #mechanism .layer-band-1 { background: linear-gradient(100deg, rgba(212,175,55,0.16), rgba(212,175,55,0.03)); }
+        #mechanism .layer-band-2 { background: linear-gradient(100deg, rgba(31,58,95,0.12), rgba(31,58,95,0.03)); }
+        #mechanism .layer-band-3 { background: linear-gradient(100deg, rgba(146,112,23,0.18), rgba(146,112,23,0.04)); }
+        #mechanism .layer-index { color: #b98e17; }
+        #mechanism .layer-band-2 .layer-index { color: #1f3a5f; }
+        #mechanism .layer-desc { color: var(--muted); }
+        #mechanism .layer-note { color: var(--ink); }
+        #mechanism .layer-note strong { color: #8c6812; }
+
+        /* ===== 測驗選項文字（淺色主題） ===== */
+        .option-btn .option-text { color: var(--ink); }
+        .option-btn.selected .option-text { color: var(--primary); font-weight: 600; }
+
+        /* ===== 已選商品強調 ===== */
+        .selection-highlight {
+            color: #c2410c !important; font-weight: 600; font-size: 1.05rem;
+            background: rgba(194,65,12,0.07); border-left: 3px solid #c2410c;
+            padding: 0.7rem 1rem; border-radius: 0 0.6rem 0.6rem 0; display: inline-block;
+        }
+        .selection-highlight strong { color: #9a3412; font-weight: 800; }
+
+        /* ===== 加贈項目 ===== */
+        .offer-bonus { background: rgba(212,175,55,0.07); border-radius: 0.9rem;
+            padding: 0.85rem 1rem; margin: 0.25rem -0.35rem; border: 1px dashed rgba(185,142,23,0.38); }
+        .offer-bonus .offer-stack-check { color: #b98e17 !important; }
+        .bonus-tag { display: inline-block; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em;
+            color: #7a5a08; background: rgba(212,175,55,0.28); border-radius: 0.4rem;
+            padding: 0.12rem 0.45rem; margin-right: 0.35rem; vertical-align: 0.08em; }
+
+        /* ===== 今晚的代價 ===== */
+        .cost-of-delay { max-width: 40rem; margin: 2.25rem auto 0; text-align: center;
+            padding: 1.35rem 1.5rem; border-radius: 1.1rem;
+            background: rgba(194,65,12,0.055); border: 1px solid rgba(194,65,12,0.18); }
+        .cost-of-delay p { color: #9a3412; font-size: 1.02rem; line-height: 1.85; margin: 0; }
+        .cost-of-delay strong { color: #7c2d12; }
+        .guarantee-strong { color: #c2410c; font-weight: 800; }
+
+        /* ===== 淺色主題補完：hero-panel / desktop-shell 內遺漏的深色 utility ===== */
+        .hero-panel .bg-slate-950\/60,
+        .desktop-shell .bg-slate-950\/60 {
+            background: #ffffff !important;
+            box-shadow: 0 6px 18px rgba(23,37,58,0.05);
+        }
+        .hero-panel .border-slate-700,
+        .desktop-shell .border-slate-700 { border-color: #e2e6eb !important; }
+        .hero-panel .border-cyan-400\/20 { border-color: rgba(185,142,23,0.30) !important; }
+        .hero-panel .border-amber-300\/15 { border-color: rgba(185,142,23,0.28) !important; }
+        .hero-panel .bg-slate-700\/80 { background: #e6e9ee !important; }
+        .hero-panel .text-slate-200,
+        .desktop-shell .text-slate-200 { color: #2b3a4d !important; }
+        .hero-panel .text-slate-100,
+        .desktop-shell .text-slate-100 { color: var(--ink) !important; }
+        .hero-panel .text-amber-200\/70 { color: #8c6812 !important; }
+        .hero-panel .text-green-300 { color: #08765a !important; }
+
+        /* 結果頁小標籤：加深、加重，不再是淡灰 */
+        #step-result .text-xs.uppercase { color: #6a4f0b !important; font-weight: 700; letter-spacing: 0.16em; }
+        #step-result .text-slate-300 { color: #2b3a4d !important; }
+        #step-result .text-slate-500 { color: #5b6875 !important; }
+        #step-result [id^="result-"] { color: var(--ink) !important; }
+        .hero-panel .bg-green-500\/20, .desktop-shell .bg-green-500\/20 { background: rgba(8,118,90,0.10) !important; }
+        .hero-panel .bg-green-300, .desktop-shell .bg-green-300 { background: #08765a !important; }
+        main .border-cyan-300\/20, .funnel-content:not(.desktop-shell) .border-cyan-300\/20 { border-color: rgba(185,142,23,0.28) !important; }
+        /* ===== 同意勾選 ===== */
+        .consent-row {
+            display: flex; align-items: flex-start; gap: 0.6rem;
+            font-size: 0.85rem !important; line-height: 1.7; color: var(--muted);
+            margin: 0.25rem 0 0.5rem; cursor: pointer;
+        }
+        .consent-row input[type="checkbox"] {
+            flex: 0 0 auto; width: 1.05rem; height: 1.05rem; margin-top: 0.22rem;
+            accent-color: #b98e17; cursor: pointer;
+        }
+        .consent-row a { color: #8c6812; text-decoration: underline; text-underline-offset: 3px; }
+        .footer-links { margin-bottom: 0.75rem; }
+        .footer-links a { color: #7c8796; text-decoration: underline; text-underline-offset: 3px; }
+        /* ===== 價格階梯 ===== */
+        .tier-board { max-width: 40rem; margin: 2rem auto 0; }
+        .tier-board-title { font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
+            color: #927017; font-weight: 600; text-align: center; margin-bottom: 0.9rem; }
+        .tier-list { display: grid; gap: 0.7rem; }
+        .tier-item {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 1rem 1.25rem; border-radius: 1rem;
+            border: 1px solid rgba(23,37,58,0.10); background: #fff;
+            transition: border-color .2s ease;
+        }
+        .tier-item.is-open { border-color: rgba(185,142,23,0.55); background: rgba(212,175,55,0.07);
+            box-shadow: 0 6px 20px rgba(185,142,23,0.10); }
+        .tier-item.is-done { opacity: 0.55; }
+        .tier-price { font-size: 1.4rem; font-weight: 800; color: var(--primary); min-width: 6.2rem; white-space: nowrap; }
+        .tier-item.is-done .tier-price { text-decoration: line-through; }
+        .tier-main { flex: 1 1 auto; }
+        .tier-label { font-weight: 700; color: var(--primary); font-size: 1rem; }
+        .tier-sub { font-size: 0.85rem; color: var(--muted); margin-top: 0.15rem; }
+        .tier-badge { flex: 0 0 auto; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;
+            padding: 0.3rem 0.7rem; border-radius: 999px; white-space: nowrap; }
+        .badge-open { background: rgba(185,142,23,0.20); color: #6a4f0b; }
+        .badge-done { background: rgba(23,37,58,0.08); color: #5b6875; }
+        .badge-next { background: rgba(31,58,95,0.10); color: #2b3a4d; }
+        .tier-note { font-size: 0.78rem; color: var(--muted); text-align: center; margin-top: 0.9rem; }
+        .story-note { display: block; margin-top: 0.5rem; font-size: 0.86rem; color: var(--muted); }
+        .tier-pact {
+            margin-top: 1.25rem; padding: 1.35rem 1.5rem; font-size: 0.9rem; line-height: 1.9;
+            color: #5c4a1f; background: rgba(212,175,55,0.09);
+            border: 1px solid rgba(185,142,23,0.32); border-radius: 1rem;
+        }
+        .tier-pact p { margin: 0 0 0.85rem; color: #5c4a1f; font-size: 0.9rem !important; line-height: 1.9; }
+        .tier-pact p:last-child { margin-bottom: 0; }
+        .tier-pact strong { color: #7a5a08; font-weight: 700; }
+        .tier-pact-title {
+            font-weight: 700; color: #6a4f0b !important; font-size: 0.95rem !important;
+            letter-spacing: 0.02em; margin-bottom: 0.9rem !important;
+        }
+        .tier-pact-close { font-style: normal; color: #7a5a08 !important; }
     </style>
 </head>
-<body>
+<body class="p-3 sm:p-5">
 
-<header>
-    <div class="header-content">
-        <div class="hero-eyebrow">艾伯林量子頻率 | 睡前聲音校準</div>
-        <h1 class="hero-nowrap">如果睡不著，問題可能不是你不夠累</h1>
-        <p class="hero-subtitle">睡前卡住通常不是單一問題，而是腦內雜訊、淺眠易醒、明天壓力或底層不安其中一條路徑正在牽動你</p>
-        <div class="hero-value">
-            <p><strong>這套音頻不是要你更努力放鬆。</strong>它把 TimeWaver 頻率概念、腦波導引與正向語意腳本整理成四條睡前路徑，分別對應 A 腦內雜訊與復盤、B 淺眠易醒與修復不足、C 明天壓力與神經備戰、D 底層不安與情緒牽動。</p>
-        </div>
-    </div>
-</header>
-
-<section id="pain-story" class="pain-story-section">
-    <h2 class="pain-story-title">你真正想解決的，不是「要不要聽音頻」，而是「今晚到底怎麼睡得著」</h2>
-    
-    <div class="pain-card">
-        <span class="pain-scene">最大痛點</span>
-        <div class="pain-quote">「明明躺下了，腦內雜訊卻還在跑。」</div>
-        <p class="pain-desc">你不是不想睡，而是躺下之後，腦袋還在復盤今天、整理對話、補做剛剛沒做完的決策。真正折磨人的不是夜晚太長，而是思考沒有停下來，腦內雜訊一直佔據注意力。</p>
-    </div>
-
-    <div class="pain-card" style="border-left-color: #3b82f6;">
-        <span class="pain-scene" style="color: #3b82f6;">核心原因</span>
-        <div class="pain-quote">「有些人是睡不沉，有些人是還在替明天備戰。」</div>
-        <p class="pain-desc">淺眠、易醒、睡了像沒睡，通常牽涉到夜間修復不足；明天有壓力、會議或重要任務時，則常見預期性焦慮與神經備戰。這兩種狀態看起來都像睡不好，但需要的聲音路徑不同。</p>
-    </div>
-
-    <div class="pain-card" style="border-left-color: #d4af37;">
-        <span class="pain-scene" style="color: #d4af37;">常見卡點</span>
-        <div class="pain-quote">「有些夜晚，真正吵的是底層的不安。」</div>
-        <p class="pain-desc">有些睡不著不是因為今天事情太多，而是安全感、匱乏感或情緒牽動在底層持續拉扯。這時候需要的不是說服自己沒事，而是先讓身心回到比較有支撐的安定感。</p>
-    </div>
-
-    <div class="pain-transition">
-        <h3>所以解法不是再逼自己睡，而是讓系統有路可以慢下來</h3>
-        <p>接下來你會看到這套音頻如何把睡前狀態拆成 A 腦內雜訊、B 淺眠易醒、C 明天壓力、D 底層不安四條路徑，再用對應的聲音頻率與語意引導，幫你建立可重複使用的夜間流程。</p>
-    </div>
-</section>
-
-
-<section id="experience" class="section-shell">
-    <div class="section-kicker">解決方案</div>
-    <h2>先分清楚你卡在哪一型，再用對應的聲音路徑處理</h2>
-    <p class="section-desc">這套音頻不是只靠放鬆旋律，而是把 <strong>TimeWaver 頻率校準</strong>、<strong>用於催眠與冥想的雙耳節拍</strong>、以及<strong>純正向語意引導</strong>結合成同一套睡前使用系統，並依照四種常見卡點做不同設計。</p>
-    <div class="visual-proof-grid">
-        <article class="visual-proof-card">
-            <img src="images/timewaver-eye-device.jpg" alt="TimeWaver 儀器與視覺意象" class="visual-proof-image">
-        </article>
-        <article class="visual-proof-card">
-            <img src="images/gemini-timewaver-brain.png" alt="腦波與聲音導引視覺" class="visual-proof-image">
-        </article>
-        <article class="visual-proof-card">
-            <img src="images/gemini-timewaver-mind.png" alt="意識與頻率引導視覺" class="visual-proof-image">
-        </article>
-    </div>
-
-    <div class="decision-helper">
-        <h3>它不是一個版本賣給所有人，而是先對應你的夜晚狀態</h3>
-        <p>A / B / C / D 四型不是複雜分類，而是把常見睡前卡住的原因整理成四條路徑：A 是腦內雜訊與復盤，B 是淺眠易醒與修復不足，C 是明天壓力與神經備戰，D 是底層不安、安全感、匱乏與情緒牽動。</p>
-        <div class="decision-grid">
-            <article class="decision-card">
-                <strong>A 劑</strong>
-                <p>腦內雜訊很多，容易復盤、反覆想、思考停不下來。</p>
-                <a href="#purchase" class="decision-link">看 A 劑</a>
-            </article>
-            <article class="decision-card">
-                <strong>B 劑</strong>
-                <p>淺眠、易醒，睡了像沒睡，醒來仍覺得修復不足。</p>
-                <a href="#purchase" class="decision-link">看 B 劑</a>
-            </article>
-            <article class="decision-card">
-                <strong>C 劑</strong>
-                <p>明天有壓力或重要任務，預期性焦慮讓神經進入備戰。</p>
-                <a href="#purchase" class="decision-link">看 C 劑</a>
-            </article>
-            <article class="decision-card">
-                <strong>D 劑</strong>
-                <p>底層不安、安全感不足、匱乏感或情緒牽動特別明顯。</p>
-                <a href="#purchase" class="decision-link">看 D 劑</a>
-            </article>
-        </div>
-    </div>
-
-</section>
-
-<section id="tech-intro" class="section-shell" style="padding-bottom: 4rem;">
-    <div class="section-kicker">為什麼有效</div>
-    <h2>為什麼很多人聽了很多助眠內容，夜裡還是停不下來？</h2>
-    <p class="section-desc">差別不只在聲音好不好聽，而在於底層有沒有對應邏輯。這一套的設計核心，是把頻率校準、腦波導引與語意引導一起用，分別回應腦內雜訊、淺眠易醒、預期性焦慮與底層不安四種睡前卡點。</p>
-    <div class="tech-container">
-        <img src="images/energy-body.jpg" alt="頻率與能量人體意象" class="tech-bg-image">
-        
-        <div style="margin-bottom: 3rem; padding: 2rem; background: rgba(0,0,0,0.03); border-left: 4px solid var(--primary); border-radius: 8px;">
-            <h4 style="color: var(--primary); font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;">這套音頻的底層不是單一聲音素材，而是三個技術層同時運作</h4>
-            <ul style="margin: 0 0 1rem; padding-left: 1.25rem; color: var(--text-sub); line-height: 1.9;">
-                <li><strong>第一層：</strong>TimeWaver 頻率概念，用來建立整體校準方向。</li>
-                <li><strong>第二層：</strong>雙耳節拍，協助大腦往目標腦波區間靠近。</li>
-                <li><strong>第三層：</strong>正向語意腳本，讓放鬆狀態下的大腦接收更一致的引導訊息。</li>
-            </ul>
-            <p style="margin-bottom: 0;">也因此它的目標不是單純「陪你聽」，而是讓睡前的大腦、神經系統與注意力有一個更明確的降速路徑。</p>
-        </div>
-
-        <div class="tech-pillars">
-            <article class="tech-pillar">
-                <span class="tech-pillar-label">技術一</span>
-                <h4>TimeWaver 頻率校準</h4>
-                <p>這系列音頻的設計邏輯，是先將常見狀態整理為 A、B、C、D 四條路徑：A 處理腦內雜訊與復盤，B 對應淺眠與修復不足，C 對應明天壓力、預期性焦慮與神經備戰，D 對應底層不安、安全感、匱乏與情緒牽動。這樣的設計方式，讓音頻不只是聲音，而是有情境、有目的、有對應邏輯的使用方案。</p>
-            </article>
-            <article class="tech-pillar">
-                <span class="tech-pillar-label">技術二</span>
-                <h4>雙耳節拍腦波導引</h4>
-                <p>透過用於催眠與冥想的雙耳節拍，對應 Theta、Delta、Alpha 等腦波區間，讓不同狀態有不同入口：思考降速、修復不足回穩、壓力卸載或安全感回穩。</p>
-            </article>
-            <article class="tech-pillar">
-                <span class="tech-pillar-label">技術三</span>
-                <h4>正向語意引導</h4>
-                <p>腳本刻意排除負面詞與否定句，改用平靜、安全、安定、鬆開、回穩等正向語意，讓半放鬆與半夢半醒狀態中的大腦接收更一致的引導方向。</p>
-            </article>
-        </div>
-
-        <div class="brainwave-grid">
-            <article class="brainwave-card">
-                <h5>Delta 波｜0.5-4 Hz</h5>
-                <p>常見於深度無夢睡眠，與身體修復、恢復、疼痛緩解有關，也對應 B 劑想改善淺眠、易醒、睡了像沒睡與修復不足的方向。</p>
-            </article>
-            <article class="brainwave-card">
-                <h5>Theta 波｜4-7 Hz</h5>
-                <p>與潛意識洞察、深度放鬆、心理意像、冥想與快速動眼睡眠有關，適合作為 A 劑協助腦內雜訊降速、減少復盤與思考停不下來的主要區間。</p>
-            </article>
-            <article class="brainwave-card">
-                <h5>Alpha 波｜7-13 Hz</h5>
-                <p>與創造力、清醒但放鬆、較穩定的冷靜狀態有關，對應 C 劑想在明天壓力與預期性焦慮下，幫神經系統從備戰狀態退回穩定。</p>
-            </article>
-            <article class="brainwave-card">
-                <h5>Beta / Gamma 波｜13-70 Hz</h5>
-                <p>Beta 常見於注意力集中、活動、焦慮與興奮；Gamma 與較高心理功能、感知、自我意識與情緒反應有關，因此夜間設計通常不是把人推往更高頻，而是從這些高張狀態慢慢往下帶。</p>
-            </article>
-        </div>
-
-        <p style="margin-bottom: 2rem;">如果你聽過很多助眠音，卻還是覺得睡前停不下來，差別通常就在這三件事：</p>
-        <ul class="tech-list">
-            <li><strong>不是靠旋律抓住注意力：</strong>底層以雙耳節拍與頻率區間為主，目的不是讓你一直跟著旋律跑，而是讓神經系統比較容易往目標狀態靠近。</li>
-            <li><strong>不是每個人都聽同一款：</strong>A / B / C / D 分別對應不同夜間狀態：A 是腦內雜訊與復盤，B 是淺眠易醒與修復不足，C 是明天壓力與神經備戰，D 是底層不安、安全感、匱乏與情緒牽動。</li>
-            <li><strong>不是只聽一次就結束：</strong>它更像是一套可重複使用的睡前流程，透過固定播放時間與固定語意輸入，慢慢建立夜間的安定習慣。</li>
-        </ul>
-
-        <div class="research-note">
-            <h4>研究依據與理論整理</h4>
-            <p><strong>TimeWaver PRO 的理論基礎：</strong>TimeWaver PRO 的理論基礎，主要建立在「信息場」的概念上。信息場被描述為一種連結精神與物質的非物質層面，分析的目的在於從中找出與當下狀態較有關聯的資訊模式，作為後續調整與應用的參考。系統在分析時會參考物理噪聲發生器的資料，並依此對不同內容進行優先排序；在其使用經驗中，這樣的排序被視為能反映與使用者較相關的方向。</p>
-            <p><strong>正向語意引導：</strong>Wegner (1994) 提出的 ironic processes of mental control 指出，當人反覆對自己說「我不焦慮」這類否定語句時，大腦反而會持續維持對焦慮概念的活化。這也是腳本刻意排除「不」字與負面詞，改用平靜、安全、穩定等正向詞彙的原因。</p>
-            <p><strong>睡眠中仍可接收語音資訊：</strong>Kouider 等人 (2014) 顯示，大腦在睡眠狀態下仍可能對具有意義的語音產生神經反應。這可作為微聲循環與半夢半醒引導的理論支持，說明放鬆狀態下語意輸入並非完全被阻斷。</p>
-            <p><strong>Theta / Delta 腦波導引：</strong>Abeln 等人 (2014) 的試點研究指出，入睡期間使用 Theta 與 Delta 聽覺刺激，可能有助於改善睡眠品質與起床後狀態，這為 A 劑與 B 劑的腦波設計提供了可引用的方向。</p>
-            <p><strong>Solfeggio 類頻率的類比證據：</strong>Akimoto 等人 (2018) 研究的是 528 Hz，而非 852 Hz；但其結果顯示特定赫茲音樂可能影響壓力荷爾蒙與自律神經，因此可作為 D 劑 852 Hz 設計的類比參考，而不是完全相同的直接證據。</p>
-        </div>
-    </div>
-
-    <div class="quantum-anchor-box">
-        <h4>你買到的不是一個檔案，而是一個可以每天用的睡前方法</h4>
-        <p>真正重要的不是音檔本身，而是它能不能真的被你用進每天晚上。當你開始固定使用，晚上才比較有機會慢慢回到安定。</p>
-    </div>
-
-    <div class="guarantee-box">
-        <h3>購買後，你會得到的不只是音檔</h3>
-        <p>你會收到對應版本的完整音頻，可以直接開始使用。</p>
-        <p>你會收到簡單的使用指引，幫助你知道什麼時間聽、怎麼聽，才比較容易變成日常習慣。</p>
-        <p>付款完成後，系統會依你填寫的資料對應訂單與寄送資訊，讓你知道自己買的是哪一款、接下來怎麼開始使用。</p>
-    </div>
-</section>
-
-<section class="value-anchor-section">
-    <div class="value-anchor-shell">
-        <div class="value-anchor-grid">
-            <div class="value-anchor-copy">
-                <div class="section-kicker" style="text-align: left; color: rgba(212,175,55,0.92);">價格比較</div>
-                <h2>不用一次買整套，先選最符合你現在解析結果的一款就好</h2>
-                <p>一套完整的高階睡前音頻方案，原價通常會落在 <strong>NT$6,000</strong> 左右。多數人真正需要的，不是一次買一整套，而是先找到最符合自己目前解析結果的那一款。</p>
-                <p>所以你現在不用先花整套的錢。你可以先用 <strong>NT$299</strong>，選一款最接近你目前 A / B / C / D 狀態的版本，從今晚開始使用。</p>
+<div class="funnel-content desktop-shell">
+    <div class="space-y-5">
+        <aside class="hero-intro hero-panel glass-panel hero-grid rounded-[2rem] funnel-stage overflow-hidden">
+            <div class="inline-flex items-center gap-2 brand-chip rounded-full px-4 py-2 text-sm tracking-[0.18em] uppercase">
+                <span class="w-2 h-2 rounded-full bg-cyan-300"></span>
+                60 秒睡前卡點檢測
             </div>
-            <aside class="value-anchor-card" aria-label="價格定錨資訊">
-                <div class="anchor-label">現在先買一款就可以</div>
-                <div class="anchor-old-price">整套方案原價 NT$6,000</div>
-                <div class="anchor-price">NT$299</div>
-                <p class="anchor-note">先選一款最符合你目前解析結果的版本。先從今晚開始，再看看它適不適合你。</p>
-            </aside>
-        </div>
+            <div class="mt-8">
+                <p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">Sleep Checkpoint Assessment</p>
+                <h1 class="text-4xl sm:text-5xl font-bold leading-tight text-white mt-3">白噪音、早點躺、放鬆 App 都沒錯。<br>錯在沒先分清你卡在哪一型。</h1>
+                <p class="mt-5 text-slate-300 leading-relaxed text-base sm:text-lg hero-summary">
+                    今晚睡不著，可能不是你不夠累，而是大腦還沒下班。躺下後還在復盤、淺眠易醒、明天壓力一直跑，或安靜下來就不安？用 60 秒測出你的睡前卡點，找到今晚最適合的聲音路徑。
+                </p>
+                <div class="hero-cta-row">
+                    <a href="#step-start" class="primary-btn inline-flex items-center justify-center px-7 py-4">開始 60 秒檢測</a>
+                    <span>8 題完成・不用先購買</span>
+                </div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <div class="hero-art-core">60<small>秒分型</small></div>
+                <p class="hero-art-caption">先分清楚<br>再開始今晚</p>
+            </div>
+
+            <div class="grid sm:grid-cols-3 gap-3 mt-8 hero-metrics">
+                <div class="mini-card rounded-2xl p-4">
+                    <p class="text-xs tracking-[0.16em] uppercase text-slate-500">完成時間</p>
+                    <p class="mt-2 text-lg font-semibold text-white">60 秒</p>
+                </div>
+                <div class="mini-card rounded-2xl p-4">
+                    <p class="text-xs tracking-[0.16em] uppercase text-slate-500">檢測題數</p>
+                    <p class="mt-2 text-lg font-semibold text-white">8 題完成</p>
+                </div>
+                <div class="mini-card rounded-2xl p-4">
+                    <p class="text-xs tracking-[0.16em] uppercase text-slate-500">購買門檻</p>
+                    <p class="mt-2 text-lg font-semibold text-white">不用先購買</p>
+                </div>
+            </div>
+
+            <div class="mt-8 space-y-3 text-sm text-slate-300 hero-points">
+                <div class="flex items-start gap-3">
+                    <span class="mt-1 w-2 h-2 rounded-full bg-cyan-300"></span>
+                    <p>先分清楚你是腦內雜訊、淺眠修復、明天壓力，還是底層不安。</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="mt-1 w-2 h-2 rounded-full bg-cyan-300"></span>
+                    <p>完成後看到你的睡前卡點、今晚第一步與對應聲音路徑。</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="mt-1 w-2 h-2 rounded-full bg-cyan-300"></span>
+                    <p>結果直接公開；想保留完整解讀時，再選擇留下 Email 即可。</p>
+                </div>
+            </div>
+
+            <div class="visual-stack" aria-label="量子調頻視覺展示">
+                <div class="visual-frame">
+                    <div class="visual-frame-grid visual-frame-top">
+                        <div class="visual-card visual-card-3">
+                            <img src="assets/3.png" alt="手掌上方的腦波與耳機頻率影像">
+                        </div>
+                        <div class="visual-card visual-card-4">
+                            <img src="assets/4.png" alt="側臉與發光腦部意象">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+<section class="impact-panel glass-panel rounded-[2rem] funnel-section tier-support mb-5">
+    <p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">睡眠品質，不只影響夜晚</p>
+    <h2 class="text-3xl sm:text-4xl font-bold text-white mt-3">當夜裡沒有真的休息，白天會先開始付代價</h2>
+    <div class="funnel-list mt-8">
+        <article class="flow-step"><span class="flow-step-number">1</span><div><h3 class="font-semibold text-white">思緒更難收回</h3><p class="text-sm text-slate-400 mt-2">白天的對話、決策與待辦，容易一路延續到躺下後。</p></div></article>
+        <article class="flow-step"><span class="flow-step-number">2</span><div><h3 class="font-semibold text-white">醒來仍像沒充電</h3><p class="text-sm text-slate-400 mt-2">睡了卻沒有恢復感，身體和注意力都更難回到穩定節奏。</p></div></article>
+        <article class="flow-step"><span class="flow-step-number">3</span><div><h3 class="font-semibold text-white">壓力更容易放大</h3><p class="text-sm text-slate-400 mt-2">當系統一直待命，明天的壓力與底層不安也更容易佔住今晚。</p></div></article>
     </div>
+    <a href="#step-start" class="primary-btn inline-block px-8 py-4 mt-8">了解我目前卡在哪裡</a>
 </section>
 
-<section id="purchase" class="section-shell">
-    <h2>選一款最符合你解析結果的音頻，今晚就能開始</h2>
-    <p class="section-desc purchase-desc">每一款都是 NT$299。你不需要一次買整套，先用最接近自己解析結果的一款建立睡前節奏。</p>
-    <div class="decision-helper" data-assessment-handoff>
-        <h3>如果你剛完成睡前卡點檢測，請先看對應你的那一款</h3>
-        <p>測驗結果不是要你一次買完整套，而是幫你先縮小選擇。先從最接近目前狀態的一款開始，今晚就有一條比較清楚的睡前路徑。</p>
+<section id="mechanism" class="glass-panel rounded-[2rem] funnel-section tier-hero mb-5" aria-labelledby="mechanism-title">
+    <div class="text-center max-w-3xl mx-auto">
+        <p class="section-eyebrow">睡前卡點四型 · Sleep Checkpoint Types</p>
+        <h2 id="mechanism-title" class="tier-hero-title mt-3">每一款，是三層疊起來的</h2>
+        <p class="text-slate-300 mt-4 leading-relaxed">免費音樂通常是一段做給所有人聽的背景聲。這裡的每一款不是找一段好聽的音檔，而是三個東西疊在一起。</p>
     </div>
-    <div class="product-grid">
-        <!-- 產品 1 -->
-        <div class="product-card" data-product-card="A">
-            <span class="recommendation-badge">你的檢測推薦</span>
-            <div class="card-icon">🍃</div>
-            <h3 class="card-title">【A劑】斷路器・沉靜頻率</h3>
-            <span class="card-freq">Theta 波 (4-7Hz) · A 型：腦內雜訊 / 復盤</span>
-            <div class="product-visual">
-                <span class="product-visual-label">適合這種狀態</span>
-                <h4 class="product-visual-title">腦內雜訊太多，需要先降速。</h4>
-                <p class="product-visual-copy">把復盤、反覆想、停不下來的思考，一格一格調暗。</p>
-            </div>
-            <p class="card-desc">適合腦內雜訊很多、容易復盤、反覆想、思考停不下來的夜晚。這一款想幫你先把注意力從腦內噪音拉開，讓大腦比較有機會慢下來。</p>
-            <button type="button" class="card-cta" data-purchase-trigger data-product-code="A" data-product-name="【A劑】斷路器・沉靜頻率" data-payment-url="https://p.ecpay.com.tw/8F74F17">立即購買 NT$299</button>
-        </div>
 
-        <!-- 產品 2 -->
-        <div class="product-card" data-product-card="B">
-            <span class="recommendation-badge">你的檢測推薦</span>
-            <div class="card-icon">🌙</div>
-            <h3 class="card-title">【B劑】深海艙・放鬆頻率</h3>
-            <span class="card-freq">Delta 波 (0.5-4Hz) · B 型：淺眠 / 修復不足</span>
-            <div class="product-visual">
-                <span class="product-visual-label">適合這種狀態</span>
-                <h4 class="product-visual-title">睡得很淺，身體沒有真正修復。</h4>
-                <p class="product-visual-copy">像慢慢沉進深海保護艙，把夜間修復感重新拉回來。</p>
-            </div>
-            <p class="card-desc">適合淺眠、易醒、睡了像沒睡、醒來仍覺得修復不足的夜晚。這一款想幫身體往更深的休息感下沉，讓夜間恢復有機會慢慢回來。</p>
-            <button type="button" class="card-cta" data-purchase-trigger data-product-code="B" data-product-name="【B劑】深海艙・放鬆頻率" data-payment-url="https://p.ecpay.com.tw/377EA05">立即購買 NT$299</button>
-        </div>
-
-        <!-- 產品 3 -->
-        <div class="product-card" data-product-card="C">
-            <span class="recommendation-badge">你的檢測推薦</span>
-            <div class="card-icon">⚡️</div>
-            <h3 class="card-title">【C劑】心流校準・專注頻率</h3>
-            <span class="card-freq">Alpha 波 (8-12Hz) · C 型：明天壓力 / 神經備戰</span>
-            <div class="product-visual">
-                <span class="product-visual-label">適合這種狀態</span>
-                <h4 class="product-visual-title">明天的壓力，不必提前把你拉進備戰。</h4>
-                <p class="product-visual-copy">讓預期性焦慮先退一步，神經系統才有機會回到穩定。</p>
-            </div>
-            <p class="card-desc">適合明天有壓力、重要任務、高壓會議，或一想到明天就進入神經備戰的夜晚。這一款想幫你把預期性焦慮收回來，讓清醒不再等於一直繃著。</p>
-            <button type="button" class="card-cta" data-purchase-trigger data-product-code="C" data-product-name="【C劑】心流校準・專注頻率" data-payment-url="https://p.ecpay.com.tw/EA5427D">立即購買 NT$299</button>
-        </div>
-
-        <!-- 產品 4 -->
-        <div class="product-card gold-card" data-product-card="D">
-            <span class="recommendation-badge">你的檢測推薦</span>
-            <div class="card-icon">💎</div>
-            <h3 class="card-title">【D劑】豐盛錨點・安定頻率</h3>
-            <span class="card-freq">Solfeggio / 852Hz · D 型：底層不安 / 安全感</span>
-            <div class="product-visual">
-                <span class="product-visual-label">適合這種狀態</span>
-                <h4 class="product-visual-title">把底層不安與匱乏感，慢慢帶回安全感。</h4>
-                <p class="product-visual-copy">不是否定情緒，而是讓安全感先回來，情緒牽動才有機會鬆開。</p>
-            </div>
-            <p class="card-desc">適合底層不安、安全感不足、匱乏感或情緒牽動明顯的夜晚。這一款想幫你先把內在拉扯降下來，讓人比較回得來當下。</p>
-            <button type="button" class="card-cta" data-purchase-trigger data-product-code="D" data-product-name="【D劑】豐盛錨點・安定頻率" data-payment-url="https://p.ecpay.com.tw/5FB3A34">立即購買 NT$299</button>
-        </div>
-    </div>
-</section>
-
-<section class="faq-section section-shell" id="faq">
-    <div class="section-kicker">常見問題</div>
-    <div class="faq-grid">
-        <article class="faq-item">
-            <h4>我不確定自己該選 A、B、C 還是 D，怎麼辦？</h4>
-            <p>先不用想得太複雜，直接對照你最明顯的狀態：腦內雜訊、復盤、思考停不下來選 A；淺眠、易醒、睡了像沒睡、修復不足選 B；明天壓力、預期性焦慮、神經備戰選 C；底層不安、安全感、匱乏與情緒牽動選 D。</p>
-        </article>
-        <article class="faq-item">
-            <h4>付款後會發生什麼？</h4>
-            <p>你送出資料後會先前往綠界付款頁。完成付款後，系統會依你填寫的資料做訂單對應與後續寄送，方便你收到正確版本與使用內容。</p>
-        </article>
-        <article class="faq-item">
-            <h4>這是一段只聽一次的音頻，還是可以重複使用？</h4>
-            <p>它不是一次性的內容，而是一個可以重複使用的睡前方法。真正重要的通常不是第一次感受，而是你能不能在固定的夜晚節奏裡持續用它。</p>
-        </article>
-        <article class="faq-item">
-            <h4>如果我同時有好幾種狀態，該怎麼選？</h4>
-            <p>我能理解每個人的狀態通常都是綜合性的，有些時候也不容易分得那麼清楚。建議你先以前面解析結果或最明顯的主因作為第一步，先選擇那一款適合的頻率開始使用，後續再依實際狀態慢慢調整就可以。</p>
-        </article>
-        <article class="faq-item">
-            <h4>它是醫療產品嗎？</h4>
-            <p>不是。它屬於一般身心放鬆與專注聆聽體驗的輔助內容，不取代醫療診斷或治療。如果你本身已有明確身心疾患，仍建議優先尋求專業醫療協助。</p>
-        </article>
-    </div>
-</section>
-
-<section class="final-cta-section" aria-label="最後行動呼籲">
-    <div class="final-cta-box">
-        <div class="section-kicker" style="color: rgba(212,175,55,0.92);">今晚開始</div>
-        <h2>今晚不用再研究更多方法，先選一個能開始的版本</h2>
-        <p>如果你已經知道自己比較接近 A、B、C 或 D，就從最符合解析結果的那一款開始。先讓睡前有一條固定路徑，身心才有機會慢慢學會回到安定。</p>
-        <a href="#purchase" class="final-cta-link">馬上購買</a>
-    </div>
-</section>
-
-<div class="purchase-modal" hidden data-purchase-modal>
-    <div class="purchase-dialog" role="dialog" aria-modal="true" aria-labelledby="purchase-dialog-title">
-        <div class="purchase-dialog-header">
+    <div class="layer-stack mt-10">
+        <article class="layer-band layer-band-1">
+            <span class="layer-index">01</span>
             <div>
-                <h3 id="purchase-dialog-title" class="purchase-dialog-title">填寫基本資料後前往付款</h3>
-                <p class="purchase-dialog-subtitle">填完基本資料後會直接帶你前往付款頁面，方便後續確認訂單與寄送內容。</p>
+                <h3 class="layer-name">引導</h3>
+                <p class="layer-desc">把注意力從白天收回來</p>
             </div>
-            <button type="button" class="purchase-close" data-purchase-close aria-label="關閉表單">×</button>
-        </div>
-        <div class="purchase-summary">
-            <span class="purchase-summary-label">NT$299</span>
-            <h4 data-summary-name></h4>
-            <p>送出後會立即跳轉到綠界付款頁，不會先扣款。</p>
-        </div>
-        <div class="purchase-reassurance">
-            <h4>送出前你可以先知道</h4>
-            <ul>
-                <li>這一步是先保留訂單資料，送出後才會進入綠界付款頁。</li>
-                <li>你填寫的資料只用於訂單確認、付款對應與後續寄送內容。</li>
-                <li>付款完成後，會依你填寫的資料對應正確版本與使用資訊。</li>
-                <li>如果你仍不確定版本，先選最接近目前解析結果的一款即可。</li>
-            </ul>
-        </div>
-        <form class="purchase-form" data-purchase-form>
-            <input type="hidden" name="product_code">
-            <input type="hidden" name="product_name">
-            <input type="hidden" name="payment_url">
-            <div class="purchase-field">
-                <label for="purchase-name">姓名</label>
-                <input id="purchase-name" name="buyer_name" type="text" autocomplete="name" required>
+        </article>
+        <article class="layer-band layer-band-2">
+            <span class="layer-index">02</span>
+            <div>
+                <h3 class="layer-name">音樂</h3>
+                <p class="layer-desc">為那一型設計的聲音</p>
             </div>
-            <div class="purchase-field">
-                <label for="purchase-email">Email</label>
-                <input id="purchase-email" name="buyer_email" type="email" autocomplete="email" required>
+        </article>
+        <article class="layer-band layer-band-3">
+            <span class="layer-index">03</span>
+            <div>
+                <h3 class="layer-name">頻率</h3>
+                <p class="layer-desc">對應該型狀態的頻率</p>
             </div>
-            <div class="purchase-field">
-                <label for="purchase-phone">手機</label>
-                <input id="purchase-phone" name="buyer_phone" type="tel" inputmode="tel" autocomplete="tel" required>
-            </div>
-            <p class="purchase-help">送出後會保留這筆訂單資料，方便後續確認付款與寄送資訊。</p>
-            <div class="purchase-status" data-purchase-status></div>
-            <div class="purchase-actions">
-                <button type="button" class="purchase-secondary" data-purchase-close>取消</button>
-                <button type="submit" class="purchase-primary" data-purchase-submit>儲存資料並前往付款</button>
-            </div>
-        </form>
+        </article>
     </div>
+
+    <p class="layer-note">四種卡點各做一版，<strong>不是同一段音檔換個封面</strong>。</p>
+
+    <div class="text-center mt-8">
+        <button type="button" onclick="jumpToQuiz('mechanism')" class="primary-btn inline-flex items-center justify-center px-7 py-4">先測出我是哪一型</button>
+        <p class="text-xs text-slate-500 mt-3">60 秒、8 題，不用先購買。</p>
+    </div>
+</section>
+
+<div class="hero-panel glass-panel hero-grid rounded-[2rem] funnel-stage border border-slate-700">
+    
+    <!-- 歡迎畫面 -->
+    <div id="step-start" class="step active text-center">
+        <div class="inline-flex items-center gap-2 brand-chip rounded-full px-4 py-2 text-xs sm:text-sm mb-5">
+            <span class="w-2 h-2 rounded-full bg-cyan-300"></span>
+            睡前檢測入口
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-white leading-tight entry-heading">先找出你今晚卡在哪一型</h2>
+        <p class="text-slate-300 mb-8 leading-relaxed max-w-2xl mx-auto entry-note">
+            我們不是要你再多學一個助眠方法，而是先幫你分清楚：你是腦內雜訊停不下來、睡眠修復不夠深、明天壓力還在預演，還是底層不安一直拉扯。
+        </p>
+        <div class="grid sm:grid-cols-2 gap-3 text-left mb-8 entry-cards">
+            <div class="mini-card rounded-2xl p-4">
+                <p class="text-sm font-semibold text-white">你會得到什麼</p>
+                <p class="text-sm text-slate-400 mt-2">你的睡前卡點、今晚第一步、對應聲音路徑與後續入口。</p>
+            </div>
+            <div class="mini-card rounded-2xl p-4">
+                <p class="text-sm font-semibold text-white">適合誰做</p>
+                <p class="text-sm text-slate-400 mt-2">長期高壓、淺眠易醒、睡醒仍累、神經緊繃、心裡常有不明耗損感的人。</p>
+            </div>
+        </div>
+        <button onclick="startQuiz()" class="primary-btn py-4 px-8 w-full sm:w-auto">按這裡開始檢測</button>
+        <div class="start-feature-image">
+            <img src="assets/5.png" alt="人物側臉與發光腦部意象">
+        </div>
+        <p class="text-xs text-slate-500 mt-4">先完成檢測，再決定今晚要不要使用對應音頻。</p>
+    </div>
+
+    <!-- 測驗題目容器 -->
+    <div id="quiz-container" class="step">
+        <div class="mb-6 flex justify-between items-center gap-4 text-sm text-slate-400 mobile-progress">
+            <div>
+                <p class="text-xs uppercase tracking-[0.18em] text-slate-500">目前進度</p>
+                <span id="question-counter">第 1 題 / 共 8 題</span>
+            </div>
+            <div class="w-2/3 bg-slate-700/80 rounded-full h-2.5 progress-track">
+                <div id="progress-bar" class="bg-gradient-to-r from-sky-400 to-cyan-300 h-2.5 rounded-full" style="width: 12.5%"></div>
+            </div>
+        </div>
+        <div class="mini-card rounded-2xl p-5 mb-6 mobile-question-card">
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-3">哪一個畫面最像你最近的真實狀態</p>
+            <h2 id="question-text" class="text-xl sm:text-2xl font-semibold text-white leading-relaxed mobile-question-title"></h2>
+        </div>
+        <div id="options-container" class="space-y-3"></div>
+        <div class="mt-6 flex justify-between items-center gap-3 mobile-quiz-actions">
+            <button id="back-btn" type="button" onclick="goBack()" class="secondary-btn px-5 py-3 text-sm">上一題</button>
+            <p class="text-xs text-slate-500 text-right">選項送出後將自動前往下一題</p>
+        </div>
+    </div>
+
+    <!-- 最終結果畫面 -->
+    <div id="step-result" class="step text-center">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/20 text-green-300 mb-4">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        </div>
+        <div class="inline-flex items-center gap-2 brand-chip rounded-full px-4 py-2 text-xs sm:text-sm mb-5">
+            <span class="w-2 h-2 rounded-full bg-green-300"></span>
+            睡前卡點報告 已完成
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold mb-3 text-white mobile-result-title">你的睡前卡點已生成</h2>
+        <p class="text-slate-300 mb-6 mobile-result-copy">本次主要結果為：<span id="result-title" class="font-bold text-cyan-300"></span></p>
+        <div class="mini-card rounded-2xl p-6 text-left mb-4">
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-2">你的主卡點</p>
+            <p id="result-checkpoint" class="text-base font-semibold text-white"></p>
+        </div>
+        <div class="bg-slate-950/60 rounded-2xl p-6 text-left border border-slate-700 mb-6">
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-2">為什麼你會睡不安穩</p>
+            <p id="result-desc" class="text-sm sm:text-base text-slate-300 leading-relaxed"></p>
+        </div>
+        <div class="bg-slate-950/60 rounded-2xl p-6 text-left border border-cyan-400/20 mb-6">
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-2">為什麼之前的方法不一定有效</p>
+            <p id="result-failure" class="text-sm sm:text-base text-slate-300 leading-relaxed"></p>
+        </div>
+        <div class="mini-card rounded-2xl p-5 text-left mb-6 border border-amber-300/15">
+            <p class="text-xs uppercase tracking-[0.18em] text-amber-200/70 mb-2">如果今晚先不處理</p>
+            <p id="result-cost" class="text-sm text-slate-300 leading-relaxed"></p>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4 text-left mb-6">
+            <div class="mini-card rounded-2xl p-5">
+                <p class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-2">今晚第一步</p>
+                <p id="result-first-step" class="text-sm text-slate-300 leading-relaxed"></p>
+            </div>
+            <div class="mini-card rounded-2xl p-5">
+                <p class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-2">對應音頻</p>
+                <p id="result-audio-name" class="text-sm font-semibold text-cyan-200 leading-relaxed"></p>
+            </div>
+        </div>
+        <div class="mini-card rounded-2xl p-5 text-left mb-6">
+            <p class="text-sm font-semibold text-white">把你這一型的完整解讀寄給你</p>
+            <ul class="mt-3 space-y-2 text-sm text-slate-400 leading-relaxed">
+                <li>• 你這一型的完整解讀</li>
+                <li>• 今晚可以做的第一步</li>
+                <li>• 接下來 7 個晚上怎麼用（純文字節奏，非檔案）</li>
+            </ul>
+            <p class="text-sm text-slate-400 mt-3">選填即可，不影響你查看結果或直接購買。</p>
+            <form id="lead-form" onsubmit="submitOptionalEmail(event)" class="grid sm:grid-cols-3 gap-3 mt-4">
+                <input type="text" id="user-name" autocomplete="name" placeholder="姓名（選填）" class="field-input">
+                <input type="email" id="user-email" required autocomplete="email" placeholder="Email" class="field-input">
+                <button type="submit" id="submit-btn" class="secondary-btn px-4 py-3 text-sm">把我的完整解讀寄到信箱</button>
+                <label class="consent-row sm:col-span-3">
+                    <input type="checkbox" id="lead-consent" required>
+                    <span>我同意依 <a href="privacy.html" target="_blank" rel="noopener">隱私權政策</a> 使用我的 Email 寄送這份解讀。不寄廣告、隨時可退訂。</span>
+                </label>
+            </form>
+            <p class="text-xs text-slate-500 mt-3">不寄廣告、隨時可退訂。</p>
+            <p id="lead-status" class="text-xs text-slate-500 mt-3" aria-live="polite"></p>
+        </div>
+        <div class="flex flex-col sm:flex-row justify-center gap-3">
+            <button id="result-sales-link" type="button" onclick="chooseRecommendedProduct()" class="primary-btn inline-block px-8 py-3">
+                今晚就用對應音頻 NT$<span data-price>299</span>
+            </button>
+        </div>
+    </div>
+
+</div>
+</div>
 </div>
 
-<footer>
-    <p>&copy; 2026 艾伯林量子頻率</p>
-    <div class="legal-disclaimer">
-        <strong>【免責與合規聲明】</strong><br>
-        本網站提供之頻率音頻產品，屬一般身心放鬆與專注聆聽體驗之輔助內容，非屬醫療器材。本產品不具備任何疾病之診斷、治療、減輕或預防功效。頁面中涉及之感受、狀態與使用情境，皆屬個人主觀經驗之描述，實際體驗因人而異。若您有失眠、焦慮症、憂鬱症或其他身心疾患，請務必尋求專業合格醫師之協助。
-    </div>
-</footer>
+
+<main class="funnel-content space-y-5 pb-8">
+
+    <section id="offer-stack" class="glass-panel rounded-[2rem] funnel-section tier-hero" aria-labelledby="offer-stack-title">
+        <p class="section-eyebrow">21 晚睡前節奏計畫</p>
+        <h2 id="offer-stack-title" class="tier-hero-title mt-3">三週後，睡前那半小時不再需要靠意志力撐</h2>
+        <p class="text-slate-300 mt-4 leading-relaxed">不是要你今晚立刻睡死，而是先讓夜晚有一個固定的收尾方式。以下是你今晚就會拿到的東西。</p>
+        <div class="funnel-list mt-7">
+            <div class="offer-stack-item"><span class="offer-stack-check">✓</span><div><strong class="text-white">今晚睡前就能用的那一款</strong><p class="text-sm text-slate-400 mt-1">付款後最晚 12 小時內送達，多數在數分鐘內。MP3 檔約 50MB、33–37 分鐘，下載後離線可聽。今晚躺下前就用得到，不用等。</p></div><span class="offer-stack-value">已含</span></div>
+            <div class="offer-stack-item"><span class="offer-stack-check">✓</span><div><strong class="text-white">對應你主卡點的核心音頻</strong><p class="text-sm text-slate-400 mt-1">依檢測結果對應 A／B／C／D 其中一款，單軌 33–37 分鐘。引導、音樂、頻率三層，四種卡點各做一版。</p></div><span class="offer-stack-value">已含</span></div>
+            <div class="offer-stack-item"><span class="offer-stack-check">✓</span><div><strong class="text-white">你的睡前卡點完整解讀</strong><p class="text-sm text-slate-400 mt-1">你卡在哪一型、為什麼之前的方法對你沒用、今晚可以做的第一步。</p></div><span class="offer-stack-value">已含</span></div>
+            <div class="offer-stack-item"><span class="offer-stack-check">✓</span><div><strong class="text-white">21 天睡前節奏陪跑（5 封信）</strong><p class="text-sm text-slate-400 mt-1">多數人買了助眠音檔，第三個晚上就忘了。第 1、3、7、14、21 晚各一封，告訴你今晚該觀察什麼、哪些反應是正常的，讓它真的變成你的睡前習慣，而不是手機裡又一個沒在用的檔案。</p></div><span class="offer-stack-value">已含</span></div>
+            <div class="offer-stack-item offer-bonus"><span class="offer-stack-check">★</span><div><strong class="text-white"><span class="bonus-tag">加贈</span> 四型全解讀對照</strong><p class="text-sm text-slate-400 mt-1">除了你自己那一型，另外三型的解讀也一併給你。你會看懂為什麼枕邊人跟你睡不著的原因不一樣，也知道他們該從哪裡開始。</p></div><span class="offer-stack-value">已含</span></div>
+            <div class="offer-stack-item"><span class="offer-stack-check">✓</span><div><strong class="text-white">7 晚無條件退費保證</strong><p class="text-sm text-slate-400 mt-1">先用 7 個晚上再決定。不滿意來信即全額退還，不問原因。你也可以改成換另一款方案，我們重寄新方案的 Day 1。</p></div><span class="offer-stack-value">已含</span></div>
+            <!-- TODO 可再加一項加贈：「睡前 3 分鐘收尾清單」（純文字，一頁）。內容備好後把下一行的註解解開。 -->
+            <!-- <div class="offer-stack-item offer-bonus"><span class="offer-stack-check">★</span><div><strong class="text-white"><span class="bonus-tag">加贈</span> 睡前 3 分鐘收尾清單</strong><p class="text-sm text-slate-400 mt-1">躺下前的三個動作，不需要工具、不需要 App，30 秒內做得完。</p></div><span class="offer-stack-value">已含</span></div> -->
+        </div>
+        <div class="mt-8 pt-7 border-t border-cyan-300/20">
+            <div class="price-anchor">
+                <div class="price-anchor-side">台北一次 60 分鐘按摩<br><strong>約 NT$800–1,300</strong><br>換來一個晚上的放鬆</div>
+                <div class="price-anchor-arrow" aria-hidden="true">→</div>
+                <div>
+                    <p class="price-anchor-main"><span class="price-anchor-unit">NT$</span><span data-price>299</span></p>
+                    <p class="price-anchor-side mt-2">21 個晚上<br><strong>平均一晚 NT$<span data-price-per-night>14</span></strong></p>
+                </div>
+            </div>
+            <p class="text-xs text-slate-400 text-center mt-5 leading-relaxed">同樣是照顧自己的自費選擇，只是這一個你可以重複使用。<br class="sm:hidden">按摩價格區間參考台北市政府公開價目表與坊間業者公開價目。</p>
+            <div class="tier-board" id="tier-board" hidden>
+                <p class="tier-board-title">現在是哪一階</p>
+                <div class="tier-list" id="tier-list"></div>
+                <div class="tier-pact" id="tier-pact" hidden>
+                    <p class="tier-pact-title">關於早鳥價，我想先說清楚</p>
+                    <p>這個價格不是行銷手法，是一個交換。</p>
+                    <p>前 10 位選擇早鳥價的朋友，我會在你使用滿 14 天之後，另外寫一封信，<strong>邀請你回覆一則使用心得</strong>。不需要寫得長，也不需要寫得好聽，只要是你真實的感受就好。這對現在的我很重要 —— 這是一個剛開始的服務，我需要知道它在不同的人身上，實際上發生了什麼。</p>
+                    <p>這不是購買條件。收到邀請時你可以婉拒，不影響你已經取得的任何內容，也不影響你的退款權利。</p>
+                    <p class="tier-pact-close">我只是希望你知道，這個價格是從哪裡來的。</p>
+                </div>
+                <p class="tier-note">價格以結帳當下為準。名額售完後自動進入下一階，不會再回到前一階。</p>
+            </div>
+            <div class="cost-of-delay">
+                <p>你今晚本來就要躺下。<strong>差別只在於今晚有沒有一個對的收尾。</strong><br>多拖一個星期，就是七個沒有真正恢復的白天 —— 而那七天你一樣會累，只是沒有人告訴你原因。</p>
+            </div>
+            <div class="mid-cta">
+                <button type="button" onclick="jumpToBuy('offer_stack')" class="primary-btn inline-flex items-center justify-center px-8 py-4">今晚就開始</button>
+                <p class="mid-cta-note">先完成檢測，系統會幫你選好對應的一款。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="glass-panel rounded-[2rem] funnel-section tier-support">
+        <div><p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">使用情境與交付流程</p><h2 class="text-3xl font-bold text-white mt-3">不是再找一段背景音，而是建立可重複的睡前入口</h2><p class="text-slate-300 mt-4 leading-relaxed">當你知道自己最常卡在哪裡，就能從對應的一款開始，在固定的睡前時段建立較一致的放鬆與收尾節奏。</p></div><div class="funnel-list mt-7"><div class="flow-step"><span class="flow-step-number">1</span><div><strong class="text-white">完成付款</strong><p class="text-sm text-slate-400 mt-1">填寫資料後前往綠界完成付款。</p></div></div><div class="flow-step"><span class="flow-step-number">2</span><div><strong class="text-white">收到啟動資訊</strong><p class="text-sm text-slate-400 mt-1">付款完成後，系統會依訂單資料寄送對應方案的啟動資訊；最晚 12 小時內完成交付。</p></div></div><div class="flow-step"><span class="flow-step-number">3</span><div><strong class="text-white">依節奏使用</strong><p class="text-sm text-slate-400 mt-1">從今晚使用方式開始，並收到 Day 1、3、7、14、21 的節奏提醒。</p></div></div></div>
+    </section>
+    <section id="faq" class="glass-panel rounded-[2rem] funnel-section tier-support" aria-labelledby="faq-title">
+        <p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">付款前，先把問題說清楚</p>
+        <h2 id="faq-title" class="text-3xl font-bold text-white mt-3">你可能還想確認的事</h2>
+        <div class="funnel-list mt-7">
+            <details class="mini-card rounded-2xl p-5">
+                <summary class="font-semibold text-white cursor-pointer pr-6">這跟 YouTube 上免費的助眠音樂差在哪？</summary>
+                <div class="text-sm text-slate-300 leading-relaxed mt-4 space-y-2"><p>免費音樂通常是一段做給所有人聽的背景聲。這裡的每一款是三層疊起來的：一段把注意力從白天收回來的引導、一段為那一型設計的音樂，以及一組對應的頻率。四種卡點各做一版，不是同一段音檔換個封面。</p><p>所以才需要先花 60 秒做檢測 —— 拿到對的那一款，比拿到一款「聽起來很放鬆」的更重要。</p><p>而你拿到的也不只是一個播放連結，還有你的卡點解讀、Day 1／3／7／14／21 的節奏提醒，以及一次換款的權利。用不用、什麼時候用，仍然由你決定。</p></div>
+            </details>
+            <details class="mini-card rounded-2xl p-5">
+                <summary class="font-semibold text-white cursor-pointer pr-6">我戴耳機睡覺會不會不好？</summary>
+                <div class="text-sm text-slate-300 leading-relaxed mt-4 space-y-2"><p>不建議戴入耳式耳機整晚睡覺，尤其是側睡或容易翻身時；它可能造成壓迫、纏繞或讓你忽略不適。</p><p>若要使用耳機，建議在睡前短時間、低音量聆聽；需要整晚播放時，優先考慮外放或床頭喇叭。</p></div>
+            </details>
+            <details class="mini-card rounded-2xl p-5">
+                <summary class="font-semibold text-white cursor-pointer pr-6">我測完是 A 型，但我覺得自己也有 C 型的狀況，怎麼辦？</summary>
+                <div class="text-sm text-slate-300 leading-relaxed mt-4 space-y-2"><p>A 與 C 可以同時出現；檢測先抓的是你目前最常把睡前拉走的主卡點，不是在替你貼永久標籤。</p><p>先從推薦方案開始，若在付款日起 7 天內發現次要卡點更明顯，可用原訂單 Email 申請換一次方案。</p></div>
+            </details>
+            <details class="mini-card rounded-2xl p-5">
+                <summary class="font-semibold text-white cursor-pointer pr-6">要聽多久才有感覺？</summary>
+                <div class="text-sm text-slate-300 leading-relaxed mt-4 space-y-2"><p>不把它設定成「播幾分鐘就必須發生什麼」的任務。第一晚先依啟動資訊使用，觀察自己最常在哪一刻又回到復盤、預演或撐住。</p><p>建議先固定使用 7 個晚上，再判斷推薦路徑是否貼近你的主卡點；不貼近時，你有一次換款的權利。</p></div>
+            </details>
+            <details class="mini-card rounded-2xl p-5">
+                <summary class="font-semibold text-white cursor-pointer pr-6">我之前試過很多方法都沒用。</summary>
+                <div class="text-sm text-slate-300 leading-relaxed mt-4 space-y-2"><p>那不代表你沒有努力；很多方法的問題是所有人都用同一個入口，而你的卡點可能根本不在那裡。</p><p>這份檢測不要求你相信某個萬用答案，只先幫你辨識今晚最需要被處理的方向，讓你不必再一次把自己逼得更用力。</p></div>
+            </details>
+            <details class="mini-card rounded-2xl p-5">
+                <summary class="font-semibold text-white cursor-pointer pr-6">付款後多久收到、怎麼收到？</summary>
+                <div class="text-sm text-slate-300 leading-relaxed mt-4 space-y-2"><p>完成綠界付款後，系統會依訂單資料把對應方案的啟動資訊寄到你填寫的 Email，最晚 12 小時內完成交付。</p><p>若時間超過仍未收到，先查看垃圾郵件與促銷分類；需要確認時，請以原訂單 Email 申請查詢。</p></div>
+            </details>
+            <details class="mini-card rounded-2xl p-5">
+                <summary class="font-semibold text-white cursor-pointer pr-6">可以在手機、平板或電腦上聽嗎？</summary>
+                <div class="text-sm text-slate-300 leading-relaxed mt-4 space-y-2"><p>可以。交付的是 MP3 檔（192kbps、44.1kHz、立體聲），手機、平板、電腦上任何一般播放器都能聆聽，不需要安裝特定 App。</p><p>下載後即可離線使用，不受網路狀況影響。付款完成後的啟動資訊會附上取得方式。</p></div>
+            </details>
+            <details class="mini-card rounded-2xl p-5">
+                <summary class="font-semibold text-white cursor-pointer pr-6">這是醫療用途嗎？</summary>
+                <div class="text-sm text-slate-300 leading-relaxed mt-4 space-y-2"><p>不是。這是以睡前使用情境為主的身心放鬆輔助內容，不用來診斷、處理或預防任何疾病。</p><p>若你正因長期睡眠困擾、身心不適或正在接受專業照護，請優先尋求合格專業人員的協助。</p></div>
+            </details>
+        </div>
+    </section>
+
+    <!-- N6 上線後：導言改為「也可以四款一起帶走」，並於結果頁補 NT$799 次級 CTA -->
+    <section id="solutions" class="glass-panel rounded-[2rem] funnel-section tier-fine">
+        <div class="text-center max-w-3xl mx-auto"><p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">四種睡前聲音路徑</p><h2 class="text-3xl sm:text-4xl font-bold text-white mt-3">先對應你的主卡點，再開始今晚的節奏</h2><p class="text-slate-300 mt-4 leading-relaxed">檢測已經幫你選好了。以下四款保留給想確認差異的人。</p></div>
+        <div class="funnel-list mt-8">
+            <article class="mini-card rounded-2xl p-6"><p class="text-cyan-200 text-sm">A 劑｜Theta 波 4–7Hz</p><h3 class="text-xl font-semibold text-white mt-2">斷路器・沉靜頻率</h3><p class="text-slate-400 text-sm mt-3">適合腦內雜訊、復盤、思考停不下來的夜晚。</p><button class="secondary-btn px-4 py-3 text-sm mt-5" onclick="chooseProduct('A')">選 A 劑</button></article>
+            <article class="mini-card rounded-2xl p-6"><p class="text-cyan-200 text-sm">B 劑｜Delta 波 0.5–4Hz</p><h3 class="text-xl font-semibold text-white mt-2">深海艙・放鬆頻率</h3><p class="text-slate-400 text-sm mt-3">適合淺眠易醒、睡醒仍累、修復感不足的夜晚。</p><button class="secondary-btn px-4 py-3 text-sm mt-5" onclick="chooseProduct('B')">選 B 劑</button></article>
+            <article class="mini-card rounded-2xl p-6"><p class="text-cyan-200 text-sm">C 劑｜Alpha 波 8–12Hz</p><h3 class="text-xl font-semibold text-white mt-2">心流校準・專注頻率</h3><p class="text-slate-400 text-sm mt-3">適合明天壓力、預演與神經提前備戰的夜晚。</p><button class="secondary-btn px-4 py-3 text-sm mt-5" onclick="chooseProduct('C')">選 C 劑</button></article>
+            <article class="mini-card rounded-2xl p-6"><p class="text-cyan-200 text-sm">D 劑｜Solfeggio 852Hz</p><h3 class="text-xl font-semibold text-white mt-2">豐盛錨點・安定頻率</h3><p class="text-slate-400 text-sm mt-3">適合底層不安、安全感不足與情緒牽動明顯的夜晚。</p><button class="secondary-btn px-4 py-3 text-sm mt-5" onclick="chooseProduct('D')">選 D 劑</button></article>
+        </div>
+    </section>
+
+    <section class="glass-panel rounded-[2rem] funnel-section tier-support" aria-labelledby="abl-method-title">
+        <p class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-3">Erick｜艾伯林量子調頻</p>
+        <h2 id="abl-method-title" class="text-3xl font-bold text-white">方法定位</h2>
+        <p class="text-slate-200 leading-relaxed mt-4">我自己就是那種一點小事就會緊張，然後晚上睡不好的人。</p>
+        <p class="text-slate-200 leading-relaxed mt-4">後來我才慢慢意識到，睡眠影響的範圍遠超過我原本以為的 —— 活力、食慾、專注力，甚至白天的判斷力，都跟前一晚有沒有真的休息到有關。你以為只是「今天比較累」，但它其實一路往後影響。</p>
+        <p class="text-slate-200 leading-relaxed mt-4">對我來說，這些音頻真正的價值不是讓我睡得更久，而是讓睡前有一個固定的收尾方式，比較不會躺下之後還在轉。白天的專注也跟著比較穩。<span class="story-note">這是我個人的使用經驗，每個人的感受不一定相同，提供你參考。</span></p>
+        <p class="text-slate-200 leading-relaxed mt-4">我做這件事，不是要替每個人貼標籤，而是因為我看見：很多人在睡前不是沒有努力，而是一直拿同一種方式，面對不同的卡點。艾伯林量子調頻想做的，是把差異說清楚，讓你從今晚能開始的一步出發。</p>
+    </section>
+    <section id="guarantee" class="glass-panel rounded-[2rem] funnel-section tier-hero">
+        <p class="section-eyebrow">7 晚無條件保證</p>
+        <h2 class="tier-hero-title mt-3">先用 7 個晚上。不滿意，全額退。</h2>
+        <p class="text-slate-300 mt-4 leading-relaxed">選錯型的風險，我來扛。你只要先從檢測推薦的那一款開始用滿 7 個晚上。如果你認為它沒有幫上忙，寫一封信給我們，<strong class="guarantee-strong">全額退還，不需要解釋原因，也不需要退回任何東西。</strong></p>
+        <div class="funnel-list mt-6 text-sm text-slate-300">
+            <p class="py-3">自付款日起 7 天內，以原訂單 Email 來信申請即可，我們才能正確對應你的訂單。</p>
+            <p class="py-3">不問原因、不需填問卷、不需要你證明什麼。</p>
+            <p class="py-3">退款於收到申請後 7 個工作天內原路退回。</p>
+            <p class="py-3">你也可以選擇不退款、改換另一款方案；換款後會重寄新方案的 Day 1 啟動內容。</p>
+        </div>
+        <p class="text-xs text-slate-500 mt-5 leading-relaxed">我知道數位商品通常不給退。但如果我不敢讓你先用了再決定，那就是我對自己做的東西沒有把握。</p>
+        <div class="mid-cta">
+            <button type="button" onclick="jumpToBuy('guarantee')" class="primary-btn inline-flex items-center justify-center px-8 py-4">選一款，今晚就開始</button>
+            <p class="mid-cta-note">付款前不會扣款；7 天內不滿意可全額退費。</p>
+        </div>
+    </section>
+    <section id="purchase" class="glass-panel rounded-[2rem] funnel-section tier-hero">
+        <div class="max-w-2xl mx-auto"><p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">開始你的睡前聲音路徑</p><h2 class="text-3xl font-bold text-white mt-3">選擇一款，今晚就開始</h2><p id="purchase-selection" class="selection-highlight mt-3">請先從檢測結果或四款方案中選擇。</p>
+            <form id="purchase-form" onsubmit="submitPaymentOrder(event)" class="space-y-4 mt-6">
+                <input id="purchase-product-code" type="hidden" value="">
+                <input id="purchase-product-name" type="hidden" value="">
+                <div><label class="block text-sm text-slate-400 mb-1" for="purchase-name">姓名</label><input id="purchase-name" required autocomplete="name" class="field-input" type="text" placeholder="請輸入姓名"></div>
+                <div><label class="block text-sm text-slate-400 mb-1" for="purchase-phone">手機 <span class="text-slate-500">（選填，僅用於交付異常時聯繫）</span></label><input id="purchase-phone" autocomplete="tel" class="field-input" type="tel" inputmode="tel" placeholder="請輸入手機（選填）"></div>
+                <div><label class="block text-sm text-slate-400 mb-1" for="purchase-email">Email</label><input id="purchase-email" required autocomplete="email" class="field-input" type="email" placeholder="用於訂單與交付資訊"><p class="text-xs text-slate-500 mt-2">啟動連結會寄到這裡，請確認拼字。</p></div>
+                <label class="consent-row">
+                    <input type="checkbox" id="purchase-consent" required>
+                    <span>我已閱讀並同意 <a href="privacy.html" target="_blank" rel="noopener">隱私權政策與服務條款</a>，並同意我提供的姓名與 Email 用於本次訂單的交付與後續內容寄送。</span>
+                </label>
+                <button id="purchase-submit" class="primary-btn w-full py-4 px-6" type="submit">今晚就開始 → 前往付款 NT$<span data-price>299</span></button>
+                <div class="flex flex-wrap justify-center gap-2 text-xs text-slate-400" aria-label="付款與交付保障">
+                    <span class="rounded-full border border-slate-700 px-3 py-1.5">綠界金流</span>
+                    <span class="rounded-full border border-slate-700 px-3 py-1.5">SSL 加密</span>
+                    <span class="rounded-full border border-slate-700 px-3 py-1.5">12 小時內交付</span>
+                    <span class="rounded-full border border-slate-700 px-3 py-1.5">可換一次</span>
+                </div>
+                <p id="purchase-status" class="text-sm text-slate-400" aria-live="polite">付款前不會扣款。</p>
+            </form>
+        </div>
+    </section>
+
+
+
+    <!-- 待真實素材到位後移除 hidden：需要 (1) 後台檢測人次與四型比例 (2) 3 則經書面同意的回饋 -->
+    <section id="social-proof" class="glass-panel rounded-[2rem] funnel-section" aria-labelledby="social-proof-title" hidden style="display:none">
+        <!--
+        社會證明區內容待真實素材到位後再放入：已核對的檢測人次與四型比例、經書面同意公開的三則回饋。
+        -->
+    </section>
+
+    <footer class="px-6 pb-6 text-xs text-slate-500 leading-relaxed">
+        <p class="footer-links"><a href="privacy.html">隱私權政策與服務條款</a>　·　<a href="privacy.html#refund">交付與退款說明</a>　·　<a href="mailto:ikit178@gmail.com">聯絡我們</a></p>
+        <p>自付款日起 7 天內，可以原訂單 Email 來信申請全額退款，無需說明原因；退款後停止後續內容寄送。逾 7 天或已選擇換款者，不再適用退款。</p>
+        <p class="mt-2">本產品為一般身心放鬆與專注聆聽的輔助內容，不屬醫療器材，不提供疾病診斷、治療或預防。</p>
+    </footer>
+</main>
+
+<div id="sticky-mobile-cta" class="sticky-mobile-cta glass-panel" aria-label="下一步">
+    <button id="sticky-mobile-cta-button" type="button" onclick="handleStickyCtaClick()" class="primary-btn w-full px-5 py-3 text-sm">
+        <span id="sticky-mobile-cta-label">60 秒測出你的睡前卡點</span>
+    </button>
+</div>
 
 <script>
-    const PAYMENT_ORDER_WEBHOOK = 'https://erick303.app.n8n.cloud/webhook/timewaver-create-ecpay-order';
-
-    const highlightRecommendedProduct = () => {
-        const resultType = new URLSearchParams(window.location.search).get('result');
-        if (!/^[ABCD]$/.test(resultType || '')) return;
-
-        const recommendedCard = document.querySelector(`[data-product-card="${resultType}"]`);
-        if (!recommendedCard) return;
-
-        recommendedCard.classList.add('is-recommended');
-        trackAblEvent('recommended_product_view', { result_type: resultType });
+    const N8N_WEBHOOK_URL = "https://erick303.app.n8n.cloud/webhook/timewaver-quiz-hook";
+    const PAYMENT_ORDER_WEBHOOK = "https://erick303.app.n8n.cloud/webhook/timewaver-create-ecpay-order";
+    const products = {
+        A: "【A劑】斷路器・沉靜頻率",
+        B: "【B劑】深海艙・放鬆頻率",
+        C: "【C劑】心流校準・專注頻率",
+        D: "【D劑】豐盛錨點・安定頻率"
     };
 
-    highlightRecommendedProduct();
+    const questions = [
+        { q: "【檢測 1/8】回想最近幾個晚上，你的睡眠狀態最接近哪一種？", options: [ {text: "躺下後腦袋仍在整理事情，入睡前一直有念頭在跑。", type: "A"}, {text: "有睡著，但睡得很淺、容易醒，醒來像沒有真正休息到。", type: "B"}, {text: "睡前容易想到明天的任務或壓力，身體明明累了，心裡卻還在備戰。", type: "C"}, {text: "夜深時會浮出不安、空洞或沒來由的擔心，睡眠像被底層情緒牽住。", type: "D"} ] },
+        { q: "【檢測 2/8】當睡眠品質變差時，你最常感受到哪一種身體訊號？", options: [ {text: "頭部緊繃、太陽穴有壓力，像大腦整晚都沒有關機。", type: "A"}, {text: "肩頸僵硬、身體沉重，對聲音或光線變得更敏感。", type: "B"}, {text: "呼吸變短、心跳偏快，像神經系統一直處在待命狀態。", type: "C"}, {text: "胸口悶、胃或腹部緊，醒來後仍有一種被消耗的感覺。", type: "D"} ] },
+        { q: "【檢測 3/8】如果把你現在的身心系統比喻成一台電腦，它最像哪一種狀態？", options: [ {text: "開了很多分頁，白天的資訊和想法一直佔用記憶體。", type: "A"}, {text: "看似進入睡眠模式，但背景程式仍在跑，休息品質很淺。", type: "B"}, {text: "正在提前運算明天的壓力，導致今晚很難真正放鬆。", type: "C"}, {text: "被深層不安全感佔用資源，常在安靜時跳出警示訊號。", type: "D"} ] },
+        { q: "【檢測 4/8】在過去一週，你通常怎麼處理睡前或休息時的緊繃感？", options: [ {text: "聽音樂、白噪音或滑內容轉移注意，但腦袋反而更難安靜。", type: "A"}, {text: "試著早點躺下或補眠，但醒來仍覺得頭重、身體沒修復。", type: "B"}, {text: "滑手機、做雜事或拖到很累才停下來，避免面對明天的壓力。", type: "C"}, {text: "告訴自己不要想太多，但內在的不安感還是會慢慢冒出來。", type: "D"} ] },
+        { q: "【檢測 5/8】白天遇到外界刺激或比較時，哪一種反應最容易延續到晚上？", options: [ {text: "開始檢討自己、反覆復盤，讓大腦到晚上仍停不下來。", type: "A"}, {text: "刺激太多後只想躲起來休息，但真正躺下又不一定恢復得了。", type: "B"}, {text: "想到還有責任、期限或重要任務，神經就一路緊到睡前。", type: "C"}, {text: "表面沒事，但心裡會冒出對金錢、關係或未來的安全感焦慮。", type: "D"} ] },
+        { q: "【檢測 6/8】如果今晚只能先改善一件事，你最希望睡前先鬆開什麼？", options: [ {text: "降低腦內雜訊，讓我不要一直復盤、思考或分心。", type: "A"}, {text: "加深身體放鬆，讓睡眠不只是有睡，而是真的有修復感。", type: "B"}, {text: "安定面對明天的壓力，讓我睡前不用一直預演和擔心。", type: "C"}, {text: "鬆開底層的不安全感，讓身心重新感到穩定、被支持。", type: "D"} ] },
+        { q: "【檢測 7/8】當壓力突然升高、事情變得不可控時，你最常出現的自動反應是？", options: [ {text: "立刻開始分析、查資料、排流程，腦袋停不下來，晚上也容易延續。", type: "A"}, {text: "整個人想退到安靜的地方，不想說話、不想被打擾，只想把刺激降到最低。", type: "B"}, {text: "反覆預演最壞情況，想先把所有風險想清楚，避免明天出錯。", type: "C"}, {text: "心裡突然浮現不安全感，會擔心自己不夠好、資源不夠，或未來撐不住。", type: "D"} ] },
+        { q: "【檢測 8/8】最後，靜下心來深呼吸一次。你現在最想把哪一種狀態交還給頻率？", options: [ {text: "我想釋放停不下來的腦內雜訊與高頻腦壓。", type: "A"}, {text: "我想進入更深層的平靜，讓睡眠真正產生修復感。", type: "B"}, {text: "我想放下對明天的預演與壓力，回到當下的穩定心流。", type: "C"}, {text: "我想鬆開深層恐懼，重新感到安全、信任與豐盛。", type: "D"} ] }
+    ];
 
-    const purchaseModal = document.querySelector('[data-purchase-modal]');
-    const purchaseForm = purchaseModal.querySelector('[data-purchase-form]');
-    const purchaseStatus = purchaseModal.querySelector('[data-purchase-status]');
-    const purchaseSubmit = purchaseModal.querySelector('[data-purchase-submit]');
-    const purchaseSummaryName = purchaseModal.querySelector('[data-summary-name]');
-    const purchaseFields = {
-        productCode: purchaseForm.elements.product_code,
-        productName: purchaseForm.elements.product_name,
-        buyerName: purchaseForm.elements.buyer_name,
-        buyerEmail: purchaseForm.elements.buyer_email,
-        buyerPhone: purchaseForm.elements.buyer_phone
-    };
-
-    const setPurchaseStatus = (message = '', tone = '') => {
-        purchaseStatus.textContent = message;
-        if (tone) {
-            purchaseStatus.dataset.tone = tone;
-        } else {
-            delete purchaseStatus.dataset.tone;
+    const resultsMap = {
+        "A": {
+            title: "A 型：大腦下不了班型",
+            checkpoint: "腦內雜訊、復盤、思考停不下來",
+            desc: "你以為是自己想太多、睡前不夠自律。其實不是你不夠努力，而是白天留下的資訊、對話與決策還抓著你的注意力；身體已經躺下，大腦仍在替你收尾。",
+            failure: "白噪音能蓋住環境聲，卻不會替注意力換一個落點。腦內分頁沒有被關照或移轉時，大腦仍會把它們留在前景繼續處理。",
+            firstStep: "現在花 30 秒，把手機螢幕朝下放遠，做三次比吸氣更長的吐氣，只數吐氣；先把注意力從腦內復盤帶回一件正在做的事。",
+            cost: "接下來一週，睡前的復盤可能仍每天佔用你的收尾時間，讓休息也像另一件待完成的事。",
+            // 真實使用回饋尚未提供，勿以推測補寫。
+            proof: "",
+            audioName: "【A劑】斷路器・沉靜頻率",
+            freq: "Theta 波 4-7Hz"
+        },
+        "B": {
+            title: "B 型：睡了但沒修復型",
+            checkpoint: "淺眠易醒、睡醒仍累、身體像在待機",
+            desc: "你以為只是睡得不夠久，所以逼自己早點躺下。真正讓你累的，可能是身體只停在待機，還沒有從白天的警覺狀態切換到可以真正休息的節奏；這不是你不會睡。",
+            failure: "早點躺只增加在床上的時間，不能替神經系統完成切換。當身體仍維持警覺，越急著睡，越容易把「快睡著」變成新的任務。",
+            firstStep: "躺好後花 30 秒，依序感覺後腦、肩膀、雙腳和床的接觸點；不必要求自己放鬆，只把注意力放在重量被承接。",
+            cost: "接下來一週，你可能繼續把更多時間留給睡覺，卻很難感覺每天有一個真正結束的時刻。",
+            // 真實使用回饋尚未提供，勿以推測補寫。
+            proof: "",
+            audioName: "【B劑】深海艙・放鬆頻率",
+            freq: "Delta 波 0.5-4Hz"
+        },
+        "C": {
+            title: "C 型：明天先佔用今晚型",
+            checkpoint: "明天壓力、預演、神經提前備戰",
+            desc: "你以為是自己責任感太重、怎麼都放不下明天。真正的問題是，大腦把會議、期限與未知風險辨識成『現在就得處理』的任務，所以它不是故意不讓你休息，而是在提前備戰。",
+            failure: "叫自己別想，沒有告訴大腦這件事何時會被處理；它仍把明天當成當下任務，於是反覆預演來避免遺漏。壓住念頭，只會讓它更黏在前景。",
+            firstStep: "現在花 30 秒寫下：『明天第一件要做的是＿＿＿。』寫完把紙扣起來；不是解決它，只是讓大腦知道這件事已有位置。",
+            cost: "接下來一週，明天的清單可能每天提早進場，讓今晚的空白時間越來越少。",
+            // 真實使用回饋尚未提供，勿以推測補寫。
+            proof: "",
+            audioName: "【C劑】心流校準・專注頻率",
+            freq: "Alpha 波 8-12Hz"
+        },
+        "D": {
+            title: "D 型：安靜後不安浮出型",
+            checkpoint: "底層不安、安全感不足、匱乏感或情緒牽動",
+            desc: "你以為自己太敏感，或又在睡前胡思亂想。真正的問題是，白天撐住的感受一安靜下來就有了空間浮出；這不是脆弱，而是你已經用撐住的方式活太久了。",
+            failure: "叫自己不要想，其實仍在盯著那個念頭有沒有回來。壓抑需要持續用力，安靜時一鬆開，感受就容易反彈；所以你需要的不是再壓一次。",
+            firstStep: "現在花 30 秒，一手放在胸口、一手放在腹部，慢慢吐氣三次，心裡只說：『我正在這裡。』不必把感受趕走。",
+            cost: "接下來一週，安靜下來的片刻可能仍容易被不安填滿，讓你更想用忙碌把自己撐住。",
+            // 真實使用回饋尚未提供，勿以推測補寫。
+            proof: "",
+            audioName: "【D劑】豐盛錨點・安定頻率",
+            freq: "Solfeggio 852Hz"
         }
     };
 
-    const openPurchaseModal = ({ productCode, productName }) => {
-        purchaseFields.productCode.value = productCode;
-        purchaseFields.productName.value = productName;
-        purchaseSummaryName.textContent = productName;
-        setPurchaseStatus('');
-        purchaseModal.hidden = false;
-        document.body.style.overflow = 'hidden';
-        window.requestAnimationFrame(() => purchaseFields.buyerName.focus());
-    };
+    let currentQ = 0;
+    let scores = { A:0, B:0, C:0, D:0 };
+    let userResultType = "A";
+    let answers = [];
+    let hasCompletedQuiz = false;
 
-    const closePurchaseModal = () => {
-        purchaseModal.hidden = true;
-        document.body.style.overflow = '';
-        setPurchaseStatus('');
-    };
+    function showStep(stepId) {
+        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+        document.getElementById(stepId).classList.add('active');
+    }
 
-    document.querySelectorAll('[data-purchase-trigger]').forEach((trigger) => {
-        trigger.addEventListener('click', () => {
-            openPurchaseModal({
-                productCode: trigger.dataset.productCode,
-                productName: trigger.dataset.productName
+    function startQuiz() {
+        currentQ = 0;
+        scores = { A:0, B:0, C:0, D:0 };
+        answers = [];
+        hasCompletedQuiz = false;
+        updateStickyCta();
+        trackAblEvent('quiz_start');
+        showStep('quiz-container');
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const qData = questions[currentQ];
+        document.getElementById('question-counter').innerText = `第 ${currentQ + 1} 題 / 共 ${questions.length} 題`;
+        document.getElementById('progress-bar').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
+        document.getElementById('question-text').innerText = qData.q;
+        document.getElementById('back-btn').disabled = currentQ === 0;
+        document.getElementById('back-btn').style.opacity = currentQ === 0 ? '0.4' : '1';
+        
+        const optsContainer = document.getElementById('options-container');
+        optsContainer.innerHTML = '';
+        
+        qData.options.forEach((opt, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerHTML = `
+                <div class="flex items-start gap-4">
+                    <span class="option-key">${String.fromCharCode(65 + index)}</span>
+                    <span class="option-text text-sm sm:text-base leading-relaxed">${opt.text}</span>
+                </div>
+            `;
+            btn.onclick = () => selectOption(opt.type, btn);
+            optsContainer.appendChild(btn);
+        });
+    }
+
+    function selectOption(type, btn) {
+        document.querySelectorAll('.option-btn').forEach(el => el.classList.remove('selected'));
+        btn.classList.add('selected');
+        scores[type]++;
+        answers[currentQ] = type;
+        currentQ++;
+        setTimeout(() => {
+            if (currentQ < questions.length) {
+                renderQuestion();
+            } else {
+                calculateResult();
+                trackAblEvent('quiz_complete', { result_type: userResultType });
+                showResult();
+            }
+        }, 180);
+    }
+
+    function goBack() {
+        if (currentQ === 0) return;
+        currentQ--;
+        const previousType = answers[currentQ];
+        if (previousType) {
+            scores[previousType] = Math.max(0, scores[previousType] - 1);
+            answers.splice(currentQ, 1);
+        }
+        renderQuestion();
+    }
+
+    function calculateResult() {
+        userResultType = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+    }
+
+    function showResult() {
+        const resultData = resultsMap[userResultType];
+        document.getElementById('result-title').innerText = resultData.title;
+        document.getElementById('result-checkpoint').innerText = `${resultData.checkpoint} / ${resultData.freq}`;
+        document.getElementById('result-desc').innerText = resultData.desc;
+        document.getElementById('result-failure').innerText = resultData.failure;
+        document.getElementById('result-cost').innerText = resultData.cost;
+        document.getElementById('result-first-step').innerText = resultData.firstStep;
+        document.getElementById('result-audio-name').innerText = resultData.audioName;
+        const resultSalesLink = document.getElementById('result-sales-link');
+        resultSalesLink.dataset.resultType = userResultType;
+        resultSalesLink.textContent = `今晚就用 ${resultData.audioName} NT${currentPrice()}`;
+        hasCompletedQuiz = true;
+        updateStickyCta();
+        trackAblEvent('result_view', { result_type: userResultType });
+        showStep('step-result');
+    }
+
+    function updateStickyCta() {
+        const label = document.getElementById('sticky-mobile-cta-label');
+        if (!label) return;
+        label.textContent = hasCompletedQuiz
+            ? `今晚就用 ${resultsMap[userResultType].audioName} NT${currentPrice()}`
+            : '60 秒測出你的睡前卡點';
+    }
+
+    /* ===== 價格階梯 ===== */
+    const PRICING_API = "https://erick303.app.n8n.cloud/webhook/timewaver-pricing";
+    let PRICING = null;
+
+    function currentPrice() {
+        return (PRICING && PRICING.active_price) ? PRICING.active_price : 299;
+    }
+
+    function applyPrices() {
+        const p = currentPrice();
+        document.querySelectorAll('[data-price]').forEach(function (el) { el.textContent = p; });
+        document.querySelectorAll('[data-price-per-night]').forEach(function (el) {
+            el.textContent = Math.round(p / 21);
+        });
+    }
+
+    function renderTiers() {
+        if (!PRICING || !Array.isArray(PRICING.tiers)) return;
+        const list = document.getElementById('tier-list');
+        const board = document.getElementById('tier-board');
+        if (!list || !board) return;
+        list.innerHTML = '';
+        PRICING.tiers.forEach(function (t) {
+            const row = document.createElement('div');
+            row.className = 'tier-item' + (t.state === 'open' ? ' is-open' : (t.state === 'sold_out' ? ' is-done' : ''));
+            let sub = '', badge = '', badgeClass = '';
+            if (t.state === 'open') {
+                sub = t.limit ? ('限 ' + t.limit + ' 位・還剩 ' + t.remaining + ' 位') : '無名額限制';
+                badge = '現在這一階'; badgeClass = 'badge-open';
+            } else if (t.state === 'sold_out') {
+                sub = t.limit ? ('限 ' + t.limit + ' 位・已額滿') : '已結束';
+                badge = '已額滿'; badgeClass = 'badge-done';
+            } else {
+                sub = t.limit ? ('限 ' + t.limit + ' 位・前一階售完後開放') : '前面售完後開放';
+                badge = '尚未開放'; badgeClass = 'badge-next';
+            }
+            row.innerHTML =
+                '<div class="tier-price">NT$' + t.price + '</div>' +
+                '<div class="tier-main"><div class="tier-label">' + t.label + '</div>' +
+                '<div class="tier-sub">' + sub + '</div></div>' +
+                '<span class="tier-badge ' + badgeClass + '">' + badge + '</span>';
+            list.appendChild(row);
+        });
+        const pact = document.getElementById('tier-pact');
+        if (pact) {
+            const early = PRICING.tiers.find(function (t) { return t.code === 'EARLY1'; });
+            pact.hidden = !(early && early.state === 'open');
+        }
+        board.hidden = false;
+    }
+
+    function loadPricing() {
+        fetch(PRICING_API + '?_=' + Date.now())
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (data) {
+                if (!data || !data.ok) return;
+                PRICING = data;
+                applyPrices();
+                renderTiers();
+                trackAblEvent('pricing_loaded', { tier: data.active_tier, price: data.active_price, sold: data.total_sold });
+            })
+            .catch(function () { /* 取價失敗就維持頁面預設值，不影響購買 */ });
+    }
+
+    function jumpToQuiz(source) {
+        trackAblEvent('mid_cta_click', { source: source, target: 'quiz' });
+        const anchor = document.getElementById('step-start');
+        if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (!hasCompletedQuiz) startQuiz();
+    }
+
+    function jumpToBuy(source) {
+        if (!hasCompletedQuiz) {
+            trackAblEvent('mid_cta_click', { source: source, target: 'quiz_redirect' });
+            jumpToQuiz(source);
+            return;
+        }
+        trackAblEvent('mid_cta_click', { source: source, target: 'purchase' });
+        chooseRecommendedProduct();
+    }
+
+    function handleStickyCtaClick() {
+        const state = hasCompletedQuiz ? 'result_ready' : 'quiz_not_completed';
+        trackAblEvent('sticky_cta_click', { state });
+        if (hasCompletedQuiz) {
+            chooseRecommendedProduct();
+            return;
+        }
+        startQuiz();
+    }
+
+    loadPricing();
+
+    function initialiseStickyCtaVisibility() {
+        const stickyCta = document.getElementById('sticky-mobile-cta');
+        const purchase = document.getElementById('purchase');
+        if (!stickyCta || !purchase || !('IntersectionObserver' in window)) return;
+        const observer = new IntersectionObserver(([entry]) => {
+            stickyCta.classList.toggle('is-hidden', entry.isIntersecting);
+        }, { threshold: 0.12 });
+        observer.observe(purchase);
+    }
+
+    initialiseStickyCtaVisibility();
+
+    function initialiseFunnelViewTracking() {
+        if (!('IntersectionObserver' in window)) return;
+
+        [
+            { id: 'offer-stack', eventName: 'offer_stack_view' },
+            { id: 'guarantee', eventName: 'guarantee_view' }
+        ].forEach(({ id, eventName }) => {
+            const element = document.getElementById(id);
+            if (!element) return;
+            const observer = new IntersectionObserver(([entry]) => {
+                if (!entry.isIntersecting) return;
+                trackAblEvent(eventName);
+                observer.unobserve(entry.target);
+            }, { threshold: 0.25 });
+            observer.observe(element);
+        });
+    }
+
+    function initialiseFaqTracking() {
+        document.querySelectorAll('#faq details').forEach((detail, index) => {
+            detail.addEventListener('toggle', () => {
+                if (detail.open) trackAblEvent('faq_open', { question_index: index + 1 });
             });
         });
-    });
+    }
 
-    purchaseModal.addEventListener('click', (event) => {
-        if (event.target === purchaseModal) closePurchaseModal();
-    });
+    function initialiseCheckoutTracking() {
+        const purchaseForm = document.getElementById('purchase-form');
+        if (!purchaseForm) return;
+        let hasStartedCheckout = false;
+        purchaseForm.querySelectorAll('input:not([type="hidden"])').forEach((input) => {
+            input.addEventListener('focus', () => {
+                if (hasStartedCheckout) return;
+                hasStartedCheckout = true;
+                trackAblEvent('checkout_start', {
+                    product_code: document.getElementById('purchase-product-code').value || null
+                });
+            });
+        });
+    }
 
-    purchaseModal.querySelectorAll('[data-purchase-close]').forEach((button) => {
-        button.addEventListener('click', closePurchaseModal);
-    });
+    initialiseFunnelViewTracking();
+    initialiseFaqTracking();
+    initialiseCheckoutTracking();
 
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && !purchaseModal.hidden) {
-            closePurchaseModal();
+    async function submitOptionalEmail(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        const name = document.getElementById('user-name').value;
+        const email = document.getElementById('user-email').value;
+        const status = document.getElementById('lead-status');
+        const resultData = resultsMap[userResultType];
+
+        btn.disabled = true;
+        btn.style.opacity = "0.7";
+        btn.innerText = "資料傳輸中...";
+
+        const payload = {
+            name: name,
+            email: email,
+            result_type: userResultType,
+            result_desc: resultData.desc,
+            result_failure: resultData.failure,
+            result_cost: resultData.cost,
+            result_first_step: resultData.firstStep,
+            audio_name: resultData.audioName,
+            timestamp: new Date().toISOString()
+        };
+
+        console.log('🚀 正在啟動維度傳輸...', payload);
+
+        try {
+            const response = await fetch(N8N_WEBHOOK_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                trackAblEvent('assessment_submit', { result_type: userResultType });
+                if (typeof fbq === 'function') {
+                    ablApplyMatching(name, email, '');
+                    fbq('track', 'Lead', { content_name: '睡前卡點檢測', content_category: userResultType });
+                }
+                status.textContent = '完整解讀已送出，請留意你的 Email。';
+                btn.innerText = '已寄送';
+            } else {
+                status.textContent = '系統暫時無法寄送，請稍後再試。';
+                btn.disabled = false;
+                btn.style.opacity = "1";
+                btn.innerText = "把我的完整解讀寄到信箱";
+            }
+        } catch (error) {
+            console.error('Email 同步失敗:', error);
+            status.textContent = '網路暫時無法寄送，請稍後再試。';
+            btn.disabled = false;
+            btn.style.opacity = "1";
+            btn.innerText = "把我的完整解讀寄到信箱";
         }
-    });
+    }
 
-    const buildOrderNumber = (productCode) => {
-        const now = new Date();
-        const stamp = [
-            String(now.getFullYear()).slice(-2),
-            String(now.getMonth() + 1).padStart(2, '0'),
-            String(now.getDate()).padStart(2, '0'),
-            String(now.getHours()).padStart(2, '0'),
-            String(now.getMinutes()).padStart(2, '0'),
-            String(now.getSeconds()).padStart(2, '0')
-        ].join('');
-        const suffix = Math.random().toString(36).slice(2, 6).toUpperCase();
-        return `${productCode}${stamp}${suffix}`;
-    };
+    function chooseRecommendedProduct() {
+        chooseProduct(userResultType);
+    }
 
-    const submitPaymentOrder = (payload) => {
+    function chooseProduct(productCode) {
+        const productName = products[productCode];
+        document.getElementById('purchase-product-code').value = productCode;
+        document.getElementById('purchase-product-name').value = productName;
+        document.getElementById('purchase-selection').innerHTML = `你選擇的是：<strong>${productName}</strong>（NT${productCode === 'BUNDLE' ? 799 : currentPrice()}）`;
+        document.getElementById('purchase').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (productCode === 'BUNDLE') {
+            trackAblEvent('bundle_click', { product_code: productCode, source: 'one_page' });
+            return;
+        }
+        trackAblEvent('audio_purchase_click', { product_code: productCode, source: 'one_page' });
+    }
+
+    // 訂單編號與金額一律由後台（n8n + products 主檔）決定，前端不再傳送，
+    // 避免任何人透過 DevTools 竄改成交金額。
+    function submitPaymentOrder(event) {
+        event.preventDefault();
+        const productCode = document.getElementById('purchase-product-code').value;
+        const status = document.getElementById('purchase-status');
+        const submit = document.getElementById('purchase-submit');
+        if (!productCode) {
+            status.textContent = '請先從檢測結果或四款方案中選擇一款。';
+            return;
+        }
+        const BASE_TYPES = ['A', 'B', 'C', 'D'];
+        const primaryCode = BASE_TYPES.includes(userResultType) ? userResultType
+            : (BASE_TYPES.includes(productCode) ? productCode : 'A');
+        // 次卡點＝分數第二高的型別，供 order bump 決定要交付哪一款
+        const secondaryCode = BASE_TYPES
+            .filter((t) => t !== primaryCode)
+            .sort((a, b) => (scores[b] || 0) - (scores[a] || 0))[0] || '';
+        const payload = {
+            buyer_name: document.getElementById('purchase-name').value.trim(),
+            buyer_email: document.getElementById('purchase-email').value.trim(),
+            buyer_phone: document.getElementById('purchase-phone').value.trim(),
+            item_codes: productCode,
+            primary_code: primaryCode,
+            secondary_code: secondaryCode,
+            source: 'one_page_assessment',
+            return_url: new URL('oto.html', window.location.href).href
+        };
+        trackAblEvent('checkout_submit', {
+            item_codes: payload.item_codes,
+            primary_code: payload.primary_code
+        });
+        submit.disabled = true;
+        status.textContent = '正在建立綠界訂單…';
+        if (typeof fbq === 'function') {
+            ablApplyMatching(payload.buyer_name, payload.buyer_email, payload.buyer_phone);
+            fbq('track', 'InitiateCheckout', {
+                value: currentPrice(),
+                currency: 'TWD',
+                content_type: 'product',
+                content_ids: [productCode]
+            });
+        }
         const bridgeForm = document.createElement('form');
         bridgeForm.method = 'POST';
         bridgeForm.action = PAYMENT_ORDER_WEBHOOK;
         bridgeForm.acceptCharset = 'UTF-8';
         bridgeForm.hidden = true;
-
         Object.entries(payload).forEach(([key, value]) => {
             const input = document.createElement('input');
             input.type = 'hidden';
@@ -996,41 +2081,9 @@
             input.value = value;
             bridgeForm.appendChild(input);
         });
-
         document.body.appendChild(bridgeForm);
         bridgeForm.submit();
-    };
-
-    purchaseForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        const productCode = purchaseFields.productCode.value;
-        const productName = purchaseFields.productName.value;
-        const buyerName = purchaseFields.buyerName.value.trim();
-        const buyerEmail = purchaseFields.buyerEmail.value.trim();
-        const buyerPhone = purchaseFields.buyerPhone.value.trim();
-        const orderNo = buildOrderNumber(productCode);
-        const payload = {
-            order_no: orderNo,
-            buyer_name: buyerName,
-            buyer_email: buyerEmail,
-            buyer_phone: buyerPhone,
-            product_code: productCode,
-            product_name: productName,
-            trade_amt: '299',
-            status: 'pending',
-            source: 'landing_page'
-        };
-
-        purchaseSubmit.disabled = true;
-        setPurchaseStatus('資料處理中，正在建立綠界訂單...', '');
-
-        if (typeof fbq === 'function') {
-            fbq('track', 'Lead');
-        }
-
-        submitPaymentOrder(payload);
-    });
+    }
 </script>
 </body>
 </html>
