@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>60 秒睡前卡點檢測｜睡不著，是因為沒先分清你卡在哪一型</title>
+    <title>60 秒睡前卡點檢測｜睡不著的原因有四種，你今晚卡的是哪一種？</title>
     <meta name="description" content="用 60 秒回答 8 題，不用先購買，先找出你今晚卡在哪一型，再選擇適合的睡前聲音路徑。">
     <link rel="canonical" href="https://timewaver-audio-sales.netlify.app/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://timewaver-audio-sales.netlify.app/">
-    <meta property="og:title" content="60 秒睡前卡點檢測｜睡不著，是因為沒先分清你卡在哪一型">
+    <meta property="og:title" content="60 秒睡前卡點檢測｜睡不著的原因有四種，你今晚卡的是哪一種？">
     <meta property="og:description" content="用 60 秒回答 8 題，不用先購買，先找出你今晚卡在哪一型，再選擇適合的睡前聲音路徑。">
     <!-- TODO: 製作 1200×630 分享圖後，放置於 assets/og-cover.jpg。 -->
     <meta property="og:image" content="https://timewaver-audio-sales.netlify.app/assets/og-cover.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="60 秒睡前卡點檢測｜睡不著，是因為沒先分清你卡在哪一型">
+    <meta name="twitter:title" content="60 秒睡前卡點檢測｜睡不著的原因有四種，你今晚卡的是哪一種？">
     <meta name="twitter:description" content="用 60 秒回答 8 題，不用先購買，先找出你今晚卡在哪一型，再選擇適合的睡前聲音路徑。">
     <meta name="twitter:image" content="https://timewaver-audio-sales.netlify.app/assets/og-cover.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -954,18 +954,26 @@
             font-weight: 800;
             line-height: 1;
         }
-        .hero-art-core small { margin-top: 0.38rem; color: #8c6812; font-size: 0.78rem; letter-spacing: 0.18em; }
+        .hero-art-core small {
+            margin-top: 0.38rem; color: #8c6812; font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            /* letter-spacing 會在最後一字後留尾隨字距，扣掉才不會左偏 */
+            margin-right: -0.18em;
+        }
         .hero-art-caption {
             position: absolute;
-            right: -1.2rem;
-            bottom: -2.5rem;
+            left: 50%;
+            bottom: -3.3rem;
+            /* 置中後再右移半個字距，抵銷 letter-spacing 造成的視覺左偏 */
+            transform: translateX(calc(-50% + 0.08em));
             margin: 0;
             color: #745b20;
             font-size: 0.84rem !important;
             font-weight: 700;
             letter-spacing: 0.16em;
             line-height: 1.7 !important;
-            text-align: right;
+            text-align: center;
+            white-space: nowrap;
         }
         @media (max-width: 640px) {
             .funnel-stage .visual-frame-grid,
@@ -1114,6 +1122,64 @@
             font-size: 0.46em; font-weight: 800; letter-spacing: 0.01em;
             vertical-align: baseline; position: relative; top: -0.02em;
         }
+
+        /* ===== 對照表：免費 vs 你這一型（淺底主題）===== */
+        .vs-table { width: 100%; border-collapse: collapse; margin-top: 1.75rem; font-size: 1rem; }
+        .vs-table th, .vs-table td { padding: 0.9rem 1rem; text-align: left; vertical-align: top; line-height: 1.75; }
+        .vs-table thead th { font-size: 0.92rem; letter-spacing: 0.03em; border-bottom: 2px solid rgba(23,37,58,0.14); }
+        .vs-table th:first-child { width: 22%; }
+        .vs-table tbody tr + tr td { border-top: 1px solid rgba(23,37,58,0.10); }
+        .vs-label { color: var(--muted) !important; font-weight: 700; }
+        .vs-free  { color: #5f6c7c !important; }
+        .vs-ours  { color: var(--ink) !important; font-weight: 700; }
+        .vs-table .vs-ours-head { color: #8a6a08 !important; font-weight: 800; }
+        .vs-table .vs-free-head { color: #5f6c7c !important; }
+        /* 右欄加一層淡金底，讓「你這一型」在視覺上直接勝出 */
+        .vs-table td.vs-ours, .vs-table th.vs-ours-head { background: rgba(212,175,55,0.08); }
+        @media (max-width: 640px) {
+            .vs-table, .vs-table thead, .vs-table tbody, .vs-table tr, .vs-table th, .vs-table td { display: block; }
+            .vs-table thead { display: none; }
+            .vs-table { font-size: 0.98rem; }
+            .vs-table tbody tr { padding: 0.95rem 0 0.2rem; border-top: 1px solid rgba(23,37,58,0.12); }
+            .vs-table tbody tr + tr td { border-top: 0; }
+            .vs-table td { padding: 0.2rem 0.6rem; }
+            .vs-table td.vs-label { padding-bottom: 0.4rem; }
+            .vs-table td.vs-ours { border-radius: 0.5rem; padding: 0.35rem 0.6rem; }
+            .vs-table td.vs-free::before { content: "免費的："; color: #6d7b8d; font-weight: 600; }
+            .vs-table td.vs-ours::before { content: "你這一型："; color: #8a6a08; font-weight: 700; }
+        }
+
+        /* ===== 第一晚會發生什麼（淺底主題）===== */
+        .first-night {
+            margin-top: 1.75rem; padding: 1.55rem 1.65rem; border-radius: 1.1rem;
+            background: rgba(212,175,55,0.075); border: 1px solid rgba(185,142,23,0.30);
+        }
+        .first-night-title {
+            font-size: 0.88rem; letter-spacing: 0.2em; text-transform: uppercase;
+            color: #8a6a08 !important; font-weight: 800; margin-bottom: 0.9rem;
+        }
+        .first-night p { color: var(--ink) !important; font-size: 1.04rem; line-height: 1.95; margin: 0 0 0.75rem; }
+        .first-night p:last-child { margin-bottom: 0; }
+        .first-night strong { color: var(--primary) !important; font-weight: 800; }
+
+        /* ===== 今晚倒數條 ===== */
+        .tonight-bar {
+            position: sticky; top: 0; z-index: 60;
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+            gap: 0.3rem 0.9rem; padding: 0.62rem 1rem;
+            font-size: 0.92rem; line-height: 1.5; text-align: center;
+            background: linear-gradient(90deg, #1f3a5f, #2b4a75);
+            color: #f4ead0; border-bottom: 1px solid rgba(212,175,55,0.35);
+        }
+        .tonight-bar strong { color: #f2cb4e; font-weight: 800; font-variant-numeric: tabular-nums; }
+        .tonight-note { opacity: 0.86; font-size: 0.84rem; }
+        .tonight-bar.is-late { background: linear-gradient(90deg, #2a2140, #3d2c5a); }
+        @media (max-width: 640px) {
+            .tonight-bar { font-size: 0.84rem; padding: 0.52rem 0.7rem; gap: 0.15rem 0.6rem; }
+            .tonight-note { font-size: 0.76rem; width: 100%; }
+        }
+        /* 測驗中不顯示，維持一題一屏的乾淨 */
+        body[data-stage="quiz"] #tonight-bar { display: none !important; }
 
         /* ===== 退費保證標章 ===== */
         .guarantee-head { display: flex; align-items: center; gap: 1.9rem; }
@@ -1270,6 +1336,11 @@
 </head>
 <body class="p-3 sm:p-5" data-stage="landing">
 
+<div id="tonight-bar" class="tonight-bar" role="status" aria-live="polite">
+    <span><span id="tonight-label">今晚還剩</span> <strong id="tonight-clock">&nbsp;</strong></span>
+    <span id="tonight-note" class="tonight-note"></span>
+</div>
+
 <div class="funnel-content desktop-shell">
     <div class="space-y-5">
         <aside class="hero-intro hero-panel glass-panel hero-grid rounded-[2rem] funnel-stage overflow-hidden">
@@ -1278,49 +1349,18 @@
                 60 秒睡前卡點檢測
             </div>
             <div class="mt-8">
-                <p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">Sleep Checkpoint Assessment</p>
-                <h1 class="text-4xl sm:text-5xl font-bold leading-tight text-white mt-3">白噪音、早點躺、放鬆 App 都沒錯。<br>睡不著，是因為沒先分清你卡在哪一型。</h1>
+                <h1 class="text-4xl sm:text-5xl font-bold leading-tight text-white mt-3">睡不著的原因有四種。<br>你今晚卡的是哪一種？</h1>
                 <p class="mt-5 text-slate-300 leading-relaxed text-base sm:text-lg hero-summary">
-                    今晚睡不著，可能不是你不夠累，而是大腦還沒下班。躺下後還在復盤、淺眠易醒、明天壓力一直跑，或安靜下來就不安？用 60 秒測出你的睡前卡點，找到今晚最適合的聲音路徑。
+                    躺下後還在復盤、睡了整晚醒來還是累、明天的壓力一直在跑，或者安靜下來反而不安。<br><br>這四種夜晚看起來很像，卡住的地方卻完全不同。所以白噪音、早點躺、放鬆 App 都沒錯 —— <strong>它們只是沒問過你是哪一種</strong>。
                 </p>
                 <div class="hero-cta-row">
-                    <button type="button" onclick="startQuiz()" class="primary-btn inline-flex items-center justify-center px-7 py-4">開始 60 秒檢測</button>
-                    <span>8 題完成・不用先購買</span>
+                    <button type="button" onclick="startQuiz()" class="primary-btn inline-flex items-center justify-center px-7 py-4">開始檢測 · 找出我卡在哪一型</button>
+                    <span>8 題點選　·　約 60 秒　·　不用留 Email</span>
                 </div>
             </div>
             <div class="hero-art" aria-hidden="true">
-                <div class="hero-art-core">60<small>秒分型</small></div>
-                <p class="hero-art-caption">先分清楚<br>再開始今晚</p>
-            </div>
-
-            <div class="grid sm:grid-cols-3 gap-3 mt-8 hero-metrics">
-                <div class="mini-card rounded-2xl p-4">
-                    <p class="text-xs tracking-[0.16em] uppercase text-slate-500">完成時間</p>
-                    <p class="mt-2 text-lg font-semibold text-white">60 秒</p>
-                </div>
-                <div class="mini-card rounded-2xl p-4">
-                    <p class="text-xs tracking-[0.16em] uppercase text-slate-500">檢測題數</p>
-                    <p class="mt-2 text-lg font-semibold text-white">8 題完成</p>
-                </div>
-                <div class="mini-card rounded-2xl p-4">
-                    <p class="text-xs tracking-[0.16em] uppercase text-slate-500">購買門檻</p>
-                    <p class="mt-2 text-lg font-semibold text-white">不用先購買</p>
-                </div>
-            </div>
-
-            <div class="mt-8 space-y-3 text-sm text-slate-300 hero-points">
-                <div class="flex items-start gap-3">
-                    <span class="mt-1 w-2 h-2 rounded-full bg-cyan-300"></span>
-                    <p>先分清楚你是腦內雜訊、淺眠修復、明天壓力，還是底層不安。</p>
-                </div>
-                <div class="flex items-start gap-3">
-                    <span class="mt-1 w-2 h-2 rounded-full bg-cyan-300"></span>
-                    <p>完成後看到你的睡前卡點、今晚第一步與對應聲音路徑。</p>
-                </div>
-                <div class="flex items-start gap-3">
-                    <span class="mt-1 w-2 h-2 rounded-full bg-cyan-300"></span>
-                    <p>結果直接公開；想保留完整解讀時，再選擇留下 Email 即可。</p>
-                </div>
+                <div class="hero-art-core">4<small>種卡點</small></div>
+                <p class="hero-art-caption">先知道是哪一種<br>再開始今晚</p>
             </div>
 
             <div class="visual-stack" aria-label="量子調頻視覺展示">
@@ -1336,17 +1376,6 @@
                 </div>
             </div>
         </aside>
-
-<section class="impact-panel glass-panel rounded-[2rem] funnel-section tier-support mb-5">
-    <p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">睡眠品質，不只影響夜晚</p>
-    <h2 class="text-3xl sm:text-4xl font-bold text-white mt-3">當夜裡沒有真的休息，白天會先開始付代價</h2>
-    <div class="funnel-list mt-8">
-        <article class="flow-step"><span class="flow-step-number">1</span><div><h3 class="font-semibold text-white">思緒更難收回</h3><p class="text-sm text-slate-400 mt-2">白天的對話、決策與待辦，容易一路延續到躺下後。</p></div></article>
-        <article class="flow-step"><span class="flow-step-number">2</span><div><h3 class="font-semibold text-white">醒來仍像沒充電</h3><p class="text-sm text-slate-400 mt-2">睡了卻沒有恢復感，身體和注意力都更難回到穩定節奏。</p></div></article>
-        <article class="flow-step"><span class="flow-step-number">3</span><div><h3 class="font-semibold text-white">壓力更容易放大</h3><p class="text-sm text-slate-400 mt-2">當系統一直待命，明天的壓力與底層不安也更容易佔住今晚。</p></div></article>
-    </div>
-    <button type="button" onclick="startQuiz()" class="primary-btn inline-block px-8 py-4 mt-8">了解我目前卡在哪裡</button>
-</section>
 
 <div class="hero-panel glass-panel hero-grid rounded-[2rem] funnel-stage border border-slate-700">
     
@@ -1370,11 +1399,11 @@
                 <p class="text-base sm:text-lg text-slate-300 mt-2 leading-relaxed">長期高壓、淺眠易醒、睡醒仍累、神經緊繃、心裡常有不明耗損感的人。</p>
             </div>
         </div>
-        <button onclick="startQuiz()" class="primary-btn py-4 px-8 w-full sm:w-auto">按這裡開始檢測</button>
+        <button onclick="startQuiz()" class="primary-btn py-4 px-8 w-full sm:w-auto">開始檢測 · 找出我卡在哪一型</button>
         <div class="start-feature-image">
             <picture><source srcset="assets/5.webp" type="image/webp"><img src="assets/5.jpg" alt="人物側臉與發光腦部意象" width="1200" height="655" loading="lazy" decoding="async"></picture>
         </div>
-        <p class="text-xs text-slate-500 mt-4">先完成檢測，再決定今晚要不要使用對應音頻。</p>
+        <p class="text-sm text-slate-400 mt-4">不用註冊、不用付費，做完直接看到結果。</p>
     </div>
 
     <!-- 測驗題目容器 -->
@@ -1473,7 +1502,7 @@
     <section id="offer-stack" class="glass-panel rounded-[2rem] funnel-section tier-hero" aria-labelledby="offer-stack-title">
         <p class="section-eyebrow">21 晚睡前節奏計畫</p>
         <h2 id="offer-stack-title" class="tier-hero-title mt-3">三週後，睡前那半小時不再需要靠意志力撐</h2>
-        <p class="text-slate-300 mt-4 leading-relaxed">不是要你今晚立刻睡死，而是先讓夜晚有一個固定的收尾方式。以下是你今晚就會拿到的東西。</p>
+        <p class="text-slate-300 mt-4 leading-relaxed">上面那一步，你今晚就可以照著做，不需要任何東西。<br><br>如果你想要的不只是今晚 —— 而是一個不用靠意志力、每晚都在的收尾方式，那我幫你這一型準備了下面這些。</p>
         <div class="funnel-list mt-7">
             <div class="offer-stack-item"><span class="offer-stack-check">✓</span><div><strong class="text-white">今晚睡前就能用的那一款</strong><p class="text-sm text-slate-400 mt-1">付款後最晚 12 小時內送達，多數在數分鐘內。MP3 檔約 50MB、33–37 分鐘，下載後離線可聽。今晚躺下前就用得到，不用等。</p></div><span class="offer-stack-value">已含</span></div>
             <div class="offer-stack-item"><span class="offer-stack-check">✓</span><div><strong class="text-white">對應你主卡點的核心音頻</strong><p class="text-sm text-slate-400 mt-1">依檢測結果對應 A／B／C／D 其中一款，單軌 33–37 分鐘。引導、音樂、頻率三層，四種卡點各做一版。</p></div><span class="offer-stack-value">已含</span></div>
@@ -1484,9 +1513,16 @@
             <!-- TODO 可再加一項加贈：「睡前 3 分鐘收尾清單」（純文字，一頁）。內容備好後把下一行的註解解開。 -->
             <!-- <div class="offer-stack-item offer-bonus"><span class="offer-stack-check">★</span><div><strong class="text-white"><span class="bonus-tag">加贈</span> 睡前 3 分鐘收尾清單</strong><p class="text-sm text-slate-400 mt-1">躺下前的三個動作，不需要工具、不需要 App，30 秒內做得完。</p></div><span class="offer-stack-value">已含</span></div> -->
         </div>
+        <div class="first-night">
+            <p class="first-night-title">今晚會發生什麼</p>
+            <p>躺下後，戴耳機或外放都可以。</p>
+            <p>前 90 秒是引導，聲音很輕，只是幫你把注意力從白天收回來。之後音樂進來，你不需要專心聽，也不需要跟著做什麼。</p>
+            <p><strong>多數人不會記得音檔是怎麼結束的 —— 那通常是好事。</strong></p>
+        </div>
+
         <div class="mt-8 pt-7 border-t border-cyan-300/20">
             <div class="price-anchor">
-                <div class="price-anchor-side">台北一次 60 分鐘按摩<br><strong>約 NT$800–1,300</strong><br>換來一個晚上的放鬆</div>
+                <div class="price-anchor-side">褪黑激素一個月 NT$500–800<br>助眠 App 一年 NT$1,000 起<br><strong>白噪音機 NT$800 起</strong><br>——現在放在櫃子上</div>
                 <div class="price-anchor-arrow" aria-hidden="true">→</div>
                 <div>
                     <p class="price-anchor-main"><span class="price-anchor-unit">NT$</span><span data-price>299</span></p>
@@ -1505,8 +1541,9 @@
                 </div>
                 <p class="tier-note">價格以結帳當下為準。名額售完後自動進入下一階，不會再回到前一階。</p>
             </div>
+            <p class="text-sm text-slate-400 text-center mt-4 leading-relaxed">這些都不是浪費 —— 只是它們都預設你的卡點跟別人一樣。</p>
             <div class="cost-of-delay">
-                <p>你今晚本來就要躺下。<strong>差別只在於今晚有沒有一個對的收尾。</strong><br>多拖一個星期，就是七個沒有真正恢復的白天 —— 而那七天你一樣會累，只是沒有人告訴你原因。</p>
+                <p><strong>為什麼是今晚？</strong><br>因為這個倒數不是促銷手法，它就是字面的意思 —— 今晚會過去。<br>你今晚本來就要躺下，差別只在於有沒有一個對的收尾。<br>多拖一個星期，就是七個沒有真正恢復的白天 —— 而那七天你一樣會累，只是沒有人告訴你原因。</p>
             </div>
             <div class="mid-cta">
                 <button type="button" onclick="jumpToBuy('offer_stack')" class="primary-btn inline-flex items-center justify-center px-8 py-4">今晚就開始</button>
@@ -1553,6 +1590,44 @@
         </div>
     </section>
 
+    <section id="vs-free" class="glass-panel rounded-[2rem] funnel-section tier-hero mb-5" aria-labelledby="vs-free-title">
+        <p class="section-eyebrow">先把最實際的問題講清楚</p>
+        <h2 id="vs-free-title" class="tier-hero-title mt-3">YouTube 上就有免費的，為什麼要花這 NT$<span data-price>299</span>？</h2>
+        <p class="text-slate-300 mt-4 leading-relaxed">這是最合理的問題，我直接回答。</p>
+        <p class="text-slate-300 mt-4 leading-relaxed">免費的助眠音樂不是不好 —— 它的問題只有一個：<strong class="text-white">它是做給所有人聽的。</strong>而一段做給所有人聽的聲音，等於沒有為任何一個人設計。</p>
+
+        <table class="vs-table">
+            <thead>
+                <tr>
+                    <th class="vs-label"></th>
+                    <th class="vs-free-head">免費助眠音樂</th>
+                    <th class="vs-ours-head">你這一型的那一款</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="vs-label">為誰做的</td><td class="vs-free">所有人</td><td class="vs-ours">你這一型，四型各做一版</td></tr>
+                <tr><td class="vs-label">結構</td><td class="vs-free">一層音樂</td><td class="vs-ours">引導 ＋ 音樂 ＋ 頻率，三層疊起來</td></tr>
+                <tr><td class="vs-label">怎麼選</td><td class="vs-free">你自己猜</td><td class="vs-ours">8 題檢測幫你選好</td></tr>
+                <tr><td class="vs-label">用得下去嗎</td><td class="vs-free">看你記不記得</td><td class="vs-ours">第 1、3、7、14、21 晚各一封節奏提醒</td></tr>
+                <tr><td class="vs-label">選錯了怎麼辦</td><td class="vs-free">再找下一個，繼續猜</td><td class="vs-ours">7 晚無條件退費，或免費換一次款</td></tr>
+            </tbody>
+        </table>
+
+        <p class="text-slate-300 mt-7 leading-relaxed">所以真正的差別不在「聲音好不好聽」，在<strong class="text-white">這一段是不是為你現在卡住的地方做的</strong>。</p>
+        <p class="text-slate-300 mt-4 leading-relaxed">這也是為什麼要先花 60 秒做檢測 —— 拿到對的那一款，比拿到一款「聽起來很放鬆」的重要得多。</p>
+    </section>
+
+    <section class="impact-panel glass-panel rounded-[2rem] funnel-section tier-support mb-5">
+        <p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">睡眠品質，不只影響夜晚</p>
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mt-3">當夜裡沒有真的休息，白天會先開始付代價</h2>
+        <div class="funnel-list mt-8">
+            <article class="flow-step"><span class="flow-step-number">1</span><div><h3 class="font-semibold text-white">思緒更難收回</h3><p class="text-sm text-slate-400 mt-2">白天的對話、決策與待辦，容易一路延續到躺下後。</p></div></article>
+            <article class="flow-step"><span class="flow-step-number">2</span><div><h3 class="font-semibold text-white">醒來仍像沒充電</h3><p class="text-sm text-slate-400 mt-2">睡了卻沒有恢復感，身體和注意力都更難回到穩定節奏。</p></div></article>
+            <article class="flow-step"><span class="flow-step-number">3</span><div><h3 class="font-semibold text-white">壓力更容易放大</h3><p class="text-sm text-slate-400 mt-2">當系統一直待命，明天的壓力與底層不安也更容易佔住今晚。</p></div></article>
+        </div>
+        <button type="button" onclick="jumpToBuy('impact')" class="primary-btn inline-block px-8 py-4 mt-8">今晚就開始</button>
+    </section>
+
     <section class="glass-panel rounded-[2rem] funnel-section tier-support">
         <div><p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">使用情境與交付流程</p><h2 class="text-3xl font-bold text-white mt-3">不是再找一段背景音，而是建立可重複的睡前入口</h2><p class="text-slate-300 mt-4 leading-relaxed">當你知道自己最常卡在哪裡，就能從對應的一款開始，在固定的睡前時段建立較一致的放鬆與收尾節奏。</p></div><div class="funnel-list mt-7"><div class="flow-step"><span class="flow-step-number">1</span><div><strong class="text-white">完成付款</strong><p class="text-sm text-slate-400 mt-1">填寫資料後前往綠界完成付款。</p></div></div><div class="flow-step"><span class="flow-step-number">2</span><div><strong class="text-white">收到啟動資訊</strong><p class="text-sm text-slate-400 mt-1">付款完成後，系統會依訂單資料寄送對應方案的啟動資訊；最晚 12 小時內完成交付。</p></div></div><div class="flow-step"><span class="flow-step-number">3</span><div><strong class="text-white">依節奏使用</strong><p class="text-sm text-slate-400 mt-1">從今晚使用方式開始，並收到 Day 1、3、7、14、21 的節奏提醒。</p></div></div></div>
     </section>
@@ -1560,10 +1635,6 @@
         <p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">付款前，先把問題說清楚</p>
         <h2 id="faq-title" class="text-3xl font-bold text-white mt-3">你可能還想確認的事</h2>
         <div class="funnel-list mt-7">
-            <details class="mini-card rounded-2xl p-5">
-                <summary class="font-semibold text-white cursor-pointer pr-6">這跟 YouTube 上免費的助眠音樂差在哪？</summary>
-                <div class="text-sm text-slate-300 leading-relaxed mt-4 space-y-2"><p>免費音樂通常是一段做給所有人聽的背景聲。這裡的每一款是三層疊起來的：一段把注意力從白天收回來的引導、一段為那一型設計的音樂，以及一組對應的頻率。四種卡點各做一版，不是同一段音檔換個封面。</p><p>所以才需要先花 60 秒做檢測 —— 拿到對的那一款，比拿到一款「聽起來很放鬆」的更重要。</p><p>而你拿到的也不只是一個播放連結，還有你的卡點解讀、Day 1／3／7／14／21 的節奏提醒，以及一次換款的權利。用不用、什麼時候用，仍然由你決定。</p></div>
-            </details>
             <details class="mini-card rounded-2xl p-5">
                 <summary class="font-semibold text-white cursor-pointer pr-6">我戴耳機睡覺會不會不好？</summary>
                 <div class="text-sm text-slate-300 leading-relaxed mt-4 space-y-2"><p>不建議戴入耳式耳機整晚睡覺，尤其是側睡或容易翻身時；它可能造成壓迫、纏繞或讓你忽略不適。</p><p>若要使用耳機，建議在睡前短時間、低音量聆聽；需要整晚播放時，優先考慮外放或床頭喇叭。</p></div>
@@ -1954,6 +2025,82 @@
         }
         startQuiz();
     }
+
+    /* ===== 今晚倒數條 =====
+       原則（Kennedy 第 3 因子：讀者必須「相信」那個急迫）：
+       只倒數真的會發生的事 —— 今晚會過去。餅乾不用來鎖假期限，
+       只用來記錄她自己的行為（首訪日、當日到訪次數），
+       產生的是屬於她自己的、可驗證的急迫感。 */
+    (function () {
+        var BAR = document.getElementById('tonight-bar');
+        if (!BAR) return;
+        var LABEL = document.getElementById('tonight-label');
+        var CLOCK = document.getElementById('tonight-clock');
+        var NOTE  = document.getElementById('tonight-note');
+
+        function getCk(k) {
+            var m = document.cookie.match('(^|;)\\s*' + k + '\\s*=\\s*([^;]+)');
+            return m ? decodeURIComponent(m[2]) : null;
+        }
+        function setCk(k, v, days) {
+            var d = new Date(); d.setTime(d.getTime() + days * 86400000);
+            document.cookie = k + '=' + encodeURIComponent(v) + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+        }
+        function tpeDate() {
+            return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Taipei' }).format(new Date());
+        }
+        function dayGap(a, b) {
+            return Math.round((Date.parse(b + 'T00:00:00Z') - Date.parse(a + 'T00:00:00Z')) / 86400000);
+        }
+
+        var today = tpeDate();
+        var first = getCk('abl_first') || today;
+        setCk('abl_first', first, 365);
+
+        var hits = (getCk('abl_lastday') === today) ? (parseInt(getCk('abl_hits') || '0', 10) + 1) : 1;
+        setCk('abl_lastday', today, 365);
+        setCk('abl_hits', String(hits), 1);
+
+        var gap = dayGap(first, today);
+        if (!isFinite(gap) || gap < 0) gap = 0;
+
+        function buildNote(h) {
+            if (h < 5) {
+                var hr = (h === 0) ? 12 : h;
+                return '現在是凌晨 ' + hr + ' 點 —— 這正是這一頁在講的那件事';
+            }
+            if (gap > 0) return '你第一次來是 ' + gap + ' 天前，那之後又過了 ' + gap + ' 個晚上';
+            if (hits > 1) return '這是你今天第 ' + hits + ' 次打開這一頁';
+            return '';
+        }
+
+        function two(x) { return (x < 10 ? '0' : '') + x; }
+
+        function tick() {
+            var now = new Date();
+            var h = now.getHours();
+            var late = h < 5;
+            BAR.classList.toggle('is-late', late);
+
+            var ms;
+            if (late) {
+                LABEL.textContent = '今晚已經過了';
+                ms = now - new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+            } else {
+                LABEL.textContent = '今晚還剩';
+                var end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+                ms = end - now;
+            }
+            var sec = Math.max(0, Math.floor(ms / 1000));
+            var hh = Math.floor(sec / 3600), mm = Math.floor((sec % 3600) / 60), ss = sec % 60;
+            CLOCK.textContent = hh > 0 ? (hh + ' 小時 ' + two(mm) + ' 分') : (mm + ' 分 ' + two(ss) + ' 秒');
+        }
+
+        NOTE.textContent = buildNote(new Date().getHours());
+        tick();
+        setInterval(tick, 1000);
+        setInterval(function () { NOTE.textContent = buildNote(new Date().getHours()); }, 60000);
+    })();
 
     loadPricing();
 
