@@ -177,6 +177,25 @@
         }
         .step { display: none; }
         .step.active { display: block; animation: fadeIn 0.45s ease; }
+
+        /* ===== 三場隔離 =====
+           原則：不鎖捲動，而是讓非當前場景完全離開 layout flow。
+           測驗進行中，頁面總高度＝測驗那一屏，使用者物理上滑不到銷售區。 */
+
+        /* 場景 0 · 著陸：測驗前看不到任何價格、方案、購買按鈕 */
+        body[data-stage="landing"] main.funnel-content { display: none !important; }
+        /* 著陸屏保留 sticky CTA：此時它不帶價格，標籤是「60 秒測出你的睡前卡點」，
+           點下去直接 startQuiz()，是拉高「測驗開始率」的第二個入口。 */
+
+        /* 場景 1 · 測驗：只剩測驗本身 */
+        body[data-stage="quiz"] .hero-intro,
+        body[data-stage="quiz"] .impact-panel,
+        body[data-stage="quiz"] main.funnel-content,
+        body[data-stage="quiz"] #sticky-mobile-cta { display: none !important; }
+
+        /* 場景 2＋3 · 結果與銷售：同一捲軸，入口區收起，落點即結果 */
+        body[data-stage="offer"] .hero-intro,
+        body[data-stage="offer"] .impact-panel { display: none !important; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
@@ -1224,7 +1243,7 @@
         .tier-pact-close { font-style: normal; color: #7a5a08 !important; }
     </style>
 </head>
-<body class="p-3 sm:p-5">
+<body class="p-3 sm:p-5" data-stage="landing">
 
 <div class="funnel-content desktop-shell">
     <div class="space-y-5">
@@ -1240,7 +1259,7 @@
                     今晚睡不著，可能不是你不夠累，而是大腦還沒下班。躺下後還在復盤、淺眠易醒、明天壓力一直跑，或安靜下來就不安？用 60 秒測出你的睡前卡點，找到今晚最適合的聲音路徑。
                 </p>
                 <div class="hero-cta-row">
-                    <a href="#step-start" class="primary-btn inline-flex items-center justify-center px-7 py-4">開始 60 秒檢測</a>
+                    <button type="button" onclick="startQuiz()" class="primary-btn inline-flex items-center justify-center px-7 py-4">開始 60 秒檢測</button>
                     <span>8 題完成・不用先購買</span>
                 </div>
             </div>
@@ -1301,46 +1320,7 @@
         <article class="flow-step"><span class="flow-step-number">2</span><div><h3 class="font-semibold text-white">醒來仍像沒充電</h3><p class="text-sm text-slate-400 mt-2">睡了卻沒有恢復感，身體和注意力都更難回到穩定節奏。</p></div></article>
         <article class="flow-step"><span class="flow-step-number">3</span><div><h3 class="font-semibold text-white">壓力更容易放大</h3><p class="text-sm text-slate-400 mt-2">當系統一直待命，明天的壓力與底層不安也更容易佔住今晚。</p></div></article>
     </div>
-    <a href="#step-start" class="primary-btn inline-block px-8 py-4 mt-8">了解我目前卡在哪裡</a>
-</section>
-
-<section id="mechanism" class="glass-panel rounded-[2rem] funnel-section tier-hero mb-5" aria-labelledby="mechanism-title">
-    <div class="text-center max-w-3xl mx-auto">
-        <p class="section-eyebrow">睡前卡點四型 · Sleep Checkpoint Types</p>
-        <h2 id="mechanism-title" class="tier-hero-title mt-3">每一款，是三層疊起來的</h2>
-        <p class="text-slate-300 mt-4 leading-relaxed">免費音樂通常是一段做給所有人聽的背景聲。這裡的每一款不是找一段好聽的音檔，而是三個東西疊在一起。</p>
-    </div>
-
-    <div class="layer-stack mt-10">
-        <article class="layer-band layer-band-1">
-            <span class="layer-index">01</span>
-            <div>
-                <h3 class="layer-name">引導</h3>
-                <p class="layer-desc">把注意力從白天收回來</p>
-            </div>
-        </article>
-        <article class="layer-band layer-band-2">
-            <span class="layer-index">02</span>
-            <div>
-                <h3 class="layer-name">音樂</h3>
-                <p class="layer-desc">為那一型設計的聲音</p>
-            </div>
-        </article>
-        <article class="layer-band layer-band-3">
-            <span class="layer-index">03</span>
-            <div>
-                <h3 class="layer-name">頻率</h3>
-                <p class="layer-desc">對應該型狀態的頻率</p>
-            </div>
-        </article>
-    </div>
-
-    <p class="layer-note">四種卡點各做一版，<strong>不是同一段音檔換個封面</strong>。</p>
-
-    <div class="text-center mt-8">
-        <button type="button" onclick="jumpToQuiz('mechanism')" class="primary-btn inline-flex items-center justify-center px-7 py-4">先測出我是哪一型</button>
-        <p class="text-xs text-slate-500 mt-3">60 秒、8 題，不用先購買。</p>
-    </div>
+    <button type="button" onclick="startQuiz()" class="primary-btn inline-block px-8 py-4 mt-8">了解我目前卡在哪裡</button>
 </section>
 
 <div class="hero-panel glass-panel hero-grid rounded-[2rem] funnel-stage border border-slate-700">
@@ -1508,6 +1488,45 @@
                 <button type="button" onclick="jumpToBuy('offer_stack')" class="primary-btn inline-flex items-center justify-center px-8 py-4">今晚就開始</button>
                 <p class="mid-cta-note">先完成檢測，系統會幫你選好對應的一款。</p>
             </div>
+        </div>
+    </section>
+
+    <section id="mechanism" class="glass-panel rounded-[2rem] funnel-section tier-hero mb-5" aria-labelledby="mechanism-title">
+        <div class="text-center max-w-3xl mx-auto">
+            <p class="section-eyebrow">睡前卡點四型 · Sleep Checkpoint Types</p>
+            <h2 id="mechanism-title" class="tier-hero-title mt-3">每一款，是三層疊起來的</h2>
+            <p class="text-slate-300 mt-4 leading-relaxed">免費音樂通常是一段做給所有人聽的背景聲。這裡的每一款不是找一段好聽的音檔，而是三個東西疊在一起。</p>
+        </div>
+    
+        <div class="layer-stack mt-10">
+            <article class="layer-band layer-band-1">
+                <span class="layer-index">01</span>
+                <div>
+                    <h3 class="layer-name">引導</h3>
+                    <p class="layer-desc">把注意力從白天收回來</p>
+                </div>
+            </article>
+            <article class="layer-band layer-band-2">
+                <span class="layer-index">02</span>
+                <div>
+                    <h3 class="layer-name">音樂</h3>
+                    <p class="layer-desc">為那一型設計的聲音</p>
+                </div>
+            </article>
+            <article class="layer-band layer-band-3">
+                <span class="layer-index">03</span>
+                <div>
+                    <h3 class="layer-name">頻率</h3>
+                    <p class="layer-desc">對應該型狀態的頻率</p>
+                </div>
+            </article>
+        </div>
+    
+        <p class="layer-note">四種卡點各做一版，<strong>不是同一段音檔換個封面</strong>。</p>
+    
+        <div class="text-center mt-8">
+            <button type="button" onclick="jumpToBuy('mechanism')" class="primary-btn inline-flex items-center justify-center px-7 py-4">選我這一型的方案</button>
+            <p class="text-xs text-slate-500 mt-3">檢測已經幫你選好對應的一款。</p>
         </div>
     </section>
 
@@ -1712,9 +1731,21 @@
     let answers = [];
     let hasCompletedQuiz = false;
 
+    /* 三場隔離：step 與場景的對應 */
+    const STAGE_BY_STEP = {
+        'step-start'    : 'landing',
+        'quiz-container': 'quiz',
+        'step-result'   : 'offer'
+    };
+
     function showStep(stepId) {
         document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
         document.getElementById(stepId).classList.add('active');
+
+        const stage = STAGE_BY_STEP[stepId] || 'landing';
+        document.body.dataset.stage = stage;
+        window.scrollTo({ top: 0, behavior: 'auto' });   // 場景切換一律回到頂端
+        if (typeof trackAblEvent === 'function') trackAblEvent('stage_' + stage);
     }
 
     function startQuiz() {
@@ -1877,9 +1908,10 @@
 
     function jumpToQuiz(source) {
         trackAblEvent('mid_cta_click', { source: source, target: 'quiz' });
-        const anchor = document.getElementById('step-start');
+        if (!hasCompletedQuiz) { startQuiz(); return; }
+        // 已完成檢測時 #step-start 不在 layout 內，改捲回結果區
+        const anchor = document.getElementById('step-result');
         if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        if (!hasCompletedQuiz) startQuiz();
     }
 
     function jumpToBuy(source) {
