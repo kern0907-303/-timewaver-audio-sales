@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>60 秒睡前卡點檢測｜白噪音、早點躺都沒錯，錯在沒先分清你卡在哪一型</title>
+    <title>60 秒睡前卡點檢測｜睡不著，是因為沒先分清你卡在哪一型</title>
     <meta name="description" content="用 60 秒回答 8 題，不用先購買，先找出你今晚卡在哪一型，再選擇適合的睡前聲音路徑。">
     <link rel="canonical" href="https://timewaver-audio-sales.netlify.app/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://timewaver-audio-sales.netlify.app/">
-    <meta property="og:title" content="60 秒睡前卡點檢測｜白噪音、早點躺都沒錯，錯在沒先分清你卡在哪一型">
+    <meta property="og:title" content="60 秒睡前卡點檢測｜睡不著，是因為沒先分清你卡在哪一型">
     <meta property="og:description" content="用 60 秒回答 8 題，不用先購買，先找出你今晚卡在哪一型，再選擇適合的睡前聲音路徑。">
     <!-- TODO: 製作 1200×630 分享圖後，放置於 assets/og-cover.jpg。 -->
     <meta property="og:image" content="https://timewaver-audio-sales.netlify.app/assets/og-cover.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="60 秒睡前卡點檢測｜白噪音、早點躺都沒錯，錯在沒先分清你卡在哪一型">
+    <meta name="twitter:title" content="60 秒睡前卡點檢測｜睡不著，是因為沒先分清你卡在哪一型">
     <meta name="twitter:description" content="用 60 秒回答 8 題，不用先購買，先找出你今晚卡在哪一型，再選擇適合的睡前聲音路徑。">
     <meta name="twitter:image" content="https://timewaver-audio-sales.netlify.app/assets/og-cover.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -329,8 +329,8 @@
         .funnel-stage .hero-metrics .mini-card p:first-child { margin: 0; }
         .funnel-stage .hero-metrics .mini-card p:last-child { margin: 0; font-size: 1rem; }
         .funnel-stage .visual-stack { margin-top: 1.5rem; }
-        .funnel-stage .visual-frame-grid { display: block; }
-        .funnel-stage .visual-card-4 { display: none; }
+        .funnel-stage .visual-frame-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 0.6rem; }
+        .funnel-stage .visual-card-4 { display: block; }
         .funnel-stage .entry-cards .mini-card { padding: 0; border: 0; background: transparent; }
         .funnel-stage .entry-cards .mini-card + .mini-card { border-top: 1px solid rgba(148, 163, 184, 0.14); padding-top: 1rem; }
         .funnel-stage .flex.flex-col { align-items: stretch; }
@@ -407,6 +407,9 @@
             background: linear-gradient(180deg, rgba(5, 14, 27, 0.04), rgba(5, 14, 27, 0.28));
             pointer-events: none;
         }
+        /* <picture> 不產生額外的 inline 盒子，維持原本 .visual-card > img 的版面 */
+        .visual-card picture,
+        .start-feature-image picture { display: block; }
         .visual-card img {
             display: block;
             width: 100%;
@@ -1085,11 +1088,17 @@
 
         /* ===== 價格錨定 ===== */
         .price-anchor {
-            display: grid; grid-template-columns: 1fr auto minmax(9rem, 1fr); align-items: center; gap: 1.25rem;
+            display: grid; grid-template-columns: 1fr auto minmax(9rem, 1fr);
+            align-items: center; justify-items: center; gap: 1.25rem;
             max-width: 40rem; margin: 1.75rem auto 0; text-align: center;
         }
-        @media (max-width: 640px) { .price-anchor { grid-template-columns: 1fr; gap: 0.6rem; } }
-        .price-anchor-side { font-size: 0.86rem; color: var(--muted); line-height: 1.7; }
+        @media (max-width: 640px) {
+            .price-anchor { grid-template-columns: 1fr; gap: 0.9rem; }
+            .price-anchor-arrow { transform: rotate(90deg); }
+        }
+        .price-anchor > * { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .price-anchor-side { font-size: 1.05rem; color: var(--muted); line-height: 1.8; }
+        .price-anchor-side strong { font-size: 1.12em; color: var(--ink); }
         .price-anchor-arrow { font-size: 1.4rem; color: #b98e17; }
         .price-anchor-main {
             display: flex; align-items: baseline; justify-content: center; gap: 0.12em;
@@ -1100,6 +1109,18 @@
         .price-anchor-unit {
             font-size: 0.46em; font-weight: 800; letter-spacing: 0.01em;
             vertical-align: baseline; position: relative; top: -0.02em;
+        }
+
+        /* ===== 退費保證標章 ===== */
+        .guarantee-head { display: flex; align-items: center; gap: 1.9rem; }
+        .guarantee-head-text { flex: 1 1 auto; min-width: 0; }
+        .guarantee-badge {
+            flex: 0 0 auto; width: 180px; height: 180px;
+            filter: drop-shadow(0 8px 22px rgba(185,142,23,0.30));
+        }
+        @media (max-width: 720px) {
+            .guarantee-head { flex-direction: column; align-items: center; text-align: center; gap: 1.2rem; }
+            .guarantee-badge { width: 148px; height: 148px; }
         }
 
         /* ===== 中段 CTA ===== */
@@ -1204,25 +1225,25 @@
         .footer-links a { color: #7c8796; text-decoration: underline; text-underline-offset: 3px; }
         /* ===== 價格階梯 ===== */
         .tier-board { max-width: 40rem; margin: 2rem auto 0; }
-        .tier-board-title { font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
-            color: #927017; font-weight: 600; text-align: center; margin-bottom: 0.9rem; }
+        .tier-board-title { font-size: 0.86rem; letter-spacing: 0.24em; text-transform: uppercase;
+            color: #927017; font-weight: 700; text-align: center; margin-bottom: 1.1rem; }
         .tier-list { display: grid; gap: 0.7rem; }
         .tier-item {
-            display: flex; align-items: center; gap: 1rem;
-            padding: 1rem 1.25rem; border-radius: 1rem;
+            display: flex; align-items: center; gap: 1.15rem;
+            padding: 1.6rem 1.75rem; border-radius: 1.15rem;
             border: 1px solid rgba(23,37,58,0.10); background: #fff;
             transition: border-color .2s ease;
         }
         .tier-item.is-open { border-color: rgba(185,142,23,0.55); background: rgba(212,175,55,0.07);
             box-shadow: 0 6px 20px rgba(185,142,23,0.10); }
         .tier-item.is-done { opacity: 0.55; }
-        .tier-price { font-size: 1.4rem; font-weight: 800; color: var(--primary); min-width: 6.2rem; white-space: nowrap; }
+        .tier-price { font-size: 2.1rem; font-weight: 800; color: var(--primary); min-width: 7.4rem; white-space: nowrap; }
         .tier-item.is-done .tier-price { text-decoration: line-through; }
         .tier-main { flex: 1 1 auto; }
-        .tier-label { font-weight: 700; color: var(--primary); font-size: 1rem; }
-        .tier-sub { font-size: 0.85rem; color: var(--muted); margin-top: 0.15rem; }
-        .tier-badge { flex: 0 0 auto; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;
-            padding: 0.3rem 0.7rem; border-radius: 999px; white-space: nowrap; }
+        .tier-label { font-weight: 700; color: var(--primary); font-size: 1.25rem; }
+        .tier-sub { font-size: 1rem; color: var(--muted); margin-top: 0.3rem; }
+        .tier-badge { flex: 0 0 auto; font-size: 0.92rem; font-weight: 700; letter-spacing: 0.05em;
+            padding: 0.42rem 0.9rem; border-radius: 999px; white-space: nowrap; }
         .badge-open { background: rgba(185,142,23,0.20); color: #6a4f0b; }
         .badge-done { background: rgba(23,37,58,0.08); color: #5b6875; }
         .badge-next { background: rgba(31,58,95,0.10); color: #2b3a4d; }
@@ -1254,7 +1275,7 @@
             </div>
             <div class="mt-8">
                 <p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">Sleep Checkpoint Assessment</p>
-                <h1 class="text-4xl sm:text-5xl font-bold leading-tight text-white mt-3">白噪音、早點躺、放鬆 App 都沒錯。<br>錯在沒先分清你卡在哪一型。</h1>
+                <h1 class="text-4xl sm:text-5xl font-bold leading-tight text-white mt-3">白噪音、早點躺、放鬆 App 都沒錯。<br>睡不著，是因為沒先分清你卡在哪一型。</h1>
                 <p class="mt-5 text-slate-300 leading-relaxed text-base sm:text-lg hero-summary">
                     今晚睡不著，可能不是你不夠累，而是大腦還沒下班。躺下後還在復盤、淺眠易醒、明天壓力一直跑，或安靜下來就不安？用 60 秒測出你的睡前卡點，找到今晚最適合的聲音路徑。
                 </p>
@@ -1302,10 +1323,10 @@
                 <div class="visual-frame">
                     <div class="visual-frame-grid visual-frame-top">
                         <div class="visual-card visual-card-3">
-                            <img src="assets/3.png" alt="手掌上方的腦波與耳機頻率影像">
+                            <picture><source srcset="assets/3.webp" type="image/webp"><img src="assets/3.jpg" alt="手掌上方的腦波與耳機頻率影像" width="1200" height="711" loading="eager" decoding="async"></picture>
                         </div>
                         <div class="visual-card visual-card-4">
-                            <img src="assets/4.png" alt="側臉與發光腦部意象">
+                            <picture><source srcset="assets/4.webp" type="image/webp"><img src="assets/4.jpg" alt="側臉與發光腦部意象" width="1200" height="890" loading="eager" decoding="async"></picture>
                         </div>
                     </div>
                 </div>
@@ -1336,18 +1357,18 @@
             我們不是要你再多學一個助眠方法，而是先幫你分清楚：你是腦內雜訊停不下來、睡眠修復不夠深、明天壓力還在預演，還是底層不安一直拉扯。
         </p>
         <div class="grid sm:grid-cols-2 gap-3 text-left mb-8 entry-cards">
-            <div class="mini-card rounded-2xl p-4">
-                <p class="text-sm font-semibold text-white">你會得到什麼</p>
-                <p class="text-sm text-slate-400 mt-2">你的睡前卡點、今晚第一步、對應聲音路徑與後續入口。</p>
+            <div class="mini-card rounded-2xl p-5">
+                <p class="text-base sm:text-lg font-semibold text-white">你會得到什麼</p>
+                <p class="text-base sm:text-lg text-slate-300 mt-2 leading-relaxed">你的睡前卡點、今晚第一步、對應聲音路徑與後續入口。</p>
             </div>
-            <div class="mini-card rounded-2xl p-4">
-                <p class="text-sm font-semibold text-white">適合誰做</p>
-                <p class="text-sm text-slate-400 mt-2">長期高壓、淺眠易醒、睡醒仍累、神經緊繃、心裡常有不明耗損感的人。</p>
+            <div class="mini-card rounded-2xl p-5">
+                <p class="text-base sm:text-lg font-semibold text-white">適合誰做</p>
+                <p class="text-base sm:text-lg text-slate-300 mt-2 leading-relaxed">長期高壓、淺眠易醒、睡醒仍累、神經緊繃、心裡常有不明耗損感的人。</p>
             </div>
         </div>
         <button onclick="startQuiz()" class="primary-btn py-4 px-8 w-full sm:w-auto">按這裡開始檢測</button>
         <div class="start-feature-image">
-            <img src="assets/5.png" alt="人物側臉與發光腦部意象">
+            <picture><source srcset="assets/5.webp" type="image/webp"><img src="assets/5.jpg" alt="人物側臉與發光腦部意象" width="1200" height="655" loading="lazy" decoding="async"></picture>
         </div>
         <p class="text-xs text-slate-500 mt-4">先完成檢測，再決定今晚要不要使用對應音頻。</p>
     </div>
@@ -1398,17 +1419,17 @@
             <p id="result-failure" class="text-sm sm:text-base text-slate-300 leading-relaxed"></p>
         </div>
         <div class="mini-card rounded-2xl p-5 text-left mb-6 border border-amber-300/15">
-            <p class="text-xs uppercase tracking-[0.18em] text-amber-200/70 mb-2">如果今晚先不處理</p>
-            <p id="result-cost" class="text-sm text-slate-300 leading-relaxed"></p>
+            <p class="text-sm uppercase tracking-[0.18em] text-amber-200/70 mb-2">如果今晚先不處理</p>
+            <p id="result-cost" class="text-base sm:text-lg text-slate-300 leading-relaxed"></p>
         </div>
         <div class="grid sm:grid-cols-2 gap-4 text-left mb-6">
             <div class="mini-card rounded-2xl p-5">
-                <p class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-2">今晚第一步</p>
-                <p id="result-first-step" class="text-sm text-slate-300 leading-relaxed"></p>
+                <p class="text-sm uppercase tracking-[0.18em] text-slate-500 mb-2">今晚第一步</p>
+                <p id="result-first-step" class="text-base sm:text-lg text-slate-300 leading-relaxed"></p>
             </div>
             <div class="mini-card rounded-2xl p-5">
-                <p class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-2">對應音頻</p>
-                <p id="result-audio-name" class="text-sm font-semibold text-cyan-200 leading-relaxed"></p>
+                <p class="text-sm uppercase tracking-[0.18em] text-slate-500 mb-2">對應音頻</p>
+                <p id="result-audio-name" class="text-base sm:text-lg font-semibold text-cyan-200 leading-relaxed"></p>
             </div>
         </div>
         <div class="mini-card rounded-2xl p-5 text-left mb-6">
@@ -1468,9 +1489,8 @@
                     <p class="price-anchor-side mt-2">21 個晚上<br><strong>平均一晚 NT$<span data-price-per-night>14</span></strong></p>
                 </div>
             </div>
-            <p class="text-xs text-slate-400 text-center mt-5 leading-relaxed">同樣是照顧自己的自費選擇，只是這一個你可以重複使用。<br class="sm:hidden">按摩價格區間參考台北市政府公開價目表與坊間業者公開價目。</p>
             <div class="tier-board" id="tier-board" hidden>
-                <p class="tier-board-title">現在是哪一階</p>
+                <p class="tier-board-title">目前價格</p>
                 <div class="tier-list" id="tier-list"></div>
                 <div class="tier-pact" id="tier-pact" hidden>
                     <p class="tier-pact-title">關於早鳥價，我想先說清楚</p>
@@ -1486,7 +1506,6 @@
             </div>
             <div class="mid-cta">
                 <button type="button" onclick="jumpToBuy('offer_stack')" class="primary-btn inline-flex items-center justify-center px-8 py-4">今晚就開始</button>
-                <p class="mid-cta-note">先完成檢測，系統會幫你選好對應的一款。</p>
             </div>
         </div>
     </section>
@@ -1494,7 +1513,7 @@
     <section id="mechanism" class="glass-panel rounded-[2rem] funnel-section tier-hero mb-5" aria-labelledby="mechanism-title">
         <div class="text-center max-w-3xl mx-auto">
             <p class="section-eyebrow">睡前卡點四型 · Sleep Checkpoint Types</p>
-            <h2 id="mechanism-title" class="tier-hero-title mt-3">每一款，是三層疊起來的</h2>
+            <h2 id="mechanism-title" class="tier-hero-title mt-3">每一個音檔都是功能疊加，做到極致</h2>
             <p class="text-slate-300 mt-4 leading-relaxed">免費音樂通常是一段做給所有人聽的背景聲。這裡的每一款不是找一段好聽的音檔，而是三個東西疊在一起。</p>
         </div>
     
@@ -1592,9 +1611,14 @@
         <p class="text-slate-200 leading-relaxed mt-4">我做這件事，不是要替每個人貼標籤，而是因為我看見：很多人在睡前不是沒有努力，而是一直拿同一種方式，面對不同的卡點。艾伯林量子調頻想做的，是把差異說清楚，讓你從今晚能開始的一步出發。</p>
     </section>
     <section id="guarantee" class="glass-panel rounded-[2rem] funnel-section tier-hero">
+        <div class="guarantee-head">
+            <img class="guarantee-badge" src="assets/guarantee-badge.svg" alt="7 晚無條件全額退費保證" width="180" height="180" loading="lazy" decoding="async">
+            <div class="guarantee-head-text">
         <p class="section-eyebrow">7 晚無條件保證</p>
         <h2 class="tier-hero-title mt-3">先用 7 個晚上。不滿意，全額退。</h2>
         <p class="text-slate-300 mt-4 leading-relaxed">選錯型的風險，我來扛。你只要先從檢測推薦的那一款開始用滿 7 個晚上。如果你認為它沒有幫上忙，寫一封信給我們，<strong class="guarantee-strong">全額退還，不需要解釋原因，也不需要退回任何東西。</strong></p>
+            </div>
+        </div>
         <div class="funnel-list mt-6 text-sm text-slate-300">
             <p class="py-3">自付款日起 7 天內，以原訂單 Email 來信申請即可，我們才能正確對應你的訂單。</p>
             <p class="py-3">不問原因、不需填問卷、不需要你證明什麼。</p>
@@ -1864,25 +1888,18 @@
         const board = document.getElementById('tier-board');
         if (!list || !board) return;
         list.innerHTML = '';
-        PRICING.tiers.forEach(function (t) {
+        // 只顯示「目前開放中」的那一階，不揭露後續階梯
+        const openTiers = PRICING.tiers.filter(function (t) { return t.state === 'open'; });
+        const shown = openTiers.length ? openTiers.slice(0, 1) : PRICING.tiers.slice(0, 1);
+        shown.forEach(function (t) {
             const row = document.createElement('div');
-            row.className = 'tier-item' + (t.state === 'open' ? ' is-open' : (t.state === 'sold_out' ? ' is-done' : ''));
-            let sub = '', badge = '', badgeClass = '';
-            if (t.state === 'open') {
-                sub = t.limit ? ('限 ' + t.limit + ' 位・還剩 ' + t.remaining + ' 位') : '無名額限制';
-                badge = '現在這一階'; badgeClass = 'badge-open';
-            } else if (t.state === 'sold_out') {
-                sub = t.limit ? ('限 ' + t.limit + ' 位・已額滿') : '已結束';
-                badge = '已額滿'; badgeClass = 'badge-done';
-            } else {
-                sub = t.limit ? ('限 ' + t.limit + ' 位・前一階售完後開放') : '前面售完後開放';
-                badge = '尚未開放'; badgeClass = 'badge-next';
-            }
+            row.className = 'tier-item is-open';
+            const sub = (t.remaining != null && t.remaining !== '') ? ('還剩 ' + t.remaining + ' 位') : '';
             row.innerHTML =
                 '<div class="tier-price">NT$' + t.price + '</div>' +
                 '<div class="tier-main"><div class="tier-label">' + t.label + '</div>' +
-                '<div class="tier-sub">' + sub + '</div></div>' +
-                '<span class="tier-badge ' + badgeClass + '">' + badge + '</span>';
+                (sub ? '<div class="tier-sub">' + sub + '</div>' : '') + '</div>' +
+                '<span class="tier-badge badge-open">現正開放</span>';
             list.appendChild(row);
         });
         const pact = document.getElementById('tier-pact');
