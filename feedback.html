@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>14 天使用回饋｜艾伯林量子調頻</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root { --ink:#17253a; --primary:#0a0f1d; --muted:#46566a; --gold:#8c6812; --gold-soft:#b98e17; --line:#e4e7eb; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; padding:0; color:var(--ink); font-size:17px; line-height:1.9;
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',Arial,sans-serif;
+    background:linear-gradient(180deg,#ffffff 0%,#fbfaf7 55%,#f5f6f7 100%);
+    letter-spacing:0.012em;
+  }
+  .wrap { max-width:44rem; margin:0 auto; padding:3rem 1.25rem 5rem; }
+  .eyebrow { font-size:0.72rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+  h1 { font-size:1.85rem; line-height:1.35; font-weight:800; color:var(--primary); margin:0.75rem 0 1rem; }
+  .lead { color:#2b3a4d; margin:0 0 0.6rem; }
+  .lead-sub { color:var(--muted); font-size:0.92rem; margin:0 0 2.25rem; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:1.35rem; padding:2rem 1.75rem; box-shadow:0 10px 30px rgba(23,37,58,0.05); }
+  .q { margin-bottom:2.25rem; }
+  .q-label { display:block; font-weight:700; color:var(--primary); font-size:1.02rem; margin-bottom:0.3rem; }
+  .q-hint { display:block; font-size:0.85rem; color:var(--muted); line-height:1.75; margin-bottom:0.85rem; }
+  .q-num { color:var(--gold-soft); font-weight:800; margin-right:0.4rem; }
+  .opt {
+    display:flex; align-items:flex-start; gap:0.7rem; padding:0.8rem 1rem;
+    border:1px solid #e4e7eb; border-radius:0.8rem; margin-bottom:0.5rem;
+    cursor:pointer; font-size:0.97rem; line-height:1.75; color:#2b3a4d;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .opt:hover { border-color:var(--gold-soft); }
+  .opt input { margin-top:0.42rem; accent-color:var(--gold-soft); flex:0 0 auto; width:1.05rem; height:1.05rem; }
+  .opt.checked { border-color:var(--gold-soft); background:rgba(212,175,55,0.07); }
+  .opt.neutral { border-style:dashed; }
+  .other-wrap { margin-top:0.6rem; }
+  textarea, input[type="text"], select {
+    width:100%; padding:0.8rem 1rem; font-size:1rem; font-family:inherit; color:var(--ink);
+    background:#fff; border:1px solid #d9dee5; border-radius:0.75rem; line-height:1.75;
+  }
+  textarea { min-height:4.5rem; resize:vertical; }
+  textarea:focus, input:focus, select:focus { outline:none; border-color:var(--gold-soft); box-shadow:0 0 0 3px rgba(185,142,23,0.14); }
+  .scale { display:flex; gap:0.35rem; flex-wrap:wrap; }
+  .scale label { flex:1 1 auto; min-width:2.5rem; }
+  .scale input { position:absolute; opacity:0; width:0; height:0; }
+  .scale span {
+    display:block; text-align:center; padding:0.6rem 0; border:1px solid #d9dee5;
+    border-radius:0.6rem; cursor:pointer; font-size:0.95rem; font-weight:600; color:var(--muted);
+    transition:all .15s ease;
+  }
+  .scale input:checked + span { background:var(--gold-soft); border-color:var(--gold-soft); color:#fff; }
+  .scale-ends { display:flex; justify-content:space-between; font-size:0.78rem; color:var(--muted); margin-top:0.45rem; }
+  .consent-box { background:rgba(212,175,55,0.08); border:1px solid rgba(185,142,23,0.30); border-radius:1rem; padding:1.35rem 1.4rem; margin:2rem 0 1.5rem; }
+  .btn {
+    width:100%; padding:1.05rem; font-size:1.05rem; font-weight:700; color:#fff; cursor:pointer;
+    background:linear-gradient(135deg,#d8b33f,#b98e17); border:none; border-radius:999px;
+    box-shadow:0 10px 24px rgba(185,142,23,0.22); font-family:inherit;
+  }
+  .btn:disabled { opacity:0.6; cursor:default; }
+  .status { text-align:center; font-size:0.9rem; color:#c2410c; margin-top:0.9rem; min-height:1.4rem; }
+  .done { display:none; text-align:center; padding:1rem 0; }
+  .done h2 { font-size:1.5rem; color:var(--primary); margin:0 0 0.75rem; }
+  .done p { color:#2b3a4d; margin:0 0 0.5rem; }
+  .meta { font-size:0.8rem; color:var(--muted); text-align:center; margin-top:1.5rem; }
+  .prog { font-size:0.82rem; color:var(--muted); text-align:center; margin-bottom:1.25rem; }
+  a { color:var(--gold); text-decoration:underline; text-underline-offset:3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">14 天使用回饋</p>
+  <h1>謝謝你用了這 14 個晚上。<br>想跟你確認幾件事。</h1>
+  <p class="lead">下面六題，<strong>大部分只要用點的</strong>，大概兩分鐘。想補充再打字就好。</p>
+  <p class="lead-sub">你填的內容預設不會公開，最後一題會問你的意願。</p>
+
+  <div class="card">
+    <p class="prog">兩分鐘 · 六題 · 多數是選擇題</p>
+    <form id="fb-form">
+
+      <div class="q" data-q="before" data-multi="1" data-required="1">
+        <label class="q-label"><span class="q-num">1</span>用之前，你的夜晚比較接近哪一種？</label>
+        <span class="q-hint">可以複選。這是為了對照後面的變化。</span>
+        <div class="opts"></div>
+        <div class="other-wrap"><textarea data-other placeholder="想補充的話寫在這裡（選填）"></textarea></div>
+      </div>
+
+      <div class="q" data-q="change" data-multi="1" data-required="1">
+        <label class="q-label"><span class="q-num">2</span>這 14 天，你有注意到下面哪些變化？</label>
+        <span class="q-hint">可以複選。真的沒有變化就選最後一項，那對我一樣重要。</span>
+        <div class="opts"></div>
+        <div class="other-wrap"><textarea data-other placeholder="還有別的變化嗎？（選填）"></textarea></div>
+      </div>
+
+      <div class="q" data-q="one_liner" data-multi="0" data-required="1">
+        <label class="q-label"><span class="q-num">3</span>如果要跟同樣困擾的朋友介紹，你會怎麼說？</label>
+        <span class="q-hint">挑一個最接近你想法的，或自己寫一句。</span>
+        <div class="opts"></div>
+        <div class="other-wrap"><textarea data-other placeholder="我會跟他說⋯（選填）"></textarea></div>
+      </div>
+
+      <div class="q" data-q="improvement" data-multi="1" data-required="1">
+        <label class="q-label"><span class="q-num">4</span>有沒有哪裡讓你覺得可以更好？</label>
+        <span class="q-hint">可以複選。這一題請不用客氣，我需要知道哪裡要修。</span>
+        <div class="opts"></div>
+        <div class="other-wrap"><textarea data-other placeholder="想講得更清楚的話（選填）"></textarea></div>
+      </div>
+
+      <div class="q">
+        <label class="q-label"><span class="q-num">5</span>你有多可能推薦給有類似困擾的朋友？</label>
+        <div class="scale" id="nps"></div>
+        <div class="scale-ends"><span>完全不會</span><span>非常可能</span></div>
+      </div>
+
+      <div class="consent-box">
+        <label class="q-label"><span class="q-num">6</span>我可以公開你的回饋嗎？</label>
+        <span class="q-hint">如果可以，我會用在網站上，讓還在猶豫的人看到真實的說法。不論你選哪一個，都不影響任何權益。</span>
+        <label class="opt"><input type="radio" name="consent" value="named" required><span>可以公開，並顯示我的名稱縮寫與年齡層</span></label>
+        <label class="opt"><input type="radio" name="consent" value="anonymous"><span>可以公開，但請完全匿名</span></label>
+        <label class="opt"><input type="radio" name="consent" value="private"><span>不要公開，只給你參考</span></label>
+
+        <div style="margin-top:1.25rem;">
+          <label class="q-label" for="display-name" style="font-size:0.95rem;">顯示名稱（選填）</label>
+          <span class="q-hint">縮寫或暱稱即可，例如「T.Y.」或「小美」。</span>
+          <input type="text" id="display-name" placeholder="T.Y.">
+        </div>
+        <div style="margin-top:1rem;">
+          <label class="q-label" for="age-band" style="font-size:0.95rem;">年齡層（選填）</label>
+          <select id="age-band">
+            <option value="">不想說</option>
+            <option>25–34</option>
+            <option>35–44</option>
+            <option>45–54</option>
+            <option>55 以上</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn" id="submit-btn" type="submit">送出回饋</button>
+      <p class="status" id="status" aria-live="polite"></p>
+    </form>
+
+    <div class="done" id="done">
+      <h2>收到了，謝謝你。</h2>
+      <p>你選的、寫的我都會看。如果有需要確認的地方，我會直接回信給你。</p>
+      <p><a href="index.html">回到睡前卡點檢測</a></p>
+    </div>
+  </div>
+
+  <p class="meta">訂單編號 <span id="order-display">—</span>　·　<a href="privacy.html">隱私權政策</a></p>
+</div>
+
+<script>
+  const FEEDBACK_API = "https://erick303.app.n8n.cloud/webhook/timewaver-feedback";
+
+  const OPTIONS = {
+    before: [
+      '躺下之後腦袋還在跑，很難停下來',
+      '有睡著，但睡得淺、容易醒',
+      '睡了不算少，早上起來還是覺得沒充到電',
+      '睡前會想到明天的事，身體累了心裡還在備戰',
+      '夜深時容易浮出不安或說不上來的擔心'
+    ],
+    change: [
+      '睡前比較容易靜下來，念頭沒有那麼黏',
+      '半夜醒來的次數比之前少',
+      '早上起床時，身體沒有那麼重',
+      '比較有一個固定的睡前流程，不會拖到很晚才躺',
+      '白天的專注比較容易進入狀況',
+      { text: '老實說，目前還沒有明顯的感覺', neutral: true }
+    ],
+    one_liner: [
+      '它不是助眠音樂，是先幫你分清楚自己卡在哪一型',
+      '重點不是聽了會睡著，是睡前終於有一個固定的收尾方式',
+      '如果你也是那種「有睡但還是累」的人，值得試一次',
+      '它不會馬上翻轉什麼，但用著用著，夜晚會比較穩'
+    ],
+    improvement: [
+      '希望有更短的版本，有時候沒辦法聽完',
+      '希望有 App 或播放清單，操作再方便一點',
+      '想要更多使用上的說明或範例',
+      '節奏提醒信的頻率可以再調整',
+      { text: '目前沒有，我覺得都還好', neutral: true }
+    ]
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const orderNo = params.get('o') || '';
+  const productCode = params.get('p') || '';
+  if (orderNo) document.getElementById('order-display').textContent = orderNo;
+
+  // 建立選項
+  document.querySelectorAll('.q[data-q]').forEach(function (q) {
+    const key = q.dataset.q;
+    const multi = q.dataset.multi === '1';
+    const box = q.querySelector('.opts');
+    (OPTIONS[key] || []).forEach(function (raw, i) {
+      const o = (typeof raw === 'string') ? { text: raw } : raw;
+      const l = document.createElement('label');
+      l.className = 'opt' + (o.neutral ? ' neutral' : '');
+      l.innerHTML = '<input type="' + (multi ? 'checkbox' : 'radio') + '" name="' + key + '" value="' + o.text.replace(/"/g, '&quot;') + '"><span>' + o.text + '</span>';
+      box.appendChild(l);
+    });
+    box.addEventListener('change', function () {
+      box.querySelectorAll('.opt').forEach(function (el) {
+        el.classList.toggle('checked', !!el.querySelector('input').checked);
+      });
+      document.getElementById('status').textContent = '';
+    });
+  });
+
+  // NPS 0–10
+  const nps = document.getElementById('nps');
+  for (let i = 0; i <= 10; i++) {
+    const l = document.createElement('label');
+    l.innerHTML = '<input type="radio" name="nps" value="' + i + '"><span>' + i + '</span>';
+    nps.appendChild(l);
+  }
+
+  function collect(q) {
+    const key = q.dataset.q;
+    const picked = Array.from(q.querySelectorAll('input[name="' + key + '"]:checked')).map(function (el) { return el.value; });
+    const other = q.querySelector('[data-other]').value.trim();
+    return { picked: picked, other: other, all: picked.concat(other ? ['（自填）' + other] : []) };
+  }
+
+  document.getElementById('fb-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const status = document.getElementById('status');
+    const btn = document.getElementById('submit-btn');
+
+    // 必答檢查：至少選一項，或自己填了東西
+    const blocks = Array.from(document.querySelectorAll('.q[data-required="1"]'));
+    for (const q of blocks) {
+      const c = collect(q);
+      if (!c.all.length) {
+        status.textContent = '第 ' + q.querySelector('.q-num').textContent + ' 題還沒有選，選一項或自己寫一句就好。';
+        q.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+    }
+
+    const npsEl = document.querySelector('input[name="nps"]:checked');
+    const consentEl = document.querySelector('input[name="consent"]:checked');
+    const data = {};
+    blocks.forEach(function (q) {
+      const c = collect(q);
+      data[q.dataset.q] = c.all.join('｜');
+      data[q.dataset.q + '_other'] = c.other;
+    });
+
+    const payload = Object.assign({
+      order_no: orderNo,
+      product_code: productCode,
+      nps: npsEl ? npsEl.value : '',
+      consent: consentEl ? consentEl.value : '',
+      display_name: document.getElementById('display-name').value.trim(),
+      age_band: document.getElementById('age-band').value,
+      submitted_at: new Date().toISOString()
+    }, data);
+
+    btn.disabled = true;
+    status.style.color = '#46566a';
+    status.textContent = '送出中⋯';
+
+    try {
+      const r = await fetch(FEEDBACK_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!r.ok) throw new Error('bad status');
+      document.getElementById('fb-form').style.display = 'none';
+      document.getElementById('done').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      status.style.color = '#c2410c';
+      status.textContent = '送出失敗，請稍後再試，或直接回信給我。';
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

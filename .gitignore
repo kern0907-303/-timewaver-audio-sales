@@ -1,1 +1,27 @@
+._*
 .DS_Store
+
+# 音檔：付費商品，絕對不能進公開 repo
+audio-mp3/
+
+# Netlify 本機狀態（含 site id）
+.netlify
+
+# ===== 以下都會被 Netlify 當成靜態檔公開，務必排除 =====
+
+# 內部文件與策略稿：含基礎設施細節、商業策略、文案審查
+*.md
+docs/
+
+# 舊版備份：會讓人直接讀到未上線或已淘汰的版本
+index.backup-*.html
+
+# 原始大圖（23MB），只留壓縮後的 webp/jpg
+assets/original/
+
+# n8n 工作流程匯出檔：含 webhook 路徑與流程結構
+n8n_*.json
+n8n_*.js
+
+# 測試檔
+tests/

@@ -219,7 +219,7 @@ src="https://www.facebook.com/tr?id=933759515940221&ev=PageView&noscript=1" /></
       <div class="field">
         <label for="p_photo">個人獨照 *</label>
         <input type="file" id="p_photo" accept="image/*" required>
-        <p class="hint">建立個人頻率座標需要。請上傳一張只有你一個人、臉部清楚的近期照片，不用特別打扮。這張照片只用於建立你的頻率檔案，不會出現在任何公開的地方。</p>
+        <p class="hint">建立個人頻率座標需要。請上傳一張只有你一個人、臉部清楚的近期照片，不用特別打扮。這張照片只用於建立你的頻率檔案，不會公開展示、不會提供給第三方，也不會用於任何行銷用途。你隨時可以來信要求刪除。</p>
       </div>
 
       <div class="consent-row">
@@ -290,8 +290,12 @@ src="https://www.facebook.com/tr?id=933759515940221&ev=PageView&noscript=1" /></
     say('正在上傳照片…');
 
     try {
-      const ext = (photoFile.name.split('.').pop() || 'jpg').toLowerCase();
-      const fileName = Date.now() + '_' + Math.random().toString(36).slice(2, 9) + '.' + ext;
+      // 檔名採用完全隨機的 UUID，不帶時間戳或任何可推敲的資訊
+      const ext = (photoFile.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+      const uid = (window.crypto && window.crypto.randomUUID)
+        ? window.crypto.randomUUID()
+        : (Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2));
+      const fileName = uid + '.' + ext;
 
       const up = await sb.storage.from('photos').upload(fileName, photoFile);
       if (up.error) throw new Error('照片上傳失敗，請稍後再試一次。');
