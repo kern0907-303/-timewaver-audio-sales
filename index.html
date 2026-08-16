@@ -1229,6 +1229,30 @@
             padding: 0.7rem 1rem; border-radius: 0 0.6rem 0.6rem 0; display: inline-block;
         }
         .selection-highlight strong { color: #9a3412; font-weight: 800; }
+        .selection-tag { display: inline-block; font-size: 0.72rem; letter-spacing: 0.12em;
+            background: #c2410c; color: #fff; border-radius: 999px; padding: 0.15rem 0.6rem;
+            margin-right: 0.55rem; vertical-align: 0.1rem; font-weight: 700; }
+        .selection-price { margin-left: 0.5rem; font-weight: 800; color: #9a3412; }
+        .selection-swap { display: block; margin-top: 0.5rem; font-size: 0.8rem; font-weight: 500;
+            color: #9a3412; opacity: 0.7; text-decoration: underline; background: none;
+            border: 0; padding: 0; cursor: pointer; }
+        .selection-swap:hover { opacity: 1; }
+
+        /* ===== 結果分享圖卡 ===== */
+        .share-card-block { border-top: 1px solid rgba(148,163,184,0.16); padding-top: 1.75rem; }
+        .share-card-canvas { width: 100%; max-width: 420px; height: auto; display: block;
+            border-radius: 1rem; border: 1px solid rgba(148,163,184,0.2); }
+        .share-card-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+
+        /* ===== 四款比較區：折疊，不佔購買動線 ===== */
+        .solutions-toggle > .funnel-list { margin-top: 1.5rem; }
+        .solutions-summary { cursor: pointer; list-style: none; text-align: center;
+            padding: 1rem; border-radius: 1rem; border: 1px dashed rgba(148,163,184,0.28); }
+        .solutions-summary::-webkit-details-marker { display: none; }
+        .solutions-summary-main { display: block; font-size: 1.15rem; font-weight: 700; color: #fff; }
+        .solutions-summary-main::after { content: " ▾"; opacity: 0.6; }
+        details[open] .solutions-summary-main::after { content: " ▴"; }
+        .solutions-summary-sub { display: block; margin-top: 0.4rem; font-size: 0.85rem; color: #94a3b8; }
 
         /* ===== 加贈項目 ===== */
         .offer-bonus { background: rgba(212,175,55,0.07); border-radius: 0.9rem;
@@ -1490,6 +1514,18 @@
                 今晚就用對應音頻 NT$<span data-price>299</span>
             </button>
         </div>
+
+        <!-- 結果分享圖卡：測完自動產圖，可存檔或分享 -->
+        <div id="share-card-block" class="share-card-block mt-8 text-left">
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-2">把你的結果存成一張圖</p>
+            <p class="text-sm text-slate-400 mb-4">不含姓名或 Email，只有型別。可以存起來，或分享給也睡不好的人。</p>
+            <canvas id="share-card-canvas" width="1080" height="1080" class="share-card-canvas" aria-label="你的睡前卡點型別圖卡"></canvas>
+            <div class="share-card-actions">
+                <button type="button" id="share-card-share" class="secondary-btn px-5 py-3 text-sm" onclick="shareResultCard()">分享這張圖</button>
+                <button type="button" id="share-card-download" class="secondary-btn px-5 py-3 text-sm" onclick="downloadResultCard()">存成圖片</button>
+            </div>
+            <p id="share-card-status" class="text-xs text-slate-500 mt-3" aria-live="polite"></p>
+        </div>
     </div>
 
 </div>
@@ -1668,13 +1704,18 @@
 
     <!-- N6 上線後：導言改為「也可以四款一起帶走」，並於結果頁補 NT$799 次級 CTA -->
     <section id="solutions" class="glass-panel rounded-[2rem] funnel-section tier-fine">
-        <div class="text-center max-w-3xl mx-auto"><p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">四種睡前聲音路徑</p><h2 class="text-3xl sm:text-4xl font-bold text-white mt-3">四款差在哪？對照你的卡點就知道</h2><p class="text-slate-300 mt-4 leading-relaxed">檢測已經幫你選好了。以下四款保留給想確認差異的人。</p></div>
+        <details id="solutions-toggle" class="solutions-toggle" ontoggle="if(this.open)trackAblEvent('solutions_open',{})">
+        <summary class="solutions-summary">
+            <span class="solutions-summary-main">想看其他三款差在哪？</span>
+            <span class="solutions-summary-sub">檢測已經幫你選好了，這裡只給想確認差異的人。</span>
+        </summary>
         <div class="funnel-list mt-8">
-            <article class="mini-card rounded-2xl p-6"><p class="text-cyan-200 text-sm">A 劑｜斷路器・Theta 4–7Hz</p><h3 class="text-xl font-semibold text-white mt-2">躺下之後，腦子還在開會</h3><p class="text-slate-400 text-sm mt-3">適合腦內雜訊、復盤、思考停不下來的夜晚。</p><button class="secondary-btn px-4 py-3 text-sm mt-5" onclick="chooseProduct('A')">選 A 劑</button></article>
-            <article class="mini-card rounded-2xl p-6"><p class="text-cyan-200 text-sm">B 劑｜深海艙・Delta 0.5–4Hz</p><h3 class="text-xl font-semibold text-white mt-2">睡了整晚，醒來還是累</h3><p class="text-slate-400 text-sm mt-3">適合淺眠易醒、睡醒仍累、修復感不足的夜晚。</p><button class="secondary-btn px-4 py-3 text-sm mt-5" onclick="chooseProduct('B')">選 B 劑</button></article>
-            <article class="mini-card rounded-2xl p-6"><p class="text-cyan-200 text-sm">C 劑｜心流校準・Alpha 8–12Hz</p><h3 class="text-xl font-semibold text-white mt-2">明天的事，今晚就開始演</h3><p class="text-slate-400 text-sm mt-3">適合明天壓力、預演與神經提前備戰的夜晚。</p><button class="secondary-btn px-4 py-3 text-sm mt-5" onclick="chooseProduct('C')">選 C 劑</button></article>
-            <article class="mini-card rounded-2xl p-6"><p class="text-cyan-200 text-sm">D 劑｜豐盛錨點・Solfeggio 852Hz</p><h3 class="text-xl font-semibold text-white mt-2">一安靜下來，反而更不安</h3><p class="text-slate-400 text-sm mt-3">適合底層不安、安全感不足與情緒牽動明顯的夜晚。</p><button class="secondary-btn px-4 py-3 text-sm mt-5" onclick="chooseProduct('D')">選 D 劑</button></article>
+            <article class="mini-card rounded-2xl p-6"><p class="text-cyan-200 text-sm">A 劑｜斷路器・Theta 4–7Hz</p><h3 class="text-xl font-semibold text-white mt-2">躺下之後，腦子還在開會</h3><p class="text-slate-400 text-sm mt-3">適合腦內雜訊、復盤、思考停不下來的夜晚。</p><button class="secondary-btn px-4 py-3 text-sm mt-5" onclick="chooseProduct('A')">改用 A 劑</button></article>
+            <article class="mini-card rounded-2xl p-6"><p class="text-cyan-200 text-sm">B 劑｜深海艙・Delta 0.5–4Hz</p><h3 class="text-xl font-semibold text-white mt-2">睡了整晚，醒來還是累</h3><p class="text-slate-400 text-sm mt-3">適合淺眠易醒、睡醒仍累、修復感不足的夜晚。</p><button class="secondary-btn px-4 py-3 text-sm mt-5" onclick="chooseProduct('B')">改用 B 劑</button></article>
+            <article class="mini-card rounded-2xl p-6"><p class="text-cyan-200 text-sm">C 劑｜心流校準・Alpha 8–12Hz</p><h3 class="text-xl font-semibold text-white mt-2">明天的事，今晚就開始演</h3><p class="text-slate-400 text-sm mt-3">適合明天壓力、預演與神經提前備戰的夜晚。</p><button class="secondary-btn px-4 py-3 text-sm mt-5" onclick="chooseProduct('C')">改用 C 劑</button></article>
+            <article class="mini-card rounded-2xl p-6"><p class="text-cyan-200 text-sm">D 劑｜豐盛錨點・Solfeggio 852Hz</p><h3 class="text-xl font-semibold text-white mt-2">一安靜下來，反而更不安</h3><p class="text-slate-400 text-sm mt-3">適合底層不安、安全感不足與情緒牽動明顯的夜晚。</p><button class="secondary-btn px-4 py-3 text-sm mt-5" onclick="chooseProduct('D')">改用 D 劑</button></article>
         </div>
+        </details>
     </section>
 
     <section class="glass-panel rounded-[2rem] funnel-section tier-support" aria-labelledby="abl-method-title">
@@ -1707,7 +1748,7 @@
         </div>
     </section>
     <section id="purchase" class="glass-panel rounded-[2rem] funnel-section tier-hero">
-        <div class="max-w-2xl mx-auto"><p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">開始你的睡前聲音路徑</p><h2 class="text-3xl font-bold text-white mt-3">選擇一款，今晚就開始</h2><p id="purchase-selection" class="selection-highlight mt-3">請先從檢測結果或四款方案中選擇。</p>
+        <div class="max-w-2xl mx-auto"><p class="text-sm tracking-[0.2em] uppercase text-cyan-200/80">你的方案已選好</p><h2 class="text-3xl font-bold text-white mt-3">今晚就開始</h2><p id="purchase-selection" class="selection-highlight mt-3">請先完成 60 秒檢測，我們會幫你選好。</p>
             <form id="purchase-form" onsubmit="submitPaymentOrder(event)" class="space-y-4 mt-6">
                 <input id="purchase-product-code" type="hidden" value="">
                 <input id="purchase-product-name" type="hidden" value="">
@@ -1928,9 +1969,196 @@
         resultSalesLink.dataset.resultType = userResultType;
         resultSalesLink.textContent = `今晚就用 ${resultData.audioName} NT${currentPrice()}`;
         hasCompletedQuiz = true;
+        chooseProduct(userResultType, true);   // 預選，購買區不再要求他重選一次
+        drawShareCard(userResultType);         // 測完就把分享圖卡畫好
+        // 字體尚未載入完成時第一次會用 fallback 字，載完再補畫一次
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(function () { drawShareCard(userResultType); });
+        }
+        setShareStatus('');
         updateStickyCta();
         trackAblEvent('result_view', { result_type: userResultType });
         showStep('step-result');
+    }
+
+
+    /* ===== 結果分享圖卡 =====
+       在瀏覽器端用 canvas 直接畫，不需要後端出圖、不帶任何個資。
+       版面與 assets/share/result-*.png 一致，改一邊要記得改另一邊。 */
+    const SHARE_CARD_MAP = {
+        A: { label: "A 型", name: "大腦下不了班", line: "躺下之後，腦子還在開會",
+             desc: ["白天的對話、決策和待辦，", "一路跟著你進被窩。"], accent: "103,232,249" },
+        B: { label: "B 型", name: "睡了但沒修復", line: "睡了整晚，醒來還是累",
+             desc: ["時數是夠的，", "但身體沒有真的休息到。"], accent: "129,199,255" },
+        C: { label: "C 型", name: "明天先佔用今晚", line: "明天的事，今晚就開始演",
+             desc: ["人還在今晚，", "神經已經先上場了。"], accent: "167,180,252" },
+        D: { label: "D 型", name: "安靜後不安浮出", line: "一安靜下來，反而更不安",
+             desc: ["白天忙的時候還好，", "夜裡靜下來才浮上來。"], accent: "196,181,253" }
+    };
+    const SHARE_FONT = '"Noto Sans TC","PingFang TC","Heiti TC","Microsoft JhengHei",sans-serif';
+
+    function drawShareCard(type) {
+        const canvas = document.getElementById('share-card-canvas');
+        const card = SHARE_CARD_MAP[type];
+        if (!canvas || !card || !canvas.getContext) return false;
+        const ctx = canvas.getContext('2d');
+        const W = 1080, H = 1080, M = 96, ac = card.accent;
+
+        // 底色漸層
+        const grad = ctx.createLinearGradient(0, 0, 0, H);
+        grad.addColorStop(0, '#080c18');
+        grad.addColorStop(1, '#121c3a');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, W, H);
+
+        // 右上光暈
+        const glow = ctx.createRadialGradient(W * 0.78, H * 0.20, 0, W * 0.78, H * 0.20, 470);
+        glow.addColorStop(0, 'rgba(' + ac + ',0.30)');
+        glow.addColorStop(1, 'rgba(' + ac + ',0)');
+        ctx.fillStyle = glow;
+        ctx.fillRect(0, 0, W, H);
+
+        // 底部聲波
+        for (let k = 0; k < 3; k++) {
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(' + ac + ',' + (0.28 - k * 0.08) + ')';
+            ctx.lineWidth = 3;
+            for (let x = 0; x <= W; x += 6) {
+                const y = H * 0.955 + k * 26 + Math.sin(x / 92 + k * 1.1) * (16 - k * 4);
+                if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        }
+
+        ctx.textBaseline = 'top';
+
+        // 品牌列
+        ctx.font = '400 30px ' + SHARE_FONT;
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText('60 秒睡前卡點檢測', M, 78);
+
+        // 右上大字母浮水印
+        ctx.font = '700 300px ' + SHARE_FONT;
+        ctx.fillStyle = 'rgba(' + ac + ',0.16)';
+        const lw = ctx.measureText(type).width;
+        ctx.fillText(type, W - M - lw + 20, 120);
+
+        // 型別標籤
+        ctx.font = '700 34px ' + SHARE_FONT;
+        const tw = ctx.measureText(card.label).width;
+        roundRect(ctx, M, 236, tw + 52, 58, 29);
+        ctx.fillStyle = 'rgba(' + ac + ',0.14)';
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(' + ac + ',0.47)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = 'rgb(' + ac + ')';
+        ctx.fillText(card.label, M + 26, 247);
+
+        // 主名稱
+        ctx.font = '700 92px ' + SHARE_FONT;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(card.name, M, 336);
+
+        // 一句話
+        ctx.font = '700 50px ' + SHARE_FONT;
+        ctx.fillStyle = 'rgb(' + ac + ')';
+        ctx.fillText(card.line, M, 474);
+
+        // 描述
+        ctx.font = '400 38px ' + SHARE_FONT;
+        ctx.fillStyle = '#cbd5e1';
+        card.desc.forEach(function (ln, i) { ctx.fillText(ln, M, 574 + i * 58); });
+
+        // 分隔線
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(148,163,184,0.24)';
+        ctx.lineWidth = 2;
+        ctx.moveTo(M, 754); ctx.lineTo(W - M, 754); ctx.stroke();
+
+        // 底部
+        ctx.font = '700 36px ' + SHARE_FONT;
+        ctx.fillStyle = '#e2e8f0';
+        ctx.fillText('睡不著的原因有四種。你今晚卡的是哪一種？', M, 788);
+        ctx.font = '400 30px ' + SHARE_FONT;
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText('8 題 · 約 60 秒 · 不用留 Email', M, 850);
+        ctx.font = '700 32px ' + SHARE_FONT;
+        ctx.fillStyle = 'rgb(' + ac + ')';
+        ctx.fillText(shareCardDomain(), M, 920);
+
+        return true;
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+    }
+
+    // 圖上印的網址跟著實際部署走，搬網域時不用改程式
+    function shareCardDomain() {
+        const h = window.location.hostname;
+        if (!h || h === 'localhost' || h === '127.0.0.1') return 'sleep.abliene.com';
+        return h.replace(/^www\./, '');
+    }
+
+    function shareCardBlob() {
+        const canvas = document.getElementById('share-card-canvas');
+        return new Promise(function (resolve) {
+            if (!canvas || !canvas.toBlob) { resolve(null); return; }
+            canvas.toBlob(function (blob) { resolve(blob); }, 'image/png');
+        });
+    }
+
+    function shareCardFileName() {
+        return 'sleep-type-' + userResultType + '.png';
+    }
+
+    function setShareStatus(msg) {
+        const el = document.getElementById('share-card-status');
+        if (el) el.textContent = msg || '';
+    }
+
+    async function shareResultCard() {
+        const blob = await shareCardBlob();
+        if (!blob) { downloadResultCard(); return; }
+        const file = new File([blob], shareCardFileName(), { type: 'image/png' });
+        // 手機上走原生分享；桌機或不支援檔案分享時退回下載
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
+                    files: [file],
+                    text: '睡不著的原因有四種，我是「' + SHARE_CARD_MAP[userResultType].name + '」。你今晚卡的是哪一種？'
+                });
+                trackAblEvent('share_card_share', { result_type: userResultType, method: 'native' });
+                setShareStatus('');
+                return;
+            } catch (err) {
+                if (err && err.name === 'AbortError') { setShareStatus(''); return; }
+            }
+        }
+        setShareStatus('這個裝置不支援直接分享，已改為存檔。');
+        downloadResultCard('share_fallback');
+    }
+
+    async function downloadResultCard(source) {
+        const blob = await shareCardBlob();
+        if (!blob) { setShareStatus('這個瀏覽器無法產生圖片，請改用截圖。'); return; }
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = shareCardFileName();
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        trackAblEvent('share_card_download', { result_type: userResultType, source: source || 'button' });
+        setShareStatus('已存到你的下載資料夾。');
     }
 
     function updateStickyCta() {
@@ -2221,17 +2449,40 @@
         chooseProduct(userResultType);
     }
 
-    function chooseProduct(productCode) {
+    // silent = true 時只寫入選擇、不捲動也不送事件（給檢測完成後的自動預選用）
+    function chooseProduct(productCode, silent) {
         const productName = products[productCode];
         document.getElementById('purchase-product-code').value = productCode;
         document.getElementById('purchase-product-name').value = productName;
-        document.getElementById('purchase-selection').innerHTML = `你選擇的是：<strong>${productName}</strong>（NT${productCode === 'BUNDLE' ? 799 : currentPrice()}）`;
+        renderPurchaseSelection(productCode, productName);
+        if (silent) return;
         document.getElementById('purchase').scrollIntoView({ behavior: 'smooth', block: 'start' });
         if (productCode === 'BUNDLE') {
             trackAblEvent('bundle_click', { product_code: productCode, source: 'one_page' });
             return;
         }
         trackAblEvent('audio_purchase_click', { product_code: productCode, source: 'one_page' });
+    }
+
+    // 購買區永遠呈現「已經幫你選好了」，換款是次要動作而不是必要動作
+    function renderPurchaseSelection(productCode, productName) {
+        const box = document.getElementById('purchase-selection');
+        if (!box) return;
+        const price = productCode === 'BUNDLE' ? 799 : currentPrice();
+        const isRecommended = productCode === userResultType;
+        box.innerHTML =
+            '<span class="selection-tag">' + (isRecommended ? '檢測為你選的' : '你更換為') + '</span>' +
+            '<strong>' + productName + '</strong>' +
+            '<span class="selection-price">NT$' + price + '</span>' +
+            '<button type="button" class="selection-swap" onclick="openSolutions()">想換一款</button>';
+    }
+
+    function openSolutions() {
+        const box = document.getElementById('solutions-toggle');
+        if (box && !box.open) box.open = true;
+        const target = document.getElementById('solutions');
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        trackAblEvent('swap_product_click', { from_code: document.getElementById('purchase-product-code').value });
     }
 
     // 訂單編號與金額一律由後台（n8n + products 主檔）決定，前端不再傳送，
@@ -2252,9 +2503,8 @@
         };
 
         if (!productCode) {
-            setStatus('請先從檢測結果或四款方案中選擇一款。', true);
-            const picker = document.getElementById('solutions') || document.getElementById('offer-stack');
-            if (picker) picker.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setStatus('請先完成 60 秒檢測，我們會幫你選好對應的那一款。', true);
+            jumpToQuiz('purchase_no_selection');
             return;
         }
         const BASE_TYPES = ['A', 'B', 'C', 'D'];
