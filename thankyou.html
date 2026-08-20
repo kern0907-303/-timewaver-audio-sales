@@ -78,6 +78,25 @@ src="https://www.facebook.com/tr?id=933759515940221&ev=PageView&noscript=1" /></
   .note p { margin:0; }
   .foot { text-align:center; margin-top:2rem; font-size:0.85rem; color:var(--muted); }
   a { color:var(--gold); text-decoration:underline; text-underline-offset:3px; }
+
+  /* ===== 分享區 ===== */
+  .share { margin-top:2.25rem; padding-top:1.75rem; border-top:1px solid var(--line); }
+  .share h2 { font-size:1.15rem; font-weight:800; color:var(--primary); margin:0 0 0.4rem; }
+  .share .sub { font-size:0.92rem; color:var(--muted); margin:0 0 1.25rem; line-height:1.8; }
+  .share canvas { width:100%; max-width:320px; height:auto; display:block; margin:0 auto 1.25rem;
+    border-radius:1rem; border:1px solid var(--line); }
+  .share-btns { display:grid; grid-template-columns:repeat(2,1fr); gap:0.6rem; }
+  @media (min-width:520px){ .share-btns { grid-template-columns:repeat(5,1fr); } }
+  .sbtn {
+    display:flex; flex-direction:column; align-items:center; gap:0.4rem;
+    padding:0.85rem 0.4rem; border:1px solid var(--line); border-radius:0.9rem;
+    background:#fff; color:var(--primary); font-size:0.8rem; font-weight:700;
+    text-decoration:none; cursor:pointer; line-height:1.4; text-align:center;
+  }
+  .sbtn:hover { border-color:rgba(212,175,55,0.6); background:rgba(212,175,55,0.06); }
+  .sbtn svg { width:22px; height:22px; }
+  .share-note { margin-top:0.9rem; font-size:0.78rem; color:var(--muted); line-height:1.7; }
+  #share-status { display:block; margin-top:0.6rem; font-size:0.82rem; color:var(--gold); min-height:1.2em; }
 </style>
 </head>
 <body>
@@ -135,6 +154,36 @@ src="https://www.facebook.com/tr?id=933759515940221&ev=PageView&noscript=1" /></
           <p>第 1、3、7、14、21 個晚上各一封信，告訴你今晚該觀察什麼、哪些反應是正常的，讓它真的變成你的睡前習慣。</p>
         </div>
       </div>
+    </div>
+
+    <div class="share" id="share-block">
+      <h2>身邊也有人睡不好嗎？</h2>
+      <p class="sub">把這個檢測傳給他。他不用付錢、不用留 Email，60 秒就知道自己卡在哪一型。</p>
+      <canvas id="share-card" width="1080" height="1080" aria-label="睡前卡點檢測分享圖"></canvas>
+      <div class="share-btns">
+        <a class="sbtn" id="fb-share" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6c-.29-.04-1.28-.13-2.43-.13-2.4 0-4.05 1.47-4.05 4.17V9.9H7.5V13h2.72v8h3.28z"/></svg>
+          Facebook
+        </a>
+        <button type="button" class="sbtn" onclick="shareToIG()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </button>
+        <a class="sbtn" id="line-share" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.9 3 2.8 6.4 2.8 10.6c0 3.8 3.3 7 7.7 7.6.3.06.7.2.8.45.1.23.07.58.03.81l-.13.79c-.04.23-.19.9.79.49 1-.41 5.35-3.15 7.3-5.4 1.34-1.47 1.9-2.96 1.9-4.74C21.2 6.4 17.1 3 12 3z"/></svg>
+          LINE
+        </a>
+        <button type="button" class="sbtn" onclick="copyLink()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.1.1l2.4-2.4a5 5 0 0 0-7.1-7.1L11 5"/><path d="M14 11a5 5 0 0 0-7.1-.1L4.5 13.3a5 5 0 0 0 7.1 7.1L13 19"/></svg>
+          複製連結
+        </button>
+        <button type="button" class="sbtn" onclick="saveCard()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M8 10.5l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          存成圖片
+        </button>
+      </div>
+      <span id="share-status" aria-live="polite"></span>
+      <p class="share-note">按 Instagram 會先把圖存到你的相簿，再開啟 IG（手機會問你要不要開啟）。IG 不能自動帶連結，記得把網址放在貼文或限動的連結貼紙。</p>
     </div>
 
     <div class="note">
@@ -199,6 +248,146 @@ src="https://www.facebook.com/tr?id=933759515940221&ev=PageView&noscript=1" /></
       try { window.localStorage.setItem(key, '1'); } catch (e) {}
     }
   })();
+</script>
+
+<script>
+/* ===== 分享圖卡（版面與 assets/share/result-*.png 一致，改一邊記得改另一邊） ===== */
+(function () {
+  var SITE = 'https://sleep.abliene.com/';
+  var MAP = {
+    A: { label:'A 型', name:'大腦下不了班', line:'躺下之後，腦子還在開會',
+         desc:['白天的對話、決策和待辦，','一路跟著你進被窩。'], ac:'103,232,249' },
+    B: { label:'B 型', name:'睡了但沒修復', line:'睡了整晚，醒來還是累',
+         desc:['時數是夠的，','但身體沒有真的休息到。'], ac:'129,199,255' },
+    C: { label:'C 型', name:'明天先佔用今晚', line:'明天的事，今晚就開始演',
+         desc:['人還在今晚，','神經已經先上場了。'], ac:'167,180,252' },
+    D: { label:'D 型', name:'安靜後不安浮出', line:'一安靜下來，反而更不安',
+         desc:['白天忙的時候還好，','夜裡靜下來才浮上來。'], ac:'196,181,253' },
+    X: { label:'四種', name:'睡不著的原因有四種', line:'你今晚卡的是哪一種？',
+         desc:['腦子停不下來、睡了沒修復、','明天先佔用今晚、安靜後不安。'], ac:'103,232,249' }
+  };
+  var FONT = '"Noto Sans TC","PingFang TC","Heiti TC","Microsoft JhengHei",sans-serif';
+
+  function type() {
+    try { var t = localStorage.getItem('abl_result_type'); if (MAP[t]) return t; } catch (e) {}
+    return 'X';
+  }
+
+  function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+  function draw() {
+    var c = document.getElementById('share-card');
+    if (!c || !c.getContext) return;
+    var t = type(), d = MAP[t], ctx = c.getContext('2d'), W = 1080, H = 1080, M = 96, ac = d.ac;
+
+    var g = ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#080c18'); g.addColorStop(1,'#121c3a');
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+    var glow = ctx.createRadialGradient(W*0.78,H*0.2,0,W*0.78,H*0.2,470);
+    glow.addColorStop(0,'rgba('+ac+',0.30)'); glow.addColorStop(1,'rgba('+ac+',0)');
+    ctx.fillStyle = glow; ctx.fillRect(0,0,W,H);
+
+    for (var k=0;k<3;k++){
+      ctx.beginPath(); ctx.strokeStyle='rgba('+ac+','+(0.28-k*0.08)+')'; ctx.lineWidth=3;
+      for (var x=0;x<=W;x+=6){
+        var y=H*0.955+k*26+Math.sin(x/92+k*1.1)*(16-k*4);
+        if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+    }
+
+    ctx.textBaseline='top';
+    ctx.font='400 30px '+FONT; ctx.fillStyle='#94a3b8';
+    ctx.fillText('60 秒睡前卡點檢測', M, 78);
+
+    if (t !== 'X') {
+      ctx.font='700 300px '+FONT; ctx.fillStyle='rgba('+ac+',0.16)';
+      ctx.fillText(t, W-M-ctx.measureText(t).width+20, 120);
+    }
+
+    ctx.font='700 34px '+FONT;
+    var tw=ctx.measureText(d.label).width;
+    rr(ctx,M,236,tw+52,58,29);
+    ctx.fillStyle='rgba('+ac+',0.14)'; ctx.fill();
+    ctx.strokeStyle='rgba('+ac+',0.47)'; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='rgb('+ac+')'; ctx.fillText(d.label, M+26, 247);
+
+    ctx.font='700 '+(t==='X'?76:92)+'px '+FONT; ctx.fillStyle='#fff';
+    ctx.fillText(d.name, M, 336);
+    ctx.font='700 50px '+FONT; ctx.fillStyle='rgb('+ac+')';
+    ctx.fillText(d.line, M, 474);
+    ctx.font='400 38px '+FONT; ctx.fillStyle='#cbd5e1';
+    d.desc.forEach(function(l,i){ ctx.fillText(l, M, 574+i*58); });
+
+    ctx.beginPath(); ctx.strokeStyle='rgba(148,163,184,0.24)'; ctx.lineWidth=2;
+    ctx.moveTo(M,754); ctx.lineTo(W-M,754); ctx.stroke();
+
+    ctx.font='700 36px '+FONT; ctx.fillStyle='#e2e8f0';
+    ctx.fillText('睡不著的原因有四種。你今晚卡的是哪一種？', M, 788);
+    ctx.font='400 30px '+FONT; ctx.fillStyle='#94a3b8';
+    ctx.fillText('8 題 · 約 60 秒 · 不用留 Email', M, 850);
+    ctx.font='700 32px '+FONT; ctx.fillStyle='rgb('+ac+')';
+    ctx.fillText('sleep.abliene.com', M, 920);
+  }
+
+  function status(msg){
+    var el=document.getElementById('share-status');
+    if(!el) return;
+    el.textContent=msg||'';
+    if(msg) setTimeout(function(){ el.textContent=''; }, 4000);
+  }
+
+  function blob(){
+    var c=document.getElementById('share-card');
+    return new Promise(function(res){
+      if(!c||!c.toBlob){res(null);return;}
+      c.toBlob(function(b){res(b);}, 'image/png');
+    });
+  }
+
+  window.saveCard = function(){
+    blob().then(function(b){
+      if(!b){ status('這個瀏覽器無法產生圖片，請改用截圖。'); return; }
+      var u=URL.createObjectURL(b), a=document.createElement('a');
+      a.href=u; a.download='sleep-check.png';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function(){URL.revokeObjectURL(u);},1000);
+      status('已存到你的下載資料夾');
+    });
+  };
+
+  window.copyLink = function(){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(SITE).then(function(){ status('已複製，貼給他就可以了'); })
+        .catch(function(){ status(SITE); });
+    } else { status(SITE); }
+  };
+
+  // 手機上先存圖再喚起 IG（系統會問使用者要不要開啟），桌機退回 IG 網站
+  window.shareToIG = function(){
+    var mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (!mobile) {
+      status('電腦上請先「存成圖片」，再從手機的 IG 上傳');
+      window.open('https://www.instagram.com/', '_blank', 'noopener');
+      return;
+    }
+    saveCard();
+    status('圖已存到相簿，正在開啟 IG…');
+    var t = setTimeout(function(){ window.location.href = 'https://www.instagram.com/'; }, 1800);
+    window.addEventListener('pagehide', function(){ clearTimeout(t); }, { once: true });
+    window.location.href = 'instagram://story-camera';
+  };
+
+  var TEXT = '睡不著的原因有四種，60 秒測出你卡在哪一型。';
+  var fb=document.getElementById('fb-share');
+  if(fb) fb.href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(SITE);
+  var line=document.getElementById('line-share');
+  if(line) line.href='https://line.me/R/msg/text/?'+encodeURIComponent(TEXT+'\n'+SITE);
+
+  draw();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+})();
 </script>
 </body>
 </html>
